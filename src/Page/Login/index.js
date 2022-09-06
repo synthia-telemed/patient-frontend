@@ -33,8 +33,8 @@ const LoginPage = () => {
 
   const LoginCard = () => {
     return (
-      <div className="shadow-md width rounded-[20px] w-[90vw] m-5 h-[350px] absolute z-1 bottom-1 bg-white">
-        <h1 className="text-center font-body font-[500] text-xl mt-[34px]">
+      <div className="shadow-md width rounded-[20px] w-[90vw] m-5 h-[350px] absolute z-1 bottom-1 bg-base-white">
+        <h1 className="text-center typographyHeadingXsSemibold mt-[34px]">
           Login
         </h1>
         <div className="w-ful mx-[15px] mt-[39px]">
@@ -63,13 +63,13 @@ const LoginPage = () => {
               <button
                 type="submit"
                 value="submit"
-                className="mt-[72px] bg-[#303ED9] font-body text-white w-[235px] h-[44px] rounded-[8px]"
+                className="mt-[72px] bg-[#303ED9] typographyTextMdMedium text-base-white w-[235px] h-[44px] rounded-[8px]"
               >
                 Login
               </button>
             </div>
           </form>
-          <h1 className="text-[#9E9E9E] text-[12px] font-body text-center mt-[48px] ">
+          <h1 className="text-gray-400 typographyTextXsMedium text-center mt-[60px] ">
             For patient in hospital
           </h1>
         </div>
@@ -85,9 +85,9 @@ const LoginPage = () => {
         className="object-cover w-full absolute z-0"
       />
       <div className="h-[70vh] flex items-center text-start ml-8 tracking-wider">
-        <h1 className="z-1 text-4xl relative font-body text-white font-[500]">
+        <h1 className="z-1 relative typographyHeadingMdSemibold text-base-white">
           Welcome! <br />
-          <span className="text-lg">to Synthia</span>
+          <span className="typographyTextLgMedium">to Synthia</span>
         </h1>
       </div>
       <LoginCard />
