@@ -75,15 +75,15 @@ const OtpVerificationPage = () => {
 
         <div className="mt-[80px] flex justify-center">
           <button
-            className="w-[315px] bg-primary_500 text-base_white h-[48px] rounded-[8px] text-[1rem] font-body font-[500]"
+            className="w-[315px] bg-primary-500 text-base-white h-[48px] rounded-[8px] typographyTextMdMedium"
             onClick={submitVerfication}
           >
             Get Verify
           </button>
         </div>
-        <h2 className="text-gray_400 text-center text-[12px] mt-[30px] font-[500]">
+        <h2 className="text-gray-400 text-center mt-[30px] typographyTextXsSemibold">
           Didn’t recieve the verification code?{" "}
-          <span className="text-primary_500" onClick={resendVerification}>
+          <span className="text-primary-600" onClick={resendVerification}>
             click to resend
           </span>
         </h2>
