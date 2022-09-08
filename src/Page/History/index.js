@@ -31,7 +31,7 @@ const HistoryPage = () => {
     );
   };
   return (
-    <div className="mx-[16px]">
+    <div className="px-[16px]">
       <Header textHeader="History appointment" />
       <Panel />
       {panel === "Complete" ? (
