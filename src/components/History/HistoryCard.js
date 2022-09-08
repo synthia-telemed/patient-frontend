@@ -5,7 +5,7 @@ import TimerIcon from "../../Assets/time.svg";
 
 const HistoryCard = ({ name, position, status, colorStatus, date, time }) => {
   return (
-    <div className="relative pb-[20px]">
+    <div className="relative pb-[20px] w-[90vw]">
       <div className="border-y-[1px] border-t-[0px] border-gray-200 w-screen absolute bottom-[0%] left-[-4%]"></div>
       <div className="flex mt-[32px] w-full relative ">
         <img
