@@ -17,8 +17,10 @@ const HistoryCard = ({ name, position, status, colorStatus, date, time }) => {
         />{" "}
         <div className="flex flex-col w-[80vw] ml-[20px] ">
           <div className="flex w-[80vw]">
-            <div className="flex flex-col w-[80vw] typographyTextMdMedium">
-              <h1 className="text-start w-[70vw] ">{name}</h1>
+            <div className="flex flex-col w-[80vw] typographyTextSmMedium">
+              <h1 className="text-start w-[70vw] typographyTextMdMedium ">
+                {name}
+              </h1>
               <h1 className="text-start text-gray-500 mt-[8px]">
                 Internist : {position}
               </h1>

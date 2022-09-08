@@ -8,7 +8,7 @@ const HistoryPage = () => {
   const ButtonPanel = ({ text }) => {
     return (
       <div
-        className={`w-[109px] h-[36px] text-center ${
+        className={`w-[109px] h-[36px] mx-[0.5rem] text-center ${
           panel === text
             ? "bg-primary-50 text-primary-500"
             : "bg-base-white text-gray-500"
@@ -23,7 +23,7 @@ const HistoryPage = () => {
   };
   const Panel = () => {
     return (
-      <div className="flex w-full justify-between ">
+      <div className="flex w-full justify-center ">
         <ButtonPanel text="Upcoming" />
         <ButtonPanel text="Complete" />
         <ButtonPanel text="Cancel" />
