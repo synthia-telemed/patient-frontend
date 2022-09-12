@@ -3,8 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import api from "../../api";
 import LoginBackground from "../../Assets/Login/background-login-page.png";
+import { connect } from "react-redux";
 
-const LoginPage = () => {
+const mapDispatch = (dispatch) => ({
+  setName: (value) => dispatch.user.setName(value),
+});
+
+const mapState = (state) => ({
+  name: state.user.name,
+});
+
+const LoginPage = (props) => {
   const [validMessage, setValidMessage] = useState("");
   const {
     register,
@@ -23,6 +32,7 @@ const LoginPage = () => {
     try {
       const body = JSON.stringify(value);
       const res = await api.post("/auth/signin", body);
+      props.setName(value);
       navigate(`/otp-verification`, {
         state: { mobile: res.data, citizenNumber: value?.credential },
       });
@@ -95,4 +105,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default connect(mapState, mapDispatch)(LoginPage);
