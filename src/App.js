@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import LoginPage from "./Page/Login";
 import OtpVerificationPage from "./Page/Login/otpVerificationPage";
 import VerifiedSuccesPage from "./Page/Login/VerifiedSuccesPage";
-import HistoryPage from './Page/History/index';
+import NotificationPage from "./Page/Notification";
+import HistoryPage from "./Page/History/index";
 import HomePage from "./Page/home";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/otp-verification" element={<OtpVerificationPage />} />
         <Route path="/verified-success" element={<VerifiedSuccesPage />} />
+        <Route path="/notification" element={<NotificationPage />} />
 
         <Route path="/history" element={<HistoryPage />} />
         <Route path="/home" element={<HomePage />} />
