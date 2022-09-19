@@ -5,6 +5,8 @@ import OtpVerificationPage from "./Page/Login/otpVerificationPage";
 import VerifiedSuccesPage from "./Page/Login/VerifiedSuccesPage";
 import NotificationPage from "./Page/Notification";
 import HistoryPage from "./Page/History/index";
+import UserSettingPage from "./Page/UserSetting/index";
+import PersonalInformationPage from "./Page/UserSetting/PersonalInformationPage";
 import HomePage from "./Page/home";
 
 function App() {
@@ -19,6 +21,11 @@ function App() {
         <Route path="/notification" element={<NotificationPage />} />
 
         <Route path="/history" element={<HistoryPage />} />
+        <Route path="/setting" element={<UserSettingPage />} />
+        <Route
+          path="/setting/personal-information"
+          element={<PersonalInformationPage />}
+        />
         <Route path="/home" element={<HomePage />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
