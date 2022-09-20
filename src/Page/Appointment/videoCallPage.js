@@ -38,7 +38,9 @@ const VideoCallPage = () => {
 			.getUserMedia({ audio: true, video: true })
 			.then((stream) => {
 				localVideo.current.srcObject = stream
-				socket.current = io("http://localhost:5050", { auth: { token } })
+				socket.current = io(process.env.REACT_APP_SOCKET_SERVER_ENDPOINT, {
+					auth: { token }
+				})
 				socket.current.emit("join-room", roomID)
 				socket.current.on("start-peering", onStartPeering)
 				socket.current.on("room-closed", () => {
