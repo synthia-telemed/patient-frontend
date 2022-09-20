@@ -18,13 +18,26 @@ const UserSettingPage = () => {
         </div>
       </div>
       <div className="mt-[24px]">
-        <SettingButton icon={PeopleIcon} title="Personal Information" />
+        <SettingButton
+          icon={PeopleIcon}
+          title="Personal Information"
+          path="/setting/personal-information"
+        />
         <SettingButton
           icon={CreditcardIcon}
           title="Add Credit card/Debit card"
+          path="/setting/credit-card"
         />
-        <SettingButton icon={AgreementIcon} title="Agreement" />
-        <SettingButton icon={PrivacyIcon} title="Privacy" />
+        <SettingButton
+          icon={AgreementIcon}
+          title="Agreement"
+          path="/setting/agreement"
+        />
+        <SettingButton
+          icon={PrivacyIcon}
+          title="Privacy"
+          path="/setting/privacy"
+        />
       </div>
       <button
         onClick={() => {}}

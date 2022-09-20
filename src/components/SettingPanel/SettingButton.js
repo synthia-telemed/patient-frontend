@@ -1,11 +1,11 @@
 import RightArrowIcon from "../../Assets/right-arrow.svg";
 import { useNavigate } from "react-router-dom";
-const SettingButton = ({ title, icon }) => {
+const SettingButton = ({ title, icon, path }) => {
   const navigate = useNavigate();
   return (
     <div
       className="border-[1px] border-solid border-gray-200 h-[72px] w-screen ml-[-16px] "
-      onClick={()=>navigate(`/setting/personal-information`)}
+      onClick={() => navigate(path)}
     >
       <div className="flex justify-between items-center h-full">
         <div className="flex ml-[16px]">

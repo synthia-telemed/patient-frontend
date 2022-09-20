@@ -1,22 +1,35 @@
 {
   "files": {
-    "main.css": "/static/css/main.3f8e9c18.css",
-    "main.js": "/static/js/main.c0026868.js",
+    "main.css": "/static/css/main.7c4f5b90.css",
+    "main.js": "/static/js/main.7e922b94.js",
     "static/js/787.2b0bbc41.chunk.js": "/static/js/787.2b0bbc41.chunk.js",
     "static/media/background-login-page.png": "/static/media/background-login-page.ffe72c8dbbf6b51a8e16.png",
     "static/media/Poppins-Medium.otf": "/static/media/Poppins-Medium.2175351766d1d5e18c15.otf",
     "static/media/default_profile.png": "/static/media/default_profile.398cdd1f7451975dcf20.png",
+    "static/media/profileuser.png": "/static/media/profileuser.1615273af9c693ac2f7d.png",
+    "static/media/jcb.svg": "/static/media/jcb.88d671f31f92728633e20f8c44b4f8d3.svg",
     "static/media/datepicker.svg": "/static/media/datepicker.6bd279cb98a33546f5700194189a231a.svg",
+    "static/media/privacy.svg": "/static/media/privacy.cb352226a6485889e4ef9db0de5e14cc.svg",
+    "static/media/visa.svg": "/static/media/visa.86f9223d9ee864f8222f48c675d17629.svg",
+    "static/media/wallet.svg": "/static/media/wallet.4e21008e4a4cd462f702e97bda8d6a82.svg",
+    "static/media/agreement.svg": "/static/media/agreement.26bf975c7d3a3a0330eff081dc2c6a9e.svg",
     "index.html": "/index.html",
+    "static/media/creditcard.svg": "/static/media/creditcard.35ec676a9708e5a10e92aeac1753cc06.svg",
+    "static/media/Plus.svg": "/static/media/Plus.1192f93d2ccc00c926f328fe839cc1c3.svg",
     "static/media/time.svg": "/static/media/time.c5f74ae738fcbc83b094edec0d02657b.svg",
     "static/media/verified_success.svg": "/static/media/verified_success.1fe4f22c3f07b9c5913f9ad4322bea32.svg",
+    "static/media/peopleIcon.svg": "/static/media/peopleIcon.e22ab62224de7c4a9b7da3ddbf248da0.svg",
+    "static/media/arrow-left.svg": "/static/media/arrow-left.5a6d06a1c7ca385640596e0069ed044c.svg",
+    "static/media/back-arrow.svg": "/static/media/back-arrow.5a6d06a1c7ca385640596e0069ed044c.svg",
+    "static/media/mastercard.svg": "/static/media/mastercard.afe8742a5ab175f4dee5e8867029fddb.svg",
+    "static/media/right-arrow.svg": "/static/media/right-arrow.0160489496fae79968069558d9652754.svg",
     "static/media/right_arrow_icon.svg": "/static/media/right_arrow_icon.0160489496fae79968069558d9652754.svg",
-    "main.3f8e9c18.css.map": "/static/css/main.3f8e9c18.css.map",
-    "main.c0026868.js.map": "/static/js/main.c0026868.js.map",
+    "main.7c4f5b90.css.map": "/static/css/main.7c4f5b90.css.map",
+    "main.7e922b94.js.map": "/static/js/main.7e922b94.js.map",
     "787.2b0bbc41.chunk.js.map": "/static/js/787.2b0bbc41.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3f8e9c18.css",
-    "static/js/main.c0026868.js"
+    "static/css/main.7c4f5b90.css",
+    "static/js/main.7e922b94.js"
   ]
 }
