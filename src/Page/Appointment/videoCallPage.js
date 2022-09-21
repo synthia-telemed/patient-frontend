@@ -34,9 +34,16 @@ const VideoCallPage = () => {
 		})
 		socket.current.on("room-closed", () => {
 			console.log("Closing the room")
-			localVideo.current = undefined
-			remoteVideo.current = undefined
+			if (remoteVideo.current.srcObject)
+				stopMediaStream(remoteVideo.current.srcObject)
+			if (localVideo.current.srcObject)
+				stopMediaStream(localVideo.current.srcObject)
 		})
+	}
+
+	const stopMediaStream = (stream) => {
+		stream.getAudioTracks().forEach((track) => track.stop())
+		stream.getVideoTracks().forEach((track) => track.stop())
 	}
 
 	// This function should be called in useEffect
