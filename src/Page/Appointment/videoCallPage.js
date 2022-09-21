@@ -1,10 +1,12 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import io from "socket.io-client"
 import Peer from "simple-peer"
 
 const VideoCallPage = () => {
 	const [roomID, setRoomID] = useState("")
 	const [token, setToken] = useState("")
+	const [isMicOn, setIsMicOn] = useState(false)
+	const [isCameraOn, setIsCameraOn] = useState(false)
 
 	const socket = useRef()
 	const localVideo = useRef()
@@ -30,23 +32,53 @@ const VideoCallPage = () => {
 		socket.current.on("signal", (data) => {
 			peer.signal(data)
 		})
+		socket.current.on("room-closed", () => {
+			console.log("Closing the room")
+			localVideo.current = undefined
+			remoteVideo.current = undefined
+		})
 	}
 
 	// This function should be called in useEffect
 	const onEnterRoom = () => {
-		navigator.mediaDevices
-			.getUserMedia({ audio: true, video: true })
-			.then((stream) => {
-				localVideo.current.srcObject = stream
-				socket.current = io(process.env.REACT_APP_SOCKET_SERVER_ENDPOINT, {
-					auth: { token }
-				})
-				socket.current.emit("join-room", roomID)
-				socket.current.on("start-peering", onStartPeering)
-				socket.current.on("room-closed", () => {
-					console.log("Closing the room")
-				})
+		socket.current = io(process.env.REACT_APP_SOCKET_SERVER_ENDPOINT, {
+			auth: { token: `Bearer ${token}` }
+		})
+		socket.current.emit("join-room", roomID)
+		socket.current.on("start-peering", onStartPeering)
+	}
+
+	useEffect(() => {
+		requestMediaDevice()
+			.then(() => {
+				console.log("success get media device")
 			})
+			.catch((err) => {
+				console.error(err)
+			})
+	}, [])
+
+	const requestMediaDevice = async () => {
+		const stream = await navigator.mediaDevices.getUserMedia({
+			audio: true,
+			video: true
+		})
+		localVideo.current.srcObject = stream
+		setIsCameraOn(true)
+		setIsMicOn(true)
+	}
+
+	const onToggleMic = async () => {
+		if (!localVideo.current) await requestMediaDevice()
+		console.log("audio", localVideo.current.srcObject.getAudioTracks())
+		localVideo.current.srcObject.getAudioTracks()[0].enabled = !isMicOn
+		setIsMicOn(!isMicOn)
+	}
+
+	const onToggleCamera = async () => {
+		if (!localVideo.current) await requestMediaDevice()
+		localVideo.current.srcObject.getVideoTracks()[0].enabled = !isCameraOn
+		setIsCameraOn(!isCameraOn)
 	}
 
 	return (
@@ -65,6 +97,10 @@ const VideoCallPage = () => {
 			<button onClick={onEnterRoom}>Ready Ka</button>
 			<video playsInline autoPlay ref={localVideo} muted></video>
 			<video playsInline autoPlay ref={remoteVideo}></video>
+			<button onClick={onToggleCamera}>
+				{isCameraOn ? "Close Camera" : "Open Camera"}
+			</button>
+			<button onClick={onToggleMic}>{isMicOn ? "Mute" : "Unmute"}</button>
 		</div>
 	)
 }
