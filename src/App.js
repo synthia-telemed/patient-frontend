@@ -12,6 +12,7 @@ import AgreementPage from "./Page/UserSetting/AgreementPage";
 import CreditcardPage from "./Page/UserSetting/CreditCardPage";
 import AddCardPage from "./Page/UserSetting/AddCardPage";
 import HomePage from "./Page/home";
+import VideoCallPage from "./Page/Appointment/videoCallPage";
 
 function App() {
   // const Login = lazy(() => import("./Page/Login"));
@@ -35,6 +36,8 @@ function App() {
         <Route path="/setting/credit-card" element={<CreditcardPage />} />
         <Route path="/setting/add-card" element={<AddCardPage />} />
         {/* Hometab */}
+        <Route path="/appointment/video-call" element={<VideoCallPage />} />
+
         <Route path="/history" element={<HistoryPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
