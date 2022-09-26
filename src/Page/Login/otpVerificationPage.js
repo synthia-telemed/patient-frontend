@@ -2,8 +2,17 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import OtpInput from "react-otp-input";
 import api from "../../api";
+import { connect } from "react-redux";
 
-const OtpVerificationPage = () => {
+const mapDispatch = (dispatch) => ({
+  setToken: (value) => dispatch.user.setToken({ tokenJWT: value }),
+});
+
+const mapState = (state) => ({
+  name: state.user.name,
+});
+
+const OtpVerificationPage = (props) => {
   const location = useLocation();
   const [otp, setOtp] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -34,6 +43,7 @@ const OtpVerificationPage = () => {
         console.log(body);
         const res = await api.post("/auth/verify", body);
         saveToken(res.data.token);
+        props.setToken(res.data.token);
         navigate(`/verified-success`);
         console.log(res);
       }
@@ -91,4 +101,4 @@ const OtpVerificationPage = () => {
     </div>
   );
 };
-export default OtpVerificationPage;
+export default connect(mapState, mapDispatch)(OtpVerificationPage);

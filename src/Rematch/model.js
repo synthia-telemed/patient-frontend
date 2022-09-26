@@ -1,3 +1,4 @@
+//EXAMPLE Rematch
 export const count = {
   state: 0, // initial state
   reducers: {
@@ -15,9 +16,13 @@ export const count = {
     },
   }),
 };
+
 export const user = {
-  state: {},
+  state: {
+    tokenJWT: "",
+  },
   reducers: {
     setName: (state, payload) => payload,
+    setToken: (state, payload) => payload,
   },
 };

@@ -3,7 +3,7 @@ import AgreementDetail from "../../components/SettingPanel/AgreementDetail";
 const AgreementPage = () => {
   return (
     <div>
-      <HeaderWithBack textHeader="Agreement" />
+      <HeaderWithBack textHeader="Agreement" path="/setting" />
       <AgreementDetail
         title="Pateint privacy Synthia Health"
         detail="&emsp;&emsp;Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, sit vestibulum, convallis vestibulum eget non commodo lectus fermentum. Quam tempus cursus viverra urna egestas ornare lobortis eu vitae. Donec vel, adipiscing sagittis nibh orci. Lacus quis turpis quis mi molestie morbi tellus. Orci quam morbi risus eget. Consectetur amet aenean scelerisque nibh risus. Ornare etiam vitae, non, molestie curabitur ut proin. 

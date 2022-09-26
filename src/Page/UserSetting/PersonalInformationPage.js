@@ -3,7 +3,7 @@ import PersonalInformationCard from "../../components/SettingPanel/PersonalInfor
 const PersonalInformationPage = () => {
   return (
     <div>
-      <HeaderWithBack textHeader="Personal Information" />
+      <HeaderWithBack textHeader="Personal Information" path="/setting" />
       <PersonalInformationCard title="Name" value="Kavisara Srisuwatcharee" />
       <PersonalInformationCard title="Birthdate" value="20/06/2000" />
       <PersonalInformationCard title="Patient Number" value="HN-103191" />

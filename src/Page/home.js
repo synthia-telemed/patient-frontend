@@ -12,6 +12,7 @@ const HomePage = (props) => {
         Hello this is home page
       </h1>
       <h1>{props.user.credential}</h1>
+      <h1>{props.user.tokenJWT}</h1>
     </div>
   );
 };
