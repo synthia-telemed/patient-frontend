@@ -1,4 +1,4 @@
-const Layout = ({ props }) => {
-  return <div className="">{props.children}</div>;
+const Layout = ({ children }) => {
+  return <div className="">{children}</div>;
 };
 export default Layout;

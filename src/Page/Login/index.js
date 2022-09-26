@@ -32,7 +32,6 @@ const LoginPage = (props) => {
     try {
       const body = JSON.stringify(value);
       const res = await api.post("/auth/signin", body);
-      props.setName(value);
       navigate(`/otp-verification`, {
         state: { mobile: res.data, citizenNumber: value?.credential },
       });
