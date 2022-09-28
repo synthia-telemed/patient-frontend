@@ -3,22 +3,27 @@ import RightArrowIcon from "../../Assets/right_arrow_icon.svg";
 import DatepickerIcon from "../../Assets/datepicker.svg";
 import TimerIcon from "../../Assets/time.svg";
 
-const HistoryCard = ({ name, position, date, time, onClick, picture }) => {
+const AppointmentDetailCard = ({
+  name,
+  position,
+  picture,
+  date,
+  time,
+}) => {
   return (
-    <div className="relative pb-[20px] w-[90vw]" onClick={onClick}>
-      <div className="border-y-[1px] border-t-[0px] border-gray-200 w-screen absolute bottom-[0%] left-[-4%]"></div>
-      <div className="flex mt-[32px] w-full relative ">
+    <div className="relative pb-[20px] w-[90vw] mx-[16px] shadow-[0px_1px_3px_rgba(16,24,40,0.1)] bg-base-white border-[1px] border-solid border-gray-200 rounded-[8px] mt-[16px]">
+      <div className="flex mt-[32px] w-[75px] h-full relative ">
         <img
-          className="min-w-[48px] min-h-[48px] max-h-[48px] object-contain rounded-[50%]"
+          className="min-w-[75px] min-h-[75px] max-h-[75px] object-contain mx-[16px] rounded-[50%]"
           src={picture}
-          width="48px"
-          height="48px"
+          width="75px"
+          height="75px"
           alt=""
         />{" "}
-        <div className="flex flex-col w-[80vw] ml-[20px] ">
-          <div className="flex w-[80vw]">
-            <div className="flex flex-col w-[80vw] typographyTextSmMedium">
-              <h1 className="text-start w-[70vw] typographyTextMdMedium ">
+        <div className="flex flex-col w-[60vw] ml-[20px] ">
+          <div className="flex w-[60vw]">
+            <div className="flex flex-col w-[60vw] typographyTextSmMedium">
+              <h1 className="text-start w-[60vw] typographyTextMdMedium ">
                 {name}
               </h1>
               <h1 className="text-start text-gray-500 mt-[8px]">
@@ -33,13 +38,10 @@ const HistoryCard = ({ name, position, date, time, onClick, picture }) => {
                 <h1 className="ml-[7px] ">{time}</h1>
               </div>
             </div>
-            <div className="flex justify-end items-start w-full mr-[16px] ">
-              <img src={RightArrowIcon} width="24px" height="24px" alt="" />
-            </div>
           </div>
         </div>
       </div>
     </div>
   );
 };
-export default HistoryCard;
+export default AppointmentDetailCard;
