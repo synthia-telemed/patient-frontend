@@ -21,6 +21,7 @@ const CreditCardPage = (props) => {
 
   const getListPaymentCreditCard = async () => {
     const res = await apiDefault.get("/payment/credit-card");
+    console.log(res);
     setPaymentList(res.data);
   };
 
@@ -30,32 +31,30 @@ const CreditCardPage = (props) => {
       {paymentList.map((data) =>
         data.brand === "Visa" ? (
           <CreditCardBox
+            isDefault={data.is_default}
             key={data.id}
             icon={VisaIcon}
             numberCard={`***${data.last_4_digits}`}
-            expireDate="16/24"
+            expireDate={data.expiry}
           />
         ) : data.brand === "MasterCard" ? (
           <CreditCardBox
+            isDefault={data.is_default}
             key={data.id}
             icon={MasterCardIcon}
             numberCard={`***${data.last_4_digits}`}
-            expireDate="16/24"
+            expireDate={data.expiry}
           />
         ) : (
           <CreditCardBox
+            isDefault={data.is_default}
             key={data.id}
             icon={JCBIcon}
             numberCard={`***${data.last_4_digits}`}
-            expireDate="16/24"
+            expireDate={data.expiry}
           />
         )
       )}
-      {/* <CreditCardBox
-        icon={MasterCardIcon}
-        numberCard="***8304"
-        expireDate="16/24"
-      /> */}
       <AddCreditCardButton />
     </div>
   );

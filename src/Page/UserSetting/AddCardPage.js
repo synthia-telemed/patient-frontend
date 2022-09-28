@@ -24,7 +24,6 @@ const AddCardPage = () => {
   } = usePaymentInputs();
 
   const navigate = useNavigate();
-  const [tokenOmise, setTokenOmise] = useState("");
 
   const handleLoadScript = () => {
     Omise = window.Omise;
@@ -51,13 +50,13 @@ const AddCardPage = () => {
   };
   const handleSubmit = async (data) => {
     createToken(data);
-    navigate("/setting/credit-card");
+    navigate(-1);
   };
 
   return (
     <div className="px-[16px]">
       <Script url="https://cdn.omise.co/omise.js" onLoad={handleLoadScript} />
-      <HeaderWithBack textHeader="Add Card" path="/setting/credit-card" />
+      <HeaderWithBack textHeader="Add Card" path={-1} />
       <div className="flex justify-between w-full mt-[24px]">
         <h1 className="typographyTextMdSemibold">Card detail</h1>
         <div className="flex w-[118px] justify-between">

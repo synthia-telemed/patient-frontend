@@ -12,6 +12,9 @@ import AgreementPage from "./Page/UserSetting/AgreementPage";
 import CreditcardPage from "./Page/UserSetting/CreditCardPage";
 import AddCardPage from "./Page/UserSetting/AddCardPage";
 import HomePage from "./Page/home";
+import AppointmentDetailPage from "./Page/Appointment/AppointmentDetailPage";
+import SummaryReciept from "./Page/Appointment/SummaryReciept";
+import PaymentSuccessFully from "./Page/Appointment/PaymentSuccessFully";
 import VideoCallPage from "./Page/Appointment/videoCallPage";
 
 function App() {
@@ -36,7 +39,16 @@ function App() {
         <Route path="/setting/credit-card" element={<CreditcardPage />} />
         <Route path="/setting/add-card" element={<AddCardPage />} />
         {/* Hometab */}
+        <Route path="/appointment/detail" element={<AppointmentDetailPage />} />
+        <Route
+          path="/appointment/summary-reciept"
+          element={<SummaryReciept />}
+        />
         <Route path="/appointment/video-call" element={<VideoCallPage />} />
+        <Route
+          path="/appointment/payment-succeed"
+          element={<PaymentSuccessFully />}
+        />
 
         <Route path="/history" element={<HistoryPage />} />
         <Route path="/home" element={<HomePage />} />
