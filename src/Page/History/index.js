@@ -4,6 +4,7 @@ import Header from "../../components/Header";
 import HistoryUpcomingTab from "./HistoryUpcomingTab";
 import HistoryCompleteTab from "./HistoryCompleteTab";
 import HistoryCancelTab from "./HistoryCancelTab";
+import Navbar from "../../components/Navbar";
 const HistoryPage = () => {
   const [panel, setPanel] = useState("Upcoming");
   const [listAppointment, setListAppointment] = useState({});
@@ -42,7 +43,8 @@ const HistoryPage = () => {
     );
   };
   return (
-    <div className="px-[16px]">
+    <div className="">
+      <div className="px-[16px]">
       <Header textHeader="History appointment" />
       <Panel />
       {panel === "Complete" ? (
@@ -54,6 +56,8 @@ const HistoryPage = () => {
       ) : (
         <>Error 404</>
       )}
+      </div>
+      <Navbar/>
     </div>
   );
 };
