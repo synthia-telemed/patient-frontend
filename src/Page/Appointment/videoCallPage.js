@@ -39,6 +39,11 @@ const VideoCallPage = () => {
       if (remoteVideo.current.srcObject) stopMediaStream(remoteVideo.current.srcObject);
       if (localVideo.current.srcObject) stopMediaStream(localVideo.current.srcObject);
     });
+    socket.current.on("user-left", () => {
+      console.log("User left");
+      if (remoteVideo.current.srcObject) stopMediaStream(remoteVideo.current.srcObject);
+      peer.destroy();
+    });
   };
 
   const stopMediaStream = stream => {
@@ -47,7 +52,7 @@ const VideoCallPage = () => {
   };
 
   // This function should be called in useEffect
-  const onEnterRoom = ({ roomID, jwtToken }) => {
+  const joinMeetingRoom = ({ roomID, jwtToken }) => {
     socket.current = io(process.env.REACT_APP_SOCKET_SERVER_ENDPOINT, {
       auth: { token: `Bearer ${jwtToken}` }
     });
@@ -59,8 +64,7 @@ const VideoCallPage = () => {
     requestMediaDevice()
       .then(() => {
         console.log("success get media device");
-        console.log(token);
-        onEnterRoom({
+        joinMeetingRoom({
           roomID: state.roomID,
           jwtToken: token
         });
