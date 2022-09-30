@@ -2,28 +2,28 @@ import { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import Peer from "simple-peer";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const VideoCallPage = () => {
-  const [roomID, setRoomID] = useState("");
-  const [token, setToken] = useState("");
   const [isMicOn, setIsMicOn] = useState(false);
   const [isCameraOn, setIsCameraOn] = useState(false);
   const { state } = useLocation();
+  const { tokenJWT: token } = useSelector(s => s.user);
 
   const socket = useRef();
   const localVideo = useRef();
   const remoteVideo = useRef();
 
-  const onStartPeering = (isInitiator) => {
+  const onStartPeering = isInitiator => {
     console.log("got start-peering", isInitiator);
     const peer = new Peer({
       stream: localVideo.current.srcObject,
-      initiator: isInitiator,
+      initiator: isInitiator
     });
-    peer.on("signal", (data) => {
+    peer.on("signal", data => {
       socket.current.emit("signal", data);
     });
-    peer.on("stream", (stream) => {
+    peer.on("stream", stream => {
       console.log("got stream");
       remoteVideo.current.srcObject = stream;
     });
@@ -31,27 +31,25 @@ const VideoCallPage = () => {
       console.log("Peer connected");
     });
 
-    socket.current.on("signal", (data) => {
+    socket.current.on("signal", data => {
       peer.signal(data);
     });
     socket.current.on("room-closed", () => {
       console.log("Closing the room");
-      if (remoteVideo.current.srcObject)
-        stopMediaStream(remoteVideo.current.srcObject);
-      if (localVideo.current.srcObject)
-        stopMediaStream(localVideo.current.srcObject);
+      if (remoteVideo.current.srcObject) stopMediaStream(remoteVideo.current.srcObject);
+      if (localVideo.current.srcObject) stopMediaStream(localVideo.current.srcObject);
     });
   };
 
-  const stopMediaStream = (stream) => {
-    stream.getAudioTracks().forEach((track) => track.stop());
-    stream.getVideoTracks().forEach((track) => track.stop());
+  const stopMediaStream = stream => {
+    stream.getAudioTracks().forEach(track => track.stop());
+    stream.getVideoTracks().forEach(track => track.stop());
   };
 
   // This function should be called in useEffect
   const onEnterRoom = ({ roomID, jwtToken }) => {
     socket.current = io(process.env.REACT_APP_SOCKET_SERVER_ENDPOINT, {
-      auth: { token: `Bearer ${jwtToken}` },
+      auth: { token: `Bearer ${jwtToken}` }
     });
     socket.current.emit("join-room", roomID);
     socket.current.on("start-peering", onStartPeering);
@@ -61,13 +59,13 @@ const VideoCallPage = () => {
     requestMediaDevice()
       .then(() => {
         console.log("success get media device");
+        console.log(token);
         onEnterRoom({
           roomID: state.roomID,
-          jwtToken:
-            "eyJhbGciOiJIUzI1NiJ9.o08uuVgZfcs5faXObysrGSwxKDOGWnyTrLlP9r74BR9GcEnw5ocSIb6uyk6F3zssoNUkaYu9pXpVMzr5mpB2gVAe1GwgdZiaAXf4DnHAMKQBrrRXqEFEdE4R0uBTb0pNLj399w1RngurNZ3SmN9oz6w_w4KjdZGthpyeWPv5jr0XTnTy-whYQpkyKurAu9OuKOocMyU.lqJ5ON4xj9bZSgJTADUM7qvz7YCW7TCSL1xHuhEJMp4",
+          jwtToken: token
         });
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
       });
   }, []);
@@ -75,7 +73,7 @@ const VideoCallPage = () => {
   const requestMediaDevice = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({
       audio: true,
-      video: true,
+      video: true
     });
     localVideo.current.srcObject = stream;
     setIsCameraOn(true);
