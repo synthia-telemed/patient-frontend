@@ -21,7 +21,6 @@ const CreditCardPage = (props) => {
 
   const getListPaymentCreditCard = async () => {
     const res = await apiDefault.get("/payment/credit-card");
-    console.log(res);
     setPaymentList(res.data);
   };
 

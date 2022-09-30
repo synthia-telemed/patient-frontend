@@ -7,7 +7,7 @@ const JoinMeetingButton = ({
 }) => {
   return (
     <div
-      className={`flex justify-center w-full h-[${height}] items-center mt-[${marginTop}]`}
+      className={`flex justify-center w-full h-[${height}] items-center mt-[${marginTop}] mb-[30px]`}
       onClick={onClick}
     >
       <div
