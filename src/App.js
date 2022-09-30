@@ -16,6 +16,7 @@ import AppointmentDetailPage from "./Page/Appointment/AppointmentDetailPage";
 import SummaryReciept from "./Page/Appointment/SummaryReciept";
 import PaymentSuccessFully from "./Page/Appointment/PaymentSuccessFully";
 import VideoCallPage from "./Page/Appointment/videoCallPage";
+import ReportPage from "./Page/Report";
 
 function App() {
   // const Login = lazy(() => import("./Page/Login"));
@@ -51,6 +52,7 @@ function App() {
         />
 
         <Route path="/history" element={<HistoryPage />} />
+        <Route path="/report" element={<ReportPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
