@@ -20,6 +20,7 @@ const VideoCallPage = () => {
       stream: localVideo.current.srcObject,
       initiator: isInitiator
     });
+    peer._debug = console.log;
     peer.on("signal", data => {
       socket.current.emit("signal", data);
     });
