@@ -22,6 +22,7 @@ const VideoCallPage = () => {
     });
     peer._debug = console.log;
     peer.on("signal", data => {
+      console.log("send signal to socket");
       socket.current.emit("signal", data);
     });
     peer.on("stream", stream => {
@@ -33,6 +34,7 @@ const VideoCallPage = () => {
     });
 
     socket.current.on("signal", data => {
+      console.log("got signal from socket");
       peer.signal(data);
     });
     socket.current.on("room-closed", () => {
@@ -44,6 +46,11 @@ const VideoCallPage = () => {
       console.log("User left");
       if (remoteVideo.current.srcObject) stopMediaStream(remoteVideo.current.srcObject);
       peer.destroy();
+      socket.current.disconnect();
+      joinMeetingRoom({
+        roomID: state.roomID,
+        jwtToken: token
+      });
     });
   };
 
@@ -55,7 +62,8 @@ const VideoCallPage = () => {
   // This function should be called in useEffect
   const joinMeetingRoom = ({ roomID, jwtToken }) => {
     socket.current = io(process.env.REACT_APP_SOCKET_SERVER_ENDPOINT, {
-      auth: { token: `Bearer ${jwtToken}` }
+      auth: { token: `Bearer ${jwtToken}` },
+      transports: ["websocket"]
     });
     socket.current.emit("join-room", roomID);
     socket.current.on("start-peering", onStartPeering);
