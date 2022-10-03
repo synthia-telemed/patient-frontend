@@ -1,28 +1,29 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import api from "../../api";
 import LoginBackground from "../../Assets/Login/background-login-page.png";
 import { connect } from "react-redux";
+import useAPI from "../../hooks/useAPI";
 
-const mapDispatch = (dispatch) => ({
-  setName: (value) => dispatch.user.setName(value),
+const mapDispatch = dispatch => ({
+  setName: value => dispatch.user.setName(value)
 });
 
-const mapState = (state) => ({
-  name: state.user.name,
+const mapState = state => ({
+  name: state.user.name
 });
 
-const LoginPage = (props) => {
+const LoginPage = props => {
   const [validMessage, setValidMessage] = useState("");
   const {
     register,
     formState: { errors },
-    handleSubmit,
+    handleSubmit
   } = useForm();
   const navigate = useNavigate();
+  const [api] = useAPI();
 
-  const onSumbitLogin = async (value) => {
+  const onSumbitLogin = async value => {
     if (value?.credential.length < 13) {
       setValidMessage("Invalid Credential");
       return;
@@ -33,7 +34,7 @@ const LoginPage = (props) => {
       const body = JSON.stringify(value);
       const res = await api.post("/auth/signin", body);
       navigate(`/otp-verification`, {
-        state: { mobile: res.data, citizenNumber: value?.credential },
+        state: { mobile: res.data, citizenNumber: value?.credential }
       });
     } catch (error) {
       console.log(error);
@@ -43,24 +44,20 @@ const LoginPage = (props) => {
   const LoginCard = () => {
     return (
       <div className="shadow-md width rounded-[20px] w-[90vw] m-5 h-[350px] absolute z-1 bottom-1 bg-base-white">
-        <h1 className="text-center typographyHeadingXsSemibold mt-[34px]">
-          Login
-        </h1>
+        <h1 className="text-center typographyHeadingXsSemibold mt-[34px]">Login</h1>
         <div className="w-ful mx-[15px] mt-[39px]">
           <form onSubmit={handleSubmit(onSumbitLogin)}>
             <h2 className=" font-body mb-[6px]">Citizen Number</h2>
             <input
               {...register("credential", {
-                required: "Invalid Credential",
+                required: "Invalid Credential"
               })}
               type="tel"
               maxLength={13}
               className="w-full h-[40px] rounded-[8px] border-[1px] border-[solid] border-[#D0D5DD] box-shadow-[0px 1px 2px 0px #1018280D]"
             />
             <h2 className="text-[#ff0000] font-body relative top-2">
-              {errors.credential?.message
-                ? errors.credential?.message
-                : validMessage}
+              {errors.credential?.message ? errors.credential?.message : validMessage}
             </h2>
             <div
               className={

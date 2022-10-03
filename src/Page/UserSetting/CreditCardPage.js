@@ -6,18 +6,19 @@ import CreditCardBox from "../../components/SettingPanel/CreditCardBox";
 import MasterCardIcon from "../../Assets/Payment/mastercard.svg";
 import JCBIcon from "../../Assets/Payment/jcb.svg";
 import VisaIcon from "../../Assets/Payment/visa.svg";
-import apiDefault from "../../apiDefault";
+import useAPI from "../../hooks/useAPI";
 
-const mapState = (state) => ({
-  user: state.user,
+const mapState = state => ({
+  user: state.user
 });
 
-const CreditCardPage = (props) => {
+const CreditCardPage = props => {
   useEffect(() => {
     getListPaymentCreditCard();
   }, []);
 
   const [paymentList, setPaymentList] = useState([]);
+  const [apiDefault] = useAPI();
 
   const getListPaymentCreditCard = async () => {
     const res = await apiDefault.get("/payment/credit-card");
@@ -27,7 +28,7 @@ const CreditCardPage = (props) => {
   return (
     <div>
       <HeaderWithBack textHeader="Credit card/Debit card" path="/setting" />
-      {paymentList.map((data) =>
+      {paymentList.map(data =>
         data.brand === "Visa" ? (
           <CreditCardBox
             isDefault={data.is_default}
