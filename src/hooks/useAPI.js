@@ -5,11 +5,9 @@ const useAPI = () => {
   const { tokenJWT } = useSelector(state => state.user);
   const instance = axios.create({
     baseURL: "https://api.synthia.tech/patient/api",
-    withCredentials: false,
-    headers: {
-      Authorization: "Bearer " + tokenJWT
-    }
+    withCredentials: false
   });
+  if (tokenJWT) instance.defaults.headers.Authorization = "Bearer " + tokenJWT;
   return [instance];
 };
 
