@@ -4,7 +4,6 @@ import { useState } from "react";
 import { PaymentInputsWrapper, usePaymentInputs } from "react-payment-inputs";
 import { Formik, Field as FormikField } from "formik";
 import { css } from "styled-components";
-import apiDefault from "../../apiDefault";
 import Script from "react-load-script";
 import images from "react-payment-inputs/images";
 import LogoCreditcard from "../../components/SettingPanel/LogoCreditcard";
@@ -12,6 +11,7 @@ import MasterCardIcon from "../../Assets/Payment/mastercard.svg";
 import JCBIcon from "../../Assets/Payment/jcb.svg";
 import VisaIcon from "../../Assets/Payment/visa.svg";
 import Switch from "react-switch";
+import useAPI from "../../hooks/useAPI";
 
 let Omise;
 const AddCardPage = () => {
@@ -21,12 +21,13 @@ const AddCardPage = () => {
     getCardImageProps,
     getCardNumberProps,
     getExpiryDateProps,
-    getCVCProps,
+    getCVCProps
   } = usePaymentInputs();
 
   const navigate = useNavigate();
   const [checked, setChecked] = useState(false);
-  const handleChange = (nextChecked) => {
+  const [apiDefault] = useAPI();
+  const handleChange = nextChecked => {
     setChecked(nextChecked);
   };
 
@@ -34,30 +35,26 @@ const AddCardPage = () => {
     Omise = window.Omise;
     Omise.setPublicKey("pkey_test_5stb95e6pqzxz4rrift");
   };
-  const createToken = (data) => {
+  const createToken = data => {
     Omise = window.Omise;
     let tokenParameters = {
       expiration_month: data.expiryDate.substr(0, 2),
       expiration_year: data.expiryDate.substr(4, 6),
       name: data.name,
       number: data.cardNumber.trim(),
-      security_code: data.cvc,
+      security_code: data.cvc
     };
-    Omise.createToken(
-      "card",
-      tokenParameters,
-      async function (statusCode, response) {
-        // response["id"] is token identifier
-        let body = {
-          card_token: response["id"],
-          is_default: checked,
-          name: data.name,
-        };
-        const res = await apiDefault.post("/payment/credit-card", body);
-      }
-    );
+    Omise.createToken("card", tokenParameters, async function (statusCode, response) {
+      // response["id"] is token identifier
+      let body = {
+        card_token: response["id"],
+        is_default: checked,
+        name: data.name
+      };
+      const res = await apiDefault.post("/payment/credit-card", body);
+    });
   };
-  const handleSubmit = async (data) => {
+  const handleSubmit = async data => {
     createToken(data);
     navigate(-1);
   };
@@ -80,9 +77,9 @@ const AddCardPage = () => {
             cardNumber: "",
             expiryDate: "",
             cvc: "",
-            name: "",
+            name: ""
           }}
-          onSubmit={(data) => handleSubmit(data)}
+          onSubmit={data => handleSubmit(data)}
           validate={() => {
             let errors = {};
             if (meta.erroredInputs.cardNumber) {
@@ -125,8 +122,8 @@ const AddCardPage = () => {
                     inputWrapper: {
                       base: css`
                         border-radius: 8px;
-                      `,
-                    },
+                      `
+                    }
                   }}
                 >
                   <svg {...getCardImageProps({ images })} />
@@ -137,7 +134,7 @@ const AddCardPage = () => {
                         name="cardnumber"
                         {...getCardNumberProps({
                           onBlur: field.onBlur,
-                          onChange: field.onChange,
+                          onChange: field.onChange
                         })}
                         maxLength={19}
                       />
@@ -155,13 +152,13 @@ const AddCardPage = () => {
                         inputWrapper: {
                           base: css`
                             border-radius: 8px;
-                          `,
+                          `
                         },
                         input: {
                           expiryDate: css`
                             width: 5rem;
-                          `,
-                        },
+                          `
+                        }
                       }}
                     >
                       <FormikField name="expiryDate">
@@ -171,7 +168,7 @@ const AddCardPage = () => {
                             name="expiredate"
                             {...getExpiryDateProps({
                               onBlur: field.onBlur,
-                              onChange: field.onChange,
+                              onChange: field.onChange
                             })}
                           />
                         )}
@@ -179,22 +176,20 @@ const AddCardPage = () => {
                     </PaymentInputsWrapper>
                   </div>
                   <div className="w-[30vw] ml-[16px] ">
-                    <h1 className="mb-[6px] typographyTextSmMedium text-gray-700">
-                      CVV
-                    </h1>
+                    <h1 className="mb-[6px] typographyTextSmMedium text-gray-700">CVV</h1>
                     <PaymentInputsWrapper
                       {...wrapperProps}
                       styles={{
                         inputWrapper: {
                           base: css`
                             border-radius: 8px;
-                          `,
+                          `
                         },
                         input: {
                           cvc: css`
                             width: 5rem;
-                          `,
-                        },
+                          `
+                        }
                       }}
                     >
                       <FormikField name="cvc">
@@ -204,7 +199,7 @@ const AddCardPage = () => {
                             name="cvc"
                             {...getCVCProps({
                               onBlur: field.onBlur,
-                              onChange: field.onChange,
+                              onChange: field.onChange
                             })}
                           />
                         )}

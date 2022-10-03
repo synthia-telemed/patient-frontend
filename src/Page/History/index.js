@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
-import apiDefault from "../../apiDefault";
 import Header from "../../components/Header";
 import HistoryUpcomingTab from "./HistoryUpcomingTab";
 import HistoryCompleteTab from "./HistoryCompleteTab";
 import HistoryCancelTab from "./HistoryCancelTab";
 import Navbar from "../../components/Navbar";
+import useAPI from "../../hooks/useAPI";
 const HistoryPage = () => {
   const [panel, setPanel] = useState("Upcoming");
   const [listAppointment, setListAppointment] = useState({});
+  const [apiDefault] = useAPI();
   useEffect(() => {
     getListAppointment();
   }, []);
@@ -16,7 +17,7 @@ const HistoryPage = () => {
     const res = await apiDefault.get("/appointment");
     setListAppointment(res.data);
   };
-  
+
   const ButtonPanel = ({ text }) => {
     return (
       <div
@@ -45,19 +46,19 @@ const HistoryPage = () => {
   return (
     <div className="">
       <div className="px-[16px]">
-      <Header textHeader="History appointment" />
-      <Panel />
-      {panel === "Complete" ? (
-        <HistoryCompleteTab data={listAppointment.completed} />
-      ) : panel === "Cancel" ? (
-        <HistoryCancelTab data={listAppointment.cancelled} />
-      ) : panel === "Upcoming" ? (
-        <HistoryUpcomingTab data={listAppointment.scheduled} />
-      ) : (
-        <>Error 404</>
-      )}
+        <Header textHeader="History appointment" />
+        <Panel />
+        {panel === "Complete" ? (
+          <HistoryCompleteTab data={listAppointment.completed} />
+        ) : panel === "Cancel" ? (
+          <HistoryCancelTab data={listAppointment.cancelled} />
+        ) : panel === "Upcoming" ? (
+          <HistoryUpcomingTab data={listAppointment.scheduled} />
+        ) : (
+          <>Error 404</>
+        )}
       </div>
-      <Navbar/>
+      <Navbar />
     </div>
   );
 };
