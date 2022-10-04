@@ -52,10 +52,10 @@ const AppointmentDetailPage = () => {
       {detailAppointment.status === "SCHEDULED" ? (
         <>
           {showButton ? (
-            <div className="mt-[24px] w-full flex justify-center">
+            <div className="mt-[24px] ">
               <PrimaryButton
                 text="Join Meeting"
-                width="165px"
+                width="235px"
                 height="48px"
                 onClick={() => {
                   navigate("/appointment/video-call", {
