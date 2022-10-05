@@ -143,7 +143,13 @@ const VideoCallPage = () => {
     socket.current.on("room-closed", duration => {
       console.log("Closing the room");
       setBlur(true);
-      setTimeout(() => navigate("/appointment/detail"), 3000);
+      setTimeout(
+        () =>
+          navigate("/appointment/detail", {
+            state: { appointmentID: state.appointmentID }
+          }),
+        3000
+      );
 
       if (remoteVideo.current.srcObject) stopMediaStream(remoteVideo.current.srcObject);
       if (localVideo.current.srcObject) stopMediaStream(localVideo.current.srcObject);
@@ -236,7 +242,11 @@ const VideoCallPage = () => {
         autoPlay
         ref={remoteVideo}
       ></video>
-      <div className="flex justify-between absolute w-[244px] top-[80%] left-[50%] transform translate-y-[-50%] translate-x-[-50%] ">
+      <div
+        className={`flex justify-between absolute w-[244px] top-[80%] left-[50%] transform translate-y-[-50%] translate-x-[-50%] ${
+          blur ? "z-[-10]" : ""
+        } `}
+      >
         <button
           onClick={onToggleCamera}
           className="bg-[#131517A1] rounded-[32px] w-[48px] h-[48px] background-blur-[3px] flex justify-center items-center"
@@ -253,7 +263,7 @@ const VideoCallPage = () => {
       {blur ? (
         <>
           <div className=" absolute blur-[40px] bg-base-white/30 text-primary-900 w-screen h-screen flex items-center justify-center"></div>
-          <div className="absolute h-screen w-screen flex justify-center items-center flex-col">
+          <div className="absolute h-screen w-screen flex justify-center items-center flex-col  text-base-white">
             <h1 className="z-15 relative typographyHeadingSmMedium">Call Ended</h1>
             <h1 className="z-15 relative typographyHeadingSmMedium">15:20</h1>
           </div>

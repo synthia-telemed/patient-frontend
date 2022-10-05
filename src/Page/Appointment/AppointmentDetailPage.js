@@ -59,7 +59,7 @@ const AppointmentDetailPage = () => {
                 height="48px"
                 onClick={() => {
                   navigate("/appointment/video-call", {
-                    state: { roomID: roomID }
+                    state: { roomID: roomID, appointmentID: state.appointmentID }
                   });
                 }}
               />
