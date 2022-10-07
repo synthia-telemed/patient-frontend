@@ -6,16 +6,20 @@ import reportWebVitals from "./reportWebVitals";
 import { init } from "@rematch/core";
 import { Provider } from "react-redux";
 import * as models from "./Rematch/model";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from '@date-io/date-fns';
 
 const store = init({
-  models,
+  models
 });
 
 const root = document.getElementById("root");
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <App />
+      </MuiPickersUtilsProvider>
     </Provider>
   </React.StrictMode>,
   root
