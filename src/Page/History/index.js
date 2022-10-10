@@ -8,14 +8,17 @@ import useAPI from "../../hooks/useAPI";
 const HistoryPage = () => {
   const [panel, setPanel] = useState("Upcoming");
   const [listAppointment, setListAppointment] = useState({});
+  const [loading, setLoading] = useState(false);
   const [apiDefault] = useAPI();
   useEffect(() => {
     getListAppointment();
   }, []);
 
   const getListAppointment = async () => {
+    setLoading(true);
     const res = await apiDefault.get("/appointment");
     setListAppointment(res.data);
+    setLoading(false);
   };
 
   const ButtonPanel = ({ text }) => {
@@ -49,11 +52,11 @@ const HistoryPage = () => {
         <Header textHeader="History appointment" />
         <Panel />
         {panel === "Complete" ? (
-          <HistoryCompleteTab data={listAppointment.completed} />
+          <HistoryCompleteTab data={listAppointment.completed} loading={loading} />
         ) : panel === "Cancel" ? (
-          <HistoryCancelTab data={listAppointment.cancelled} />
+          <HistoryCancelTab data={listAppointment.cancelled} loading={loading} />
         ) : panel === "Upcoming" ? (
-          <HistoryUpcomingTab data={listAppointment.scheduled} />
+          <HistoryUpcomingTab data={listAppointment.scheduled} loading={loading} />
         ) : (
           <>Error 404</>
         )}
