@@ -4,7 +4,6 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import AppointmentDetailCard from "../../components/Appointment/AppointmentDetailCard";
 import StatusAppointment from "../../components/Appointment/StatusAppointment";
-import apiDefault from "../../apiDefault";
 import HeaderWithBack from "../../components/HeaderWithBack";
 import PrimaryButton from "../../components/Appointment/PrimaryButton";
 import BadgeStatus from "../../components/Appointment/BadgeStatus";
@@ -12,19 +11,33 @@ import Prescription from "../../components/Appointment/Prescription";
 import AppointmentWaitingIcon from "../../Assets/Appointment/appointment_waiting.svg";
 import NextAppointment from "../../components/Appointment/NextAppointment";
 import MedicineAndRecieptTab from "../../components/Appointment/MedicineAndRecieptTab";
+import useAPI from "../../hooks/useAPI";
 const AppointmentDetailPage = () => {
   dayjs.extend(utc);
   const { state } = useLocation();
   const [detailAppointment, setDetailAppointment] = useState({});
+  const [showButton, setShowButton] = useState(false);
+  const [roomID, setRoomID] = useState("");
+  const [apiDefault] = useAPI();
   const navigate = useNavigate();
   useEffect(() => {
     getDetailAppointment();
+    showJoinButtonAppointment();
   }, []);
 
   const getDetailAppointment = async () => {
     const res = await apiDefault.get(`/appointment/${state.appointmentID}`);
     setDetailAppointment(res.data);
-    console.log(res.data);
+    console.log(res);
+  };
+  const showJoinButtonAppointment = async () => {
+    try {
+      const res = await apiDefault.get(`/appointment/${state.appointmentID}/roomID`);
+      setRoomID(res.data.room_id);
+      setShowButton(res.status === 200 ? true : false);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="mb-[24px]">
@@ -38,11 +51,32 @@ const AppointmentDetailPage = () => {
       />
       {detailAppointment.status === "SCHEDULED" ? (
         <>
-          <StatusAppointment
-            textStatus="Please wait until the doctor come in."
-            bgColor="bg-primary-50"
-            colorText="text-primary-500"
-          />
+          {showButton ? (
+            <div className="mt-[24px] ">
+              <PrimaryButton
+                text="Join Meeting"
+                width="235px"
+                height="48px"
+                onClick={() => {
+                  navigate("/appointment/video-call", {
+                    state: { roomID: roomID, appointmentID: state.appointmentID }
+                  });
+                }}
+              />
+            </div>
+          ) : (
+            // <PrimaryButton
+            //   text="Join Meeting"
+            //   height="40px"
+            //   width="165px"
+            //   onClick={() => {}}
+            // />
+            <StatusAppointment
+              textStatus="Please wait until the doctor come in."
+              bgColor="bg-primary-50"
+              colorText="text-primary-500"
+            />
+          )}
           <div className="mt-[16px] mx-[16px]">
             <h1 className="typographyTextLgSemibold">Details</h1>
             <h2 className="typographyTextSmRegular font-[400]">
@@ -74,18 +108,16 @@ const AppointmentDetailPage = () => {
             bgColor="bg-success-50"
             colorText="text-success-700"
           />
-          <NextAppointment
-            date={dayjs(detailAppointment?.next_appointment).format(
-              "DD MMMM YYYY"
-            )}
-            time={dayjs(detailAppointment?.next_appointment)
-              .utcOffset(7)
-              .format("HH:mm")}
-          />
-          <h1 className="typographyTextLgSemibold mx-[16px] mt-[16px]">
-            Prescriptions
-          </h1>
-          {detailAppointment?.prescriptions?.map((data) => (
+          <div className="mx-[16px]">
+            <NextAppointment
+              date={dayjs(detailAppointment?.next_appointment).format("DD MMMM YYYY")}
+              time={dayjs(detailAppointment?.next_appointment)
+                .utcOffset(7)
+                .format("HH:mm")}
+            />
+          </div>
+          <h1 className="typographyTextLgSemibold mx-[16px] mt-[16px]">Prescriptions</h1>
+          {detailAppointment?.prescriptions?.map(data => (
             <Prescription
               medicine={data?.name}
               description={data?.description}
@@ -101,7 +133,7 @@ const AppointmentDetailPage = () => {
               height="48px"
               onClick={() => {
                 navigate("/appointment/summary-reciept", {
-                  state: { appointmentID: state.appointmentID },
+                  state: { appointmentID: state.appointmentID }
                 });
               }}
             />
@@ -113,26 +145,16 @@ const AppointmentDetailPage = () => {
         <div className="mx-[16px] mt-[10px] ">
           <h1 className=" flex typographyTextXsMedium text-gray-600">
             Your appointment status :{" "}
-            <BadgeStatus
-              text="Complete"
-              style="bg-success-50 text-success-700"
-            />
+            <BadgeStatus text="Complete" style="bg-success-50 text-success-700" />
           </h1>
           <NextAppointment
-            date={dayjs(detailAppointment?.next_appointment).format(
-              "DD MMMM YYYY"
-            )}
-            time={dayjs(detailAppointment?.next_appointment)
-              .utcOffset(7)
-              .format("HH:mm")}
+            date={dayjs(detailAppointment?.next_appointment).format("DD MMMM YYYY")}
+            time={dayjs(detailAppointment?.next_appointment).utcOffset(7).format("HH:mm")}
           />
-          <h1 className="typographyTextLgSemibold mt-[16px]">
-            Medicine And Reciept
-          </h1>
+          <h1 className="typographyTextLgSemibold mt-[16px]">Medicine And Reciept</h1>
           <MedicineAndRecieptTab data={detailAppointment} />
         </div>
       ) : (
-        // <PrimaryButton text="Join Meeting" onClick={() => {}} />
         <></>
       )}
     </div>

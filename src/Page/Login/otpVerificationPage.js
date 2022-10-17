@@ -1,28 +1,29 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import OtpInput from "react-otp-input";
-import api from "../../api";
 import { connect } from "react-redux";
+import useAPI from "../../hooks/useAPI";
 
-const mapDispatch = (dispatch) => ({
-  setToken: (value) => dispatch.user.setToken({ tokenJWT: value }),
+const mapDispatch = dispatch => ({
+  setToken: value => dispatch.user.setToken({ tokenJWT: value })
 });
 
-const mapState = (state) => ({
-  name: state.user.name,
+const mapState = state => ({
+  name: state.user.name
 });
 
-const OtpVerificationPage = (props) => {
+const OtpVerificationPage = props => {
   const location = useLocation();
   const [otp, setOtp] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  const handleChange = (otp) => {
+  const [api] = useAPI();
+
+  const handleChange = otp => {
     setOtp(otp);
   };
-  const saveToken = (token) => {
+  const saveToken = token => {
     localStorage.setItem("jwt", token);
-    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   };
   const resendVerification = async () => {
     try {
@@ -55,9 +56,7 @@ const OtpVerificationPage = (props) => {
   return (
     <div className="w-screen h-screen">
       <div className="absolute left-[50%] top-[30vh] translate-x-[-50%] w-screen">
-        <h1 className="text-center font-body text-[24px]">
-          Enter Verification Code
-        </h1>
+        <h1 className="text-center font-body text-[24px]">Enter Verification Code</h1>
         <h2 className="text-center font-body text-[12px]">
           The verification code sent to {location.state.mobile.phone_number}
         </h2>
@@ -75,13 +74,11 @@ const OtpVerificationPage = (props) => {
               color: "#303ed9",
               fontSize: "2.5rem",
               fontFamily: "Poppins",
-              fontWeight: 600,
+              fontWeight: 600
             }}
           />
         </div>
-        <h1 className=" font-body text-error_600 mx-[2.5rem] ">
-          {errorMessage}
-        </h1>
+        <h1 className=" font-body text-error_600 mx-[2.5rem] ">{errorMessage}</h1>
 
         <div className="mt-[80px] flex justify-center">
           <button

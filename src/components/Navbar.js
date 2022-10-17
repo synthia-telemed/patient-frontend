@@ -2,14 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const pathname = window.location.pathname;
-  const ButtonNavbar = ({
-    text,
-    textStyle,
-    bgStyle,
-    icon,
-    path,
-    colorIcon,
-  }) => {
+  const ButtonNavbar = ({ text, textStyle, bgStyle, icon, path, colorIcon }) => {
     const navigate = useNavigate();
 
     const ProfileIcon = ({ color }) => {
@@ -102,9 +95,7 @@ const Navbar = () => {
           ) : (
             <></>
           )}
-          <h1 className={`typographyTextXsSemibold ${textStyle} mt-[8px]`}>
-            {text}
-          </h1>
+          <h1 className={`typographyTextXsSemibold ${textStyle} mt-[8px]`}>{text}</h1>
         </div>
       </div>
     );
@@ -113,24 +104,20 @@ const Navbar = () => {
     { label: "Home", link: "/home", page: "Home", icon: "home" },
     { label: "History", link: "/history", page: "History", icon: "history" },
     { label: "Report", link: "/report", page: "Report", icon: "report" },
-    { label: "About", link: "/setting", page: "About", icon: "about" },
+    { label: "About", link: "/setting", page: "About", icon: "about" }
   ];
   return (
-    <div className="w-screen h-[100px] absolute bottom-[0%] px-[24px] py-[18px] border-t-[1px] border-solid border-gray-100 rounded-bl-[24px] rounded-br-[24px] bg-base-white">
+    <div className="w-screen h-[100px] fixed bottom-[0%] px-[24px] py-[18px] border-t-[1px] border-solid border-gray-100 rounded-bl-[24px] rounded-br-[24px] bg-base-white z-[100] ">
       <div className="flex justify-between">
-        {componentNav.map((item) => {
+        {componentNav.map(item => {
           return (
             <ButtonNavbar
               text={item.label}
               key={item.page}
               icon={item.icon}
               path={item.link}
-              textStyle={
-                item.link === pathname ? "text-primary-500" : "text-gray-500"
-              }
-              bgStyle={
-                item.link === pathname ? "bg-primary-50" : "bg-base-white"
-              }
+              textStyle={item.link === pathname ? "text-primary-500" : "text-gray-500"}
+              bgStyle={item.link === pathname ? "bg-primary-50" : "bg-base-white"}
               colorIcon={item.link === pathname ? "#303ED9" : "#667085"}
             />
           );

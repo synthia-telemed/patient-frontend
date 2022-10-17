@@ -1,8 +1,8 @@
 import HistoryCardWithDayjs from "../../components/History/HistoryCardWithDayjs";
-const HistoryCompleteTab = ({ data }) => {
+const HistoryCompleteTab = ({ data,loading }) => {
   return (
     <div>
-      <HistoryCardWithDayjs data={data} />
+      <HistoryCardWithDayjs data={data} loading={loading} />
     </div>
   );
 };

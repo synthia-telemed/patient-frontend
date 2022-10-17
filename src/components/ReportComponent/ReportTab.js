@@ -1,14 +1,13 @@
 import { useState } from "react";
-import MedicineTab from "./MedicineTab";
-import RecieptTab from "./RecieptTab";
-const MedicineAndRecieptTab = ({data}) => {
-  console.log(data)
-  const [panel, setPanel] = useState("Medicine");
+import BloodPressureTab from "./BloodPressureTab";
+import GlucoseTab from "./GlucoseTab";
+const ReportTab = ({selectedDate}) => {
+  const [panel, setPanel] = useState("Blood pressure/Palse");
   const Panel = () => {
     return (
       <div className="flex w-full justify-center ">
-        <ButtonPanel text="Medicine" />
-        <ButtonPanel text="Reciept" />
+        <ButtonPanel text="Blood pressure/Palse" />
+        <ButtonPanel text="Glucose level" />
       </div>
     );
   };
@@ -29,12 +28,12 @@ const MedicineAndRecieptTab = ({data}) => {
     );
   };
   return (
-    <div>
+    <div className="mt-[12px]">
       <Panel />
-      {panel === "Medicine" ? (
-        <MedicineTab data={data} />
-      ) : panel === "Reciept" ? (
-        <RecieptTab data={data} />
+      {panel === "Blood pressure/Palse" ? (
+        <BloodPressureTab dateTime={selectedDate} />
+      ) : panel === "Glucose level" ? (
+        <GlucoseTab dateTime={selectedDate}/>
       ) : (
         <>Error 404</>
       )}
@@ -42,4 +41,4 @@ const MedicineAndRecieptTab = ({data}) => {
   );
 };
 
-export default MedicineAndRecieptTab;
+export default ReportTab;
