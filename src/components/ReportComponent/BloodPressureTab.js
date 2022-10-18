@@ -69,7 +69,7 @@ const BloodPressureTab = ({ dateTime }) => {
           <button
             type="submit"
             value="submit"
-            className="mt-[72px] bg-[#303ED9] typographyTextMdMedium text-base-white w-[235px] h-[44px] rounded-[8px]"
+            className="mt-[24px] bg-[#303ED9] typographyTextMdMedium text-base-white w-[235px] h-[44px] rounded-[8px]"
           >
             Submit
           </button>
