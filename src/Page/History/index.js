@@ -47,7 +47,7 @@ const HistoryPage = () => {
     );
   };
   return (
-    <div className="pb-[100px]">
+    <div className="pb-[150px]">
       <div className="px-[16px]">
         <Header textHeader="History appointment" />
         <Panel />
