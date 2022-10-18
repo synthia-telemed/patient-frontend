@@ -3,7 +3,7 @@ import RightArrowIcon from "../../Assets/right_arrow_icon.svg";
 import DatepickerIcon from "../../Assets/datepicker.svg";
 import TimerIcon from "../../Assets/time.svg";
 
-const HistoryCard = ({ name, position, date, time, onClick, picture }) => {
+const HistoryCard = ({ name, position, date, startTime, onClick, picture,endTime }) => {
   return (
     <div className="relative pb-[20px] w-[90vw]" onClick={onClick}>
       <div className="border-y-[1px] border-t-[0px] border-gray-200 w-screen absolute bottom-[0%] left-[-4%]"></div>
@@ -30,7 +30,7 @@ const HistoryCard = ({ name, position, date, time, onClick, picture }) => {
               </div>
               <div className="flex items-center">
                 <img src={TimerIcon} alt="" />
-                <h1 className="ml-[7px] ">{time}</h1>
+                <h1 className="ml-[7px] ">{startTime + "-" +endTime}</h1>
               </div>
             </div>
             <div className="flex justify-end items-start w-full mr-[16px] ">

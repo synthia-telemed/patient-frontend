@@ -4,6 +4,8 @@ import HistoryCard from "../../components/History/HistoryCard";
 import EmptyAppointment from "../../Assets/History/empty_appointment.svg";
 import { useNavigate } from "react-router-dom";
 const HistoryCardWithDayjs = ({ data, loading }) => {
+  console.log("Card")
+  console.log(data)
   dayjs.extend(utc);
   const navigate = useNavigate();
   return (
@@ -53,8 +55,9 @@ const HistoryCardWithDayjs = ({ data, loading }) => {
               name={data.doctor.full_name}
               position={data.doctor.position}
               colorStatus="bg-secondary-100 text-primary-500 "
-              date={dayjs(data.date_time).format("DD MMMM YYYY")}
-              time={dayjs(data.date_time).utcOffset(7).format("HH:mm")}
+              date={dayjs(data.start_date_time).format("DD MMMM YYYY")}
+              startTime={dayjs(data.start_date_time).utcOffset(7).format("HH:mm")}
+              endTime={dayjs(data.end_date_time).utcOffset(7).format("HH:mm")}
             />
           );
         })
