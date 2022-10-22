@@ -84,7 +84,7 @@ const OtpVerificationPage = props => {
             className="w-[315px] bg-primary-500 text-base-white h-[48px] rounded-[8px] typographyTextMdMedium"
             onClick={submitVerfication}
           >
-            Get Verify
+            Submit
           </button>
         </div>
         <h2 className="text-gray-400 text-center mt-[30px] typographyTextXsSemibold">
