@@ -19,7 +19,7 @@ export const count = {
 
 export const user = {
   state: {
-    tokenJWT: localStorage.getItem("jwt") || ""
+    tokenJWT: ""
   },
   reducers: {
     setName: (state, payload) => payload,
