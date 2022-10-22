@@ -62,10 +62,10 @@ const AddCardPage = () => {
   return (
     <div>
       <Script url="https://cdn.omise.co/omise.js" onLoad={handleLoadScript} />
-      <HeaderWithBack textHeader="Add Card" path={-1} />
+      <HeaderWithBack textHeader="Add credit card" path={-1} />
       <div className="px-[16px]">
         <div className="flex justify-between w-full mt-[24px]">
-          <h1 className="typographyTextMdSemibold">Card detail</h1>
+          <h1 className="typographyTextMdSemibold">Credit card detail</h1>
           <div className="flex w-[118px] justify-between">
             <LogoCreditcard icon={VisaIcon} />
             <LogoCreditcard icon={MasterCardIcon} />
@@ -101,7 +101,7 @@ const AddCardPage = () => {
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col">
                 <h1 className="typographyTextSmMedium text-gray-700 mt-[16px]">
-                  Name on Card
+                  Name on the card
                 </h1>
                 <FormikField name="name">
                   {({ field }) => (
@@ -114,7 +114,7 @@ const AddCardPage = () => {
                   )}
                 </FormikField>
                 <h1 className="mt-[16px] mb-[6px] typographyTextSmMedium text-gray-700">
-                  Card Number
+                  Card number
                 </h1>
                 <PaymentInputsWrapper
                   {...wrapperProps}
@@ -210,7 +210,7 @@ const AddCardPage = () => {
               </div>
               <div className="flex mt-[39px] items-center">
                 <h1 className="text-primary-500 typographyTextXsMedium mr-[16px]">
-                  Set as default bank account
+                  Set as default card
                 </h1>
                 <Switch
                   onChange={handleChange}
@@ -228,7 +228,7 @@ const AddCardPage = () => {
                     type="submit"
                     value="submit"
                   >
-                    Send
+                    Submit
                   </button>
                 </div>
               </div>

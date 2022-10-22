@@ -41,8 +41,8 @@ const HistoryPage = () => {
     return (
       <div className="flex w-full justify-center ">
         <ButtonPanel text="Upcoming" />
-        <ButtonPanel text="Complete" />
-        <ButtonPanel text="Cancel" />
+        <ButtonPanel text="Completed" />
+        <ButtonPanel text="Cancelled" />
       </div>
     );
   };
@@ -51,9 +51,9 @@ const HistoryPage = () => {
       <div className="px-[16px]">
         <Header textHeader="History appointment" />
         <Panel />
-        {panel === "Complete" ? (
+        {panel === "Completed" ? (
           <HistoryCompleteTab data={listAppointment.completed} loading={loading} />
-        ) : panel === "Cancel" ? (
+        ) : panel === "Cancelled" ? (
           <HistoryCancelTab data={listAppointment.cancelled} loading={loading} />
         ) : panel === "Upcoming" ? (
           <HistoryUpcomingTab data={listAppointment.scheduled} loading={loading} />

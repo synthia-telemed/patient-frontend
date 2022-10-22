@@ -36,7 +36,7 @@ const UserSettingPage = () => {
           />
           <SettingButton
             icon={CreditcardIcon}
-            title="Add Credit card/Debit card"
+            title="Credit cards"
             path="/setting/credit-card"
           />
           <SettingButton
