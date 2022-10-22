@@ -23,7 +23,11 @@ export const user = {
   },
   reducers: {
     setName: (state, payload) => payload,
-    setToken: (state, payload) => payload,
+    setToken: (state, payload) => {
+      state.tokenJWT = payload;
+
+      return state;
+    },
     removeToken: (state, payload) => {
       state.tokenJWT = "";
       return state;
