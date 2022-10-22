@@ -59,8 +59,8 @@ const SummaryReciept = () => {
 
   return (
     <div>
-      <HeaderWithBack textHeader="Summary Reciept" path={-1} />
-      <h1 className="typographyTextMdSemibold mx-[16px] mt-[16px]">Summary Expense</h1>
+      <HeaderWithBack textHeader="Your invoice" path={-1} />
+      <h1 className="typographyTextMdSemibold mx-[16px] mt-[16px]">Expense</h1>
       <RecieptDetailCard data={detailAppointment.invoice} />
       <h1 className="typographyTextMdSemibold mx-[16px] mt-[16px]">Total Charges</h1>
       <CardTotalCharges detailAppointment={detailAppointment} />
@@ -106,7 +106,7 @@ const SummaryReciept = () => {
       )}
       <AddCreditCardButton />
       <PrimaryButton
-        text="Pay now"
+        text="Pay"
         onClick={onSubmitPayNow}
         width="235px"
         height="48px"
