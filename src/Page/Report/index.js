@@ -19,6 +19,7 @@ import {
 const ReportPage = () => {
   const [showModal, setShowModal] = useState(false);
   const current = new Date();
+  const barColors = ["#1f77b4", "#ff7f0e", "#2ca02c"];
   const [selectedDate, handleDateChange] = useState(new Date(current));
   const { unit, data, x_label, ticks, isNumerical } = {
     unit: "mmHG",
@@ -26,28 +27,32 @@ const ReportPage = () => {
     data: [
       {
         label: "S",
-        values: [80, 120]
+        values: [80, 120],
+        fill: "#1f77b4"
       },
       {
         label: "M"
       },
       {
         label: "T",
-        values: [90, 130]
+        values: [90, 130],
+        fill: "#ff7f0e"
       },
       {
         label: "W"
       },
       {
         label: "T",
-        values: [92, 123]
+        values: [92, 123],
+        fill: "#2ca02c"
       },
       {
         label: "F"
       },
       {
         label: "S",
-        values: [92, 123]
+        values: [92, 123],
+        fill: "#1f77b4"
       }
     ]
   };
@@ -117,7 +122,7 @@ const ReportPage = () => {
               className="typographyTextXsMedium"
             />
             <Tooltip />
-            <Bar barSize={10} dataKey="values" fill="#8884d8" radius={30}>
+            <Bar barSize={10} dataKey="values" fill="fill" radius={30}>
               <LabelList
                 className="typographyTextXsMedium"
                 width={20}
@@ -143,7 +148,8 @@ const ReportPage = () => {
         <h1 className="typographyTextSmMedium text-gray-600">Total avg this day</h1>
         <div className="flex items-center mt-[5px]">
           <h1 className="typographyHeadingXsSemibold text-success-700 mr-[16px] mb-[19px]">
-            130<span className="typographyTextSmMedium text-gray-600 ml-[4px]">mg/dL</span>
+            130
+            <span className="typographyTextSmMedium text-gray-600 ml-[4px]">mg/dL</span>
           </h1>
           <BadgeStatus text="Normal" style="bg-success-50 text-success-700" />
         </div>
@@ -178,7 +184,6 @@ const ReportPage = () => {
                 formatter={v => `${v} ${unit2}`}
                 position="top"
               />
-
             </Bar>
           </BarChart>
         </ResponsiveContainer>

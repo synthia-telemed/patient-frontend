@@ -56,7 +56,7 @@ const AddCardPage = () => {
   };
   const handleSubmit = async data => {
     createToken(data);
-    navigate(-1);
+    navigate("/setting/credit-card");
   };
 
   return (

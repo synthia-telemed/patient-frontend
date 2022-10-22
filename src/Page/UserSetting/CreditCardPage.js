@@ -31,6 +31,7 @@ const CreditCardPage = props => {
       {paymentList.map(data =>
         data.brand === "Visa" ? (
           <CreditCardBox
+            id={data.id}
             isDefault={data.is_default}
             key={data.id}
             icon={VisaIcon}
@@ -39,6 +40,7 @@ const CreditCardPage = props => {
           />
         ) : data.brand === "MasterCard" ? (
           <CreditCardBox
+            id={data.id}
             isDefault={data.is_default}
             key={data.id}
             icon={MasterCardIcon}
@@ -47,6 +49,7 @@ const CreditCardPage = props => {
           />
         ) : (
           <CreditCardBox
+            id={data.id}
             isDefault={data.is_default}
             key={data.id}
             icon={JCBIcon}

@@ -27,7 +27,7 @@ const GlucoseTab = ({dateTime}) => {
     console.log(res);
   };
   return (
-    <div className="mt-[36px] bg-base-white">
+    <div className="mt-[36px] bg-base-white h-[550px]">
       <form onSubmit={handleSubmit(submitGlucose)}>
         <h1 className="typographyTextSmMedium text-grey-700 mb-[6px]">Glucose</h1>
         <input
@@ -107,7 +107,7 @@ const GlucoseTab = ({dateTime}) => {
           <button
             type="submit"
             value="submit"
-            className="mt-[72px] bg-[#303ED9] typographyTextMdMedium text-base-white w-[235px] h-[44px] rounded-[8px] mb-[32px]"
+            className="mt-[24px] bg-[#303ED9] typographyTextMdMedium text-base-white w-[235px] h-[44px] rounded-[8px] mb-[32px]"
           >
             Submit
           </button>
