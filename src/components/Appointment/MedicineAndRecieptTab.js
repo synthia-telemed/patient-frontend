@@ -1,14 +1,14 @@
 import { useState } from "react";
 import MedicineTab from "./MedicineTab";
 import RecieptTab from "./RecieptTab";
-const MedicineAndRecieptTab = ({data}) => {
-  console.log(data)
-  const [panel, setPanel] = useState("Medicine");
+const MedicineAndRecieptTab = ({ data }) => {
+  console.log(data);
+  const [panel, setPanel] = useState("Prescription");
   const Panel = () => {
     return (
       <div className="flex w-full justify-center ">
-        <ButtonPanel text="Medicine" />
-        <ButtonPanel text="Reciept" />
+        <ButtonPanel text="Prescription" />
+        <ButtonPanel text="Invoice" />
       </div>
     );
   };
@@ -31,9 +31,9 @@ const MedicineAndRecieptTab = ({data}) => {
   return (
     <div>
       <Panel />
-      {panel === "Medicine" ? (
+      {panel === "Prescription" ? (
         <MedicineTab data={data} />
-      ) : panel === "Reciept" ? (
+      ) : panel === "Invoice" ? (
         <RecieptTab data={data} />
       ) : (
         <>Error 404</>
