@@ -49,7 +49,7 @@ const HistoryPage = () => {
   return (
     <div className="pb-[150px]">
       <div className="px-[16px]">
-        <Header textHeader="History appointment" />
+        <Header textHeader="Appointment history" />
         <Panel />
         {panel === "Completed" ? (
           <HistoryCompleteTab data={listAppointment.completed} loading={loading} />

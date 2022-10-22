@@ -31,7 +31,7 @@ const UserSettingPage = () => {
         <div className="mt-[24px]">
           <SettingButton
             icon={PeopleIcon}
-            title="Personal Information"
+            title="Personal information"
             path="/setting/personal-information"
           />
           <SettingButton
