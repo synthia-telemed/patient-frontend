@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Preferences } from "@capacitor/preferences";
 import OtpInput from "react-otp-input";
 import { connect } from "react-redux";
 import useAPI from "../../hooks/useAPI";
@@ -22,8 +23,9 @@ const OtpVerificationPage = props => {
   const handleChange = otp => {
     setOtp(otp);
   };
-  const saveToken = token => {
-    localStorage.setItem("jwt", token);
+  const saveToken = async token => {
+    props.setToken(token);
+    await Preferences.set({ key: "token", value: token });
   };
   const resendVerification = async () => {
     try {
@@ -41,12 +43,9 @@ const OtpVerificationPage = props => {
         setErrorMessage("Invalid PIN. Please try again");
       } else {
         const body = { otp: otp };
-        console.log(body);
         const res = await api.post("/auth/verify", body);
-        saveToken(res.data.token);
-        props.setToken(res.data.token);
+        await saveToken(res.data.token);
         navigate(`/verified-success`);
-        console.log(res);
       }
     } catch (error) {
       console.log(error);

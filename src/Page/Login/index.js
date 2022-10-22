@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { Preferences } from "@capacitor/preferences";
 import LoginBackground from "../../Assets/Login/background-login-page.png";
 import { connect } from "react-redux";
 import useAPI from "../../hooks/useAPI";
@@ -22,6 +24,17 @@ const LoginPage = props => {
   } = useForm();
   const navigate = useNavigate();
   const [api] = useAPI();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    Preferences.get({ key: "token" }).then(token => {
+      if (token.value) {
+        dispatch.user.setToken(token.value);
+        return navigate(`/home`);
+      }
+    });
+  });
 
   const onSumbitLogin = async value => {
     if (value?.credential.length < 13) {
