@@ -28,12 +28,14 @@ const LoginPage = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    Preferences.get({ key: "token" }).then(token => {
-      if (token.value) {
-        dispatch.user.setToken(token.value);
-        return navigate(`/home`);
-      }
-    });
+    Preferences.get({ key: "token" })
+      .then(token => {
+        if (token.value) {
+          dispatch.user.setToken(token.value);
+          return navigate(`/home`);
+        }
+      })
+      .catch(err => console.err(err));
   });
 
   const onSumbitLogin = async value => {

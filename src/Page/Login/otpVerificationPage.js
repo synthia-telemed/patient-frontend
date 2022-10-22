@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import useAPI from "../../hooks/useAPI";
 
 const mapDispatch = dispatch => ({
-  setToken: value => dispatch.user.setToken({ tokenJWT: value })
+  setToken: value => dispatch.user.setToken(value)
 });
 
 const mapState = state => ({

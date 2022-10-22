@@ -1,14 +1,13 @@
 import { connect } from "react-redux";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import DefaultProfile from '../Assets/default_profile.png';
+import DefaultProfile from "../Assets/default_profile.png";
 import AppointmentDetailCard from "../components/Appointment/AppointmentDetailCard";
 import Navbar from "../components/Navbar";
 
-const mapState = (state) => ({
-  user: state.user,
+const mapState = state => ({
+  user: state.user
 });
-
 
 const NotificationIcon = () => {
   return (
@@ -41,16 +40,14 @@ const NotificationIcon = () => {
   );
 };
 
-const HomePage = (props) => {
-  console.log(props.user)
+const HomePage = props => {
+  console.log(props.user);
   return (
     <div className="">
       <div>
         <div className=" flex justify-between mt-[56px] px-[17px]  w-full">
           <div className="w-[173px]">
-            <h1 className="typographyTextSmMedium text-primary-500">
-              Welcome Back
-            </h1>
+            <h1 className="typographyTextSmMedium text-primary-500">Welcome Back</h1>
             <h1 className="typographyHeadingXsSemibold">Name User &#9996;</h1>
           </div>
           <div className="w-[45px] h-[45px] p-[5px] rounded-[15px] bg-primary-50 flex justify-center items-center ">
@@ -58,9 +55,7 @@ const HomePage = (props) => {
           </div>
         </div>
       </div>
-      <h1 className="px-[17px] typographyTextMdSemibold mt-[17px]">
-        Your Appointment
-      </h1>
+      <h1 className="px-[17px] typographyTextMdSemibold mt-[17px]">Your Appointment</h1>
       <AppointmentDetailCard
         picture={DefaultProfile}
         name="Dr. Kandfr adakdkamd"
