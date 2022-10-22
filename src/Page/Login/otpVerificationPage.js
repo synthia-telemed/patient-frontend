@@ -64,6 +64,7 @@ const OtpVerificationPage = props => {
             value={otp}
             onChange={handleChange}
             numInputs={6}
+            isInputNum={true}
             inputStyle={{
               width: "50.5px",
               height: "3rem",
