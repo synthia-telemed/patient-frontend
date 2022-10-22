@@ -31,12 +31,12 @@ const UserSettingPage = () => {
         <div className="mt-[24px]">
           <SettingButton
             icon={PeopleIcon}
-            title="Personal Information"
+            title="Personal information"
             path="/setting/personal-information"
           />
           <SettingButton
             icon={CreditcardIcon}
-            title="Add Credit card/Debit card"
+            title="Credit cards"
             path="/setting/credit-card"
           />
           <SettingButton

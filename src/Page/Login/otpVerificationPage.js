@@ -58,7 +58,7 @@ const OtpVerificationPage = props => {
       <div className="absolute left-[50%] top-[30vh] translate-x-[-50%] w-screen">
         <h1 className="text-center font-body text-[24px]">Enter Verification Code</h1>
         <h2 className="text-center font-body text-[12px]">
-          The verification code sent to {location.state.mobile.phone_number}
+          The verification code is sent to {location.state.mobile.phone_number}
         </h2>
         <div className="flex justify-center w-screen mt-[80px] ">
           <OtpInput
@@ -89,9 +89,9 @@ const OtpVerificationPage = props => {
           </button>
         </div>
         <h2 className="text-gray-400 text-center mt-[30px] typographyTextXsSemibold">
-          Didn’t recieve the verification code?{" "}
+          Didn’t recieve?{" "}
           <span className="text-primary-600" onClick={resendVerification}>
-            click to resend
+            Resend
           </span>
         </h2>
       </div>

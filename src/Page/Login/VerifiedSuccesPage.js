@@ -6,14 +6,12 @@ const VerifiedSuccesPage = () => {
   useEffect(() => {
     setTimeout(() => {
       navigate("/home");
-    }, 3000);
+    }, 2000);
   }, []);
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <VerifiedIcon width="56px" height="56px" />
-      <h1 className="mt-[22px] typographyHeadingSmMedium">
-        Verified successfully
-      </h1>
+      <h1 className="mt-[22px] typographyHeadingSmMedium">Welcome to Synthia</h1>
     </div>
   );
 };
