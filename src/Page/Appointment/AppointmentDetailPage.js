@@ -59,7 +59,7 @@ const AppointmentDetailPage = () => {
         name={detailAppointment?.doctor?.full_name}
         position={detailAppointment?.doctor?.position}
         date={dayjs(detailAppointment?.start_date_time).format("DD MMMM YYYY")}
-        time={dayjs(detailAppointment?.start_date_time).utcOffset(7).format("HH:mm")}
+        time={dayjs(detailAppointment?.start_date_time).utcOffset(7).format("HH:mm")+"-"+dayjs(detailAppointment?.end_date_time).utcOffset(7).format("HH:mm")}
       />
       {detailAppointment.status === "SCHEDULED" ? (
         <>
