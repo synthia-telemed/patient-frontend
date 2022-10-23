@@ -26,6 +26,7 @@ const AddCardPage = () => {
 
   const navigate = useNavigate();
   const [checked, setChecked] = useState(false);
+  const [error, setError] = useState(false);
   const [apiDefault] = useAPI();
   const handleChange = nextChecked => {
     setChecked(nextChecked);
@@ -51,12 +52,17 @@ const AddCardPage = () => {
         is_default: checked,
         name: data.name
       };
-      const res = await apiDefault.post("/payment/credit-card", body);
+      try {
+        const res = await apiDefault.post("/payment/credit-card", body);
+        navigate("/setting/credit-card");
+      } catch (e) {
+        console.log(e);
+        setError(true);
+      }
     });
   };
   const handleSubmit = async data => {
     createToken(data);
-    navigate("/setting/credit-card");
   };
 
   return (
@@ -221,10 +227,15 @@ const AddCardPage = () => {
                   offColor="#EAECF0"
                 />
               </div>
+              {error ? (
+                <h1 className=" text-error-500 typographyTextXsMedium mt-[16px]">Something Wrong Please Try Again</h1>
+              ) : (
+                <></>
+              )}
               <div className="absolute bottom-[20%] left-[25%]">
                 <div className="flex justify-center ">
                   <button
-                    className="bg-primary-500 text-base-white typographyTextMdMedium rounded-[8px] w-[238px] h-[48px]"
+                    className="bg-primary-500 text-base-white typographyTextMdMedium rounded-[8px] w-[228px] h-[48px]"
                     type="submit"
                     value="submit"
                   >
