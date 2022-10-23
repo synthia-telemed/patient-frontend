@@ -62,7 +62,7 @@ const LoginPage = props => {
         <h1 className="text-center typographyHeadingXsSemibold mt-[34px]">Login</h1>
         <div className="w-ful mx-[15px] mt-[39px]">
           <form onSubmit={handleSubmit(onSumbitLogin)}>
-            <h2 className=" font-body mb-[6px]">National ID / Passport ID </h2>
+            <h2 className=" font-body mb-[6px]">National ID Number</h2>
             <input
               {...register("credential", {
                 required: "Invalid Credential"
