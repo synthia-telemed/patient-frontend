@@ -90,7 +90,7 @@ const HomePage = props => {
       />
       <Navbar />
       <div className="mt-[30px] px-[16px]">
-        <h1 className="typographyTextMdSemibold">Today`s status</h1>
+        <h1 className="typographyTextMdSemibold">Today's status</h1>
         <div className="flex flex-col justify-center items-center h-[300px] ">
           <img src={EmptyStatusIcon} alt="" width="200px" height="148px" />
           <h1 className="typographyTextXsMedium mt-[8px] w-[200px] text-center">
