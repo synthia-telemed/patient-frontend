@@ -1,639 +1,459 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import url("https://fonts.googleapis.com/css?family=Poppins");
 @font-face {
   font-family: "Poppins";
-  src: url("../src/Fonts/Poppins-Medium.otf");
   font-style: normal;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
-.typographyHeading2xlRegular 
- {
-  
+.typographyHeading2xlRegular {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
   font-size: 72px;
   line-height: 90px;
-  letter-spacing:  
-  -0.02em;
+  letter-spacing: -0.02em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeading2xlMedium 
- {
-  
+.typographyHeading2xlMedium {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
   font-size: 72px;
   line-height: 90px;
-  letter-spacing:  
-  -0.02em;
+  letter-spacing: -0.02em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingMdSemibold 
- {
-  
+.typographyHeadingMdSemibold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
   font-size: 32px;
   line-height: 42px;
-  letter-spacing:  
-  -0.02em;
+  letter-spacing: -0.02em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingSmMedium 
- {
-  
+.typographyHeadingSmMedium {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
   line-height: 32px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingXsSemibold 
- {
-  
+.typographyHeadingXsSemibold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
   line-height: 30px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextLgSemibold 
- {
-  
+.typographyTextLgSemibold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
   line-height: 28px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextMdRegular 
- {
-  
+.typographyTextMdRegular {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextMdMedium 
- {
-  
+.typographyTextMdMedium {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextMdSemibold 
- {
-  
+.typographyTextMdSemibold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextSmRegular 
- {
-  
+.typographyTextSmRegular {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextSmMedium 
- {
+.typographyTextSmMedium {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextXsRegular 
- {
-  
+.typographyTextXsRegular {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 18px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextXsMedium 
- {
-  
+.typographyTextXsMedium {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 18px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextSmSemibold 
- {
-  
+.typographyTextSmSemibold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
   line-height: 20px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeading2xlSemibold 
- {
-  
+.typographyHeading2xlSemibold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
   font-size: 72px;
   line-height: 90px;
-  letter-spacing:  
-  -0.02em;
+  letter-spacing: -0.02em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeading2xlBold 
- {
-  
+.typographyHeading2xlBold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 700;
   font-size: 72px;
   line-height: 90px;
-  letter-spacing:  
-  -0.02em;
+  letter-spacing: -0.02em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingXlRegular 
- {
-  
+.typographyHeadingXlRegular {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
   font-size: 60px;
   line-height: 72px;
-  letter-spacing:  
-  -0.02em;
+  letter-spacing: -0.02em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingXlMedium 
- {
-  
+.typographyHeadingXlMedium {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
   font-size: 60px;
   line-height: 72px;
-  letter-spacing:  
-  -0.02em;
+  letter-spacing: -0.02em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingXlSemibold 
- {
-  
+.typographyHeadingXlSemibold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
   font-size: 60px;
   line-height: 72px;
-  letter-spacing:  
-  -0.02em;
+  letter-spacing: -0.02em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingXlBold 
- {
-  
+.typographyHeadingXlBold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 700;
   font-size: 60px;
   line-height: 72px;
-  letter-spacing:  
-  -0.02em;
+  letter-spacing: -0.02em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingLgRegular 
- {
-  
+.typographyHeadingLgRegular {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
   font-size: 48px;
   line-height: 60px;
-  letter-spacing:  
-  -0.02em;
+  letter-spacing: -0.02em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingLgMedium 
- {
-  
+.typographyHeadingLgMedium {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
   font-size: 48px;
   line-height: 60px;
-  letter-spacing:  
-  -0.02em;
+  letter-spacing: -0.02em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingLgSemibold 
- {
-  
+.typographyHeadingLgSemibold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
   font-size: 48px;
   line-height: 60px;
-  letter-spacing:  
-  -0.02em;
+  letter-spacing: -0.02em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingLgBold 
- {
-  
+.typographyHeadingLgBold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 700;
   font-size: 48px;
   line-height: 60px;
-  letter-spacing:  
-  -0.02em;
+  letter-spacing: -0.02em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingMdRegular 
- {
-  
+.typographyHeadingMdRegular {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
   font-size: 32px;
   line-height: 42px;
-  letter-spacing:  
-  -0.02em;
+  letter-spacing: -0.02em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingMdMedium 
- {
-  
+.typographyHeadingMdMedium {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
   font-size: 32px;
   line-height: 42px;
-  letter-spacing:  
-  -0.02em;
+  letter-spacing: -0.02em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingMdBold 
- {
-  
+.typographyHeadingMdBold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 700;
   font-size: 32px;
   line-height: 42px;
-  letter-spacing:  
-  -0.02em;
+  letter-spacing: -0.02em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingSmRegular 
- {
-  
+.typographyHeadingSmRegular {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
   line-height: 32px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingSmSemibold 
- {
-  
+.typographyHeadingSmSemibold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
   line-height: 32px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingSmBold 
- {
-  
+.typographyHeadingSmBold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
   line-height: 32px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingXsRegular 
- {
-  
+.typographyHeadingXsRegular {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
   line-height: 30px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingXsMedium 
- {
-  
+.typographyHeadingXsMedium {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
   line-height: 30px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyHeadingXsBold 
- {
-  
+.typographyHeadingXsBold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
   line-height: 30px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextXlRegular 
- {
-  
+.typographyTextXlRegular {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
   line-height: 30px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextXlMedium 
- {
-  
+.typographyTextXlMedium {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
   line-height: 30px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextXlSemibold 
- {
-  
+.typographyTextXlSemibold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
   line-height: 30px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextXlBold 
- {
-  
+.typographyTextXlBold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
   line-height: 30px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextLgRegular 
- {
-  
+.typographyTextLgRegular {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 28px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextLgMedium 
- {
-  
+.typographyTextLgMedium {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
   line-height: 28px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextLgBold 
- {
-  
+.typographyTextLgBold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
   line-height: 28px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextMdBold 
- {
-  
+.typographyTextMdBold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 24px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextSmBold 
- {
-  
+.typographyTextSmBold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
   line-height: 20px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextXsSemibold 
- {
-  
+.typographyTextXsSemibold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
   font-size: 12px;
   line-height: 18px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
+}
 
-.typographyTextXsBold 
- {
-  
+.typographyTextXsBold {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 700;
   font-size: 12px;
   line-height: 18px;
-  letter-spacing:  
-  0em;
+  letter-spacing: 0em;
   text-indent: 0px;
-  
-}    
-
-
+}

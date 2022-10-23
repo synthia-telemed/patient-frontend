@@ -9993,6 +9993,11 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
+use-omise@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/use-omise/-/use-omise-1.2.1.tgz#dd3c3f5d323ab5f797f91e02fbbfb6ef47b4039d"
+  integrity sha512-/HUSJSPFJW8I6v01ip6cmI4/Y4qcY0WM7wwAOLVZd/LyJaA/iB+r9gTdB/3PKhqNU8RhVB6C0E+Sf7mSw6BQSQ==
+
 use-sync-external-store@^1.0.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz"

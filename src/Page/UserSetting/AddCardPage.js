@@ -12,9 +12,13 @@ import JCBIcon from "../../Assets/Payment/jcb.svg";
 import VisaIcon from "../../Assets/Payment/visa.svg";
 import Switch from "react-switch";
 import useAPI from "../../hooks/useAPI";
+import { useOmise } from "use-omise";
 
-let Omise;
+// let Omise;
 const AddCardPage = () => {
+  const { createTokenPromise } = useOmise({
+    publicKey: "pkey_test_5stb95e6pqzxz4rrift"
+  });
   const {
     meta,
     wrapperProps,
@@ -32,12 +36,13 @@ const AddCardPage = () => {
     setChecked(nextChecked);
   };
 
-  const handleLoadScript = () => {
-    Omise = window.Omise;
-    Omise.setPublicKey("pkey_test_5stb95e6pqzxz4rrift");
-  };
-  const createToken = data => {
-    Omise = window.Omise;
+  // const handleLoadScript = () => {
+  //   Omise = window.Omise;
+  //   Omise.setPublicKey("pkey_test_5stb95e6pqzxz4rrift");
+  // };
+  const createToken = async data => {
+    // Omise = window.Omise;
+    console.log("here")
     let tokenParameters = {
       expiration_month: data.expiryDate.substr(0, 2),
       expiration_year: data.expiryDate.substr(4, 6),
@@ -45,29 +50,46 @@ const AddCardPage = () => {
       number: data.cardNumber.trim(),
       security_code: data.cvc
     };
-    Omise.createToken("card", tokenParameters, async function (statusCode, response) {
-      // response["id"] is token identifier
-      let body = {
-        card_token: response["id"],
-        is_default: checked,
-        name: data.name
-      };
-      try {
-        const res = await apiDefault.post("/payment/credit-card", body);
-        navigate("/setting/credit-card");
-      } catch (e) {
-        console.log(e);
-        setError(true);
-      }
-    });
+    console.log(tokenParameters)
+    const token = await createTokenPromise("card", tokenParameters);
+    console.log(token)
+    const body = {
+      card_token: token,
+      is_default: checked,
+      name: data.name
+    };
+    try {
+      const res = await apiDefault.post("/payment/credit-card", body);
+      console.log(res)
+      navigate("/setting/credit-card");
+    } catch (e) {
+      console.log(e);
+      setError(true);
+    }
+    // Omise.createToken("card", tokenParameters, async function (statusCode, response) {
+    //   // response["id"] is token identifier
+    //   let body = {
+    //     card_token: response["id"],
+    //     is_default: checked,
+    //     name: data.name
+    //   };
+    //   try {
+    //     const res = await apiDefault.post("/payment/credit-card", body);
+    //     navigate("/setting/credit-card");
+    //   } catch (e) {
+    //     console.log(e);
+    //     setError(true);
+    //   }
+    // });
   };
   const handleSubmit = async data => {
+    console.log(data);
     createToken(data);
   };
 
   return (
     <div>
-      <Script url="https://cdn.omise.co/omise.js" onLoad={handleLoadScript} />
+      {/* <Script url="https://cdn.omise.co/omise.js" onLoad={handleLoadScript} /> */}
       <HeaderWithBack textHeader="Add credit card" path={-1} />
       <div className="px-[16px]">
         <div className="flex justify-between w-full mt-[24px]">
@@ -228,7 +250,9 @@ const AddCardPage = () => {
                 />
               </div>
               {error ? (
-                <h1 className=" text-error-500 typographyTextXsMedium mt-[16px]">Something Wrong Please Try Again</h1>
+                <h1 className=" text-error-500 typographyTextXsMedium mt-[16px]">
+                  Something Wrong Please Try Again
+                </h1>
               ) : (
                 <></>
               )}
