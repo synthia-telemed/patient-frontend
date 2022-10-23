@@ -43,7 +43,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "ionic:build": "npm run build",
-    "ionic:serve": "npm run start"
+    "ionic:serve": "npm run start",
+    "open:ios": "yarn build && cap sync && cap open ios"
   },
   "eslintConfig": {
     "extends": [
