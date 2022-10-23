@@ -65,7 +65,7 @@ const LoginPage = props => {
             <h2 className=" font-body mb-[6px]">National ID Number</h2>
             <input
               {...register("credential", {
-                required: "Invalid Credential"
+                required: "Your national ID number is not found."
               })}
               type="tel"
               maxLength={13}
