@@ -90,6 +90,9 @@ const ReportPage = () => {
   const onClickReportMeasure = () => {
     setShowModal(true);
   };
+  const onClickCloseModal = () => {
+    setShowModal(false);
+  };
   return (
     <div className="overflow-auto h-[1000px]">
       <HeaderReport />
@@ -216,7 +219,7 @@ const ReportPage = () => {
                       />
                     </div>
                   </div>
-                  <ReportTab selectedDate={selectedDate} />
+                  <ReportTab selectedDate={selectedDate} setShowModal={onClickCloseModal} />
                 </div>
               </div>
             </div>

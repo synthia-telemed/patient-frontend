@@ -6,7 +6,7 @@ import AfterMealIcon from "../../Assets/Report/after_meal.svg";
 import DinnerIcon from "../../Assets/Report/dinner.svg";
 import LunchIcon from "../../Assets/Report/lunch-bag.svg";
 import RamenIcon from "../../Assets/Report/ramen.svg";
-const GlucoseTab = ({dateTime}) => {
+const GlucoseTab = ({dateTime,setShowModal}) => {
   const [meal, setMeal] = useState("beforemeal");
   const [apiDefault] = useAPIMeasureMent();
   const [period, setPeriod] = useState("breakfast");
@@ -25,6 +25,7 @@ const GlucoseTab = ({dateTime}) => {
     console.log(body);
     const res = await apiDefault.post(`/glucose`, body);
     console.log(res);
+    setShowModal();
   };
   return (
     <div className="mt-[36px] bg-base-white h-[550px]">

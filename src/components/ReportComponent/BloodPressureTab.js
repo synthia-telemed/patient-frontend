@@ -1,7 +1,7 @@
 import PrimaryButton from "../Appointment/PrimaryButton";
 import useAPIMeasureMent from "../../hooks/useApiMeasurement";
 import { useForm } from "react-hook-form";
-const BloodPressureTab = ({ dateTime }) => {
+const BloodPressureTab = ({ dateTime, setShowModal }) => {
   const {
     register,
     formState: { errors },
@@ -18,6 +18,7 @@ const BloodPressureTab = ({ dateTime }) => {
     console.log(body);
     const res = await apiDefault.post(`/blood-pressure`, body);
     console.log(res);
+    setShowModal();
   };
   return (
     <div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import BloodPressureTab from "./BloodPressureTab";
 import GlucoseTab from "./GlucoseTab";
-const ReportTab = ({selectedDate}) => {
+const ReportTab = ({selectedDate,setShowModal}) => {
   const [panel, setPanel] = useState("Blood pressure/Palse");
   const Panel = () => {
     return (
@@ -31,9 +31,9 @@ const ReportTab = ({selectedDate}) => {
     <div className="mt-[12px]">
       <Panel />
       {panel === "Blood pressure/Palse" ? (
-        <BloodPressureTab dateTime={selectedDate} />
+        <BloodPressureTab dateTime={selectedDate} setShowModal={setShowModal} />
       ) : panel === "Glucose level" ? (
-        <GlucoseTab dateTime={selectedDate}/>
+        <GlucoseTab dateTime={selectedDate} setShowModal={setShowModal}/>
       ) : (
         <>Error 404</>
       )}
