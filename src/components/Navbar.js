@@ -91,9 +91,9 @@ const Navbar = () => {
             <path
               d="M9.15722 20.7714V17.7047C9.1572 16.9246 9.79312 16.2908 10.581 16.2856H13.4671C14.2587 16.2856 14.9005 16.9209 14.9005 17.7047V17.7047V20.7809C14.9003 21.4432 15.4343 21.9845 16.103 22H18.0271C19.9451 22 21.5 20.4607 21.5 18.5618V18.5618V9.83784C21.4898 9.09083 21.1355 8.38935 20.538 7.93303L13.9577 2.6853C12.8049 1.77157 11.1662 1.77157 10.0134 2.6853L3.46203 7.94256C2.86226 8.39702 2.50739 9.09967 2.5 9.84736V18.5618C2.5 20.4607 4.05488 22 5.97291 22H7.89696C8.58235 22 9.13797 21.4499 9.13797 20.7714V20.7714"
               stroke="#667085"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </div>
@@ -110,20 +110,20 @@ const Navbar = () => {
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M21.2498 12.0005C21.2498 17.1095 17.1088 21.2505 11.9998 21.2505C6.89076 21.2505 2.74976 17.1095 2.74976 12.0005C2.74976 6.89149 6.89076 2.75049 11.9998 2.75049C17.1088 2.75049 21.2498 6.89149 21.2498 12.0005Z"
               stroke="#667085"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M15.4314 14.9429L11.6614 12.6939V7.84686"
               stroke="#667085"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </div>
@@ -142,25 +142,25 @@ const Navbar = () => {
             <path
               d="M7.24487 14.7815L10.238 10.8913L13.6522 13.5732L16.5813 9.79291"
               stroke="#667085"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <circle
               cx="19.9954"
               cy="4.20021"
               r="1.9222"
               stroke="#667085"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M14.9245 3.12012H7.65679C4.64535 3.12012 2.77808 5.25284 2.77808 8.26428V16.3467C2.77808 19.3581 4.60874 21.4817 7.65679 21.4817H16.2609C19.2724 21.4817 21.1396 19.3581 21.1396 16.3467V9.30776"
               stroke="#667085"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </div>
@@ -177,22 +177,22 @@ const Navbar = () => {
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M11.9848 15.3462C8.11719 15.3462 4.81433 15.931 4.81433 18.2729C4.81433 20.6148 8.09624 21.2205 11.9848 21.2205C15.8524 21.2205 19.1543 20.6348 19.1543 18.2938C19.1543 15.9529 15.8734 15.3462 11.9848 15.3462Z"
               stroke="#667085"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M11.9848 12.0059C14.5229 12.0059 16.58 9.94779 16.58 7.40969C16.58 4.8716 14.5229 2.81445 11.9848 2.81445C9.44667 2.81445 7.38858 4.8716 7.38858 7.40969C7.38001 9.93922 9.42382 11.9973 11.9524 12.0059H11.9848Z"
               stroke="#667085"
-              stroke-width="1.42857"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.42857"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </div>

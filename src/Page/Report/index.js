@@ -1,10 +1,12 @@
-import { useState, React } from "react";
+import { useState, React, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import HeaderReport from "../../components/ReportComponent/HeaderReport";
 import FloatingButton from "../../components/ReportComponent/FloatingButton";
 import { DateTimePicker } from "@material-ui/pickers";
 import BadgeStatus from "../../components/Appointment/BadgeStatus";
 import ReportTab from "../../components/ReportComponent/ReportTab";
+import dayjs from "dayjs";
+import useApiMeasurement from "../../hooks/useApiMeasurement";
 import {
   BarChart,
   Bar,
@@ -18,6 +20,8 @@ import {
 
 const ReportPage = () => {
   const [showModal, setShowModal] = useState(false);
+  const [glucoseValue, setGlucoseLevel] = useState({});
+  const [apiDefault] = useApiMeasurement();
   const current = new Date();
   const barColors = ["#1f77b4", "#ff7f0e", "#2ca02c"];
   const [selectedDate, handleDateChange] = useState(new Date(current));
@@ -93,6 +97,20 @@ const ReportPage = () => {
   const onClickCloseModal = () => {
     setShowModal(false);
   };
+  const fetchGlucoseValue = async () => {
+    const query = { granularity: "day", date: current.toISOString() };
+    console.log(current.toISOString());
+    const res = await apiDefault.get("/blood-pressure/visualization/patient", {
+      params: query
+    });
+
+    console.log(res.data);
+  };
+
+  useEffect(() => {
+    fetchGlucoseValue();
+  }, []);
+
   return (
     <div className="overflow-auto h-[1000px]">
       <HeaderReport />
@@ -219,7 +237,10 @@ const ReportPage = () => {
                       />
                     </div>
                   </div>
-                  <ReportTab selectedDate={selectedDate} setShowModal={onClickCloseModal} />
+                  <ReportTab
+                    selectedDate={selectedDate}
+                    setShowModal={onClickCloseModal}
+                  />
                 </div>
               </div>
             </div>
