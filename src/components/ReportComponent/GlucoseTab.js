@@ -35,7 +35,7 @@ const GlucoseTab = ({dateTime,setShowModal}) => {
           {...register("Glucose", {
             required: "Invalid Glucose"
           })}
-          type="number"
+          type="tel"
           className="border-[1px] border-solid border-gray-300 rounded-[4px] h-[40px] mt-[6px] px-[8px] w-[342px]"
         />
         <h1 className="typographyTextSmMedium text-grey-700 mt-[16px] mb-[8px]">Meal</h1>

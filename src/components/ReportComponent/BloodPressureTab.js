@@ -28,7 +28,7 @@ const BloodPressureTab = ({ dateTime, setShowModal }) => {
           <div className="flex flex-col items-center justify-center w-[64px] ">
             <h1 className="text-gray-500 typographyTextXsMedium mb-[2px]">SYS</h1>
             <input
-              type="number"
+              type="tel"
               {...register("SYS", {
                 required: "Invalid SYS"
               })}
