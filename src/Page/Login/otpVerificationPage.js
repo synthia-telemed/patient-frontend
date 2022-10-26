@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Preferences } from "@capacitor/preferences";
 import OtpInput from "react-otp-input";
 import { connect } from "react-redux";
 import useAPI from "../../hooks/useAPI";
 
 const mapDispatch = dispatch => ({
-  setToken: value => dispatch.user.setToken({ tokenJWT: value })
+  setToken: value => dispatch.user.setToken(value)
 });
 
 const mapState = state => ({
@@ -22,8 +23,9 @@ const OtpVerificationPage = props => {
   const handleChange = otp => {
     setOtp(otp);
   };
-  const saveToken = token => {
-    localStorage.setItem("jwt", token);
+  const saveToken = async token => {
+    props.setToken(token);
+    await Preferences.set({ key: "token", value: token });
   };
   const resendVerification = async () => {
     try {
@@ -41,12 +43,9 @@ const OtpVerificationPage = props => {
         setErrorMessage("Invalid PIN. Please try again");
       } else {
         const body = { otp: otp };
-        console.log(body);
         const res = await api.post("/auth/verify", body);
-        saveToken(res.data.token);
-        props.setToken(res.data.token);
+        await saveToken(res.data.token);
         navigate(`/verified-success`);
-        console.log(res);
       }
     } catch (error) {
       console.log(error);
@@ -58,13 +57,14 @@ const OtpVerificationPage = props => {
       <div className="absolute left-[50%] top-[30vh] translate-x-[-50%] w-screen">
         <h1 className="text-center font-body text-[24px]">Enter Verification Code</h1>
         <h2 className="text-center font-body text-[12px]">
-          The verification code sent to {location.state.mobile.phone_number}
+          The verification code is sent to {location.state.mobile.phone_number}
         </h2>
         <div className="flex justify-center w-screen mt-[80px] ">
           <OtpInput
             value={otp}
             onChange={handleChange}
             numInputs={6}
+            isInputNum={true}
             inputStyle={{
               width: "50.5px",
               height: "3rem",
@@ -85,13 +85,13 @@ const OtpVerificationPage = props => {
             className="w-[315px] bg-primary-500 text-base-white h-[48px] rounded-[8px] typographyTextMdMedium"
             onClick={submitVerfication}
           >
-            Get Verify
+            Submit
           </button>
         </div>
         <h2 className="text-gray-400 text-center mt-[30px] typographyTextXsSemibold">
-          Didn’t recieve the verification code?{" "}
+          Didn’t recieve?{" "}
           <span className="text-primary-600" onClick={resendVerification}>
-            click to resend
+            Resend
           </span>
         </h2>
       </div>

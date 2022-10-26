@@ -1,14 +1,17 @@
 import { connect } from "react-redux";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import DefaultProfile from '../Assets/default_profile.png';
+import DefaultProfile from "../Assets/default_profile.png";
 import AppointmentDetailCard from "../components/Appointment/AppointmentDetailCard";
 import Navbar from "../components/Navbar";
+import useAPI from "../hooks/useAPI";
+import EmptyStatusIcon from "../Assets/Home/EmptyStatus.svg";
 
-const mapState = (state) => ({
-  user: state.user,
+const mapState = state => ({
+  user: state.user
 });
-
 
 const NotificationIcon = () => {
   return (
@@ -41,16 +44,25 @@ const NotificationIcon = () => {
   );
 };
 
-const HomePage = (props) => {
-  console.log(props.user)
+const HomePage = props => {
+  dayjs.extend(utc);
+  const navigate = useNavigate();
+  const [apiDefault] = useAPI();
+  const [detailYourAppointment, setDetailYourAppointment] = useState([]);
+  useEffect(() => {
+    getNextAppointment();
+  }, []);
+  const getNextAppointment = async () => {
+    const res = await apiDefault.get("/appointment/next");
+    setDetailYourAppointment(res.data);
+  };
+  console.log(props.user);
   return (
     <div className="">
       <div>
         <div className=" flex justify-between mt-[56px] px-[17px]  w-full">
           <div className="w-[173px]">
-            <h1 className="typographyTextSmMedium text-primary-500">
-              Welcome Back
-            </h1>
+            <h1 className="typographyTextSmMedium text-primary-500">Welcome Back</h1>
             <h1 className="typographyHeadingXsSemibold">Name User &#9996;</h1>
           </div>
           <div className="w-[45px] h-[45px] p-[5px] rounded-[15px] bg-primary-50 flex justify-center items-center ">
@@ -58,17 +70,34 @@ const HomePage = (props) => {
           </div>
         </div>
       </div>
-      <h1 className="px-[17px] typographyTextMdSemibold mt-[17px]">
-        Your Appointment
-      </h1>
+      <h1 className="px-[17px] typographyTextMdSemibold mt-[17px]">Your Appointment</h1>
       <AppointmentDetailCard
-        picture={DefaultProfile}
-        name="Dr. Kandfr adakdkamd"
-        position="Siriraj"
-        date="27 May 2022"
-        time="14:30"
+        picture={detailYourAppointment?.doctor?.profile_pic_url}
+        name={detailYourAppointment?.doctor?.full_name}
+        position={detailYourAppointment?.doctor?.position}
+        date={dayjs(detailYourAppointment?.start_date_time).format("DD MMMM YYYY")}
+        time={
+          dayjs(detailYourAppointment?.start_date_time).utcOffset(7).format("HH:mm") +
+          "-" +
+          dayjs(detailYourAppointment?.end_date_time).utcOffset(7).format("HH:mm")
+        }
+        onClick={() => {
+          navigate("/appointment/detail", {
+            state: { appointmentID: detailYourAppointment.id }
+          });
+        }}
+        isButton={true}
       />
       <Navbar />
+      <div className="mt-[30px] px-[16px]">
+        <h1 className="typographyTextMdSemibold">Today's status</h1>
+        <div className="flex flex-col justify-center items-center h-[300px] ">
+          <img src={EmptyStatusIcon} alt="" width="200px" height="148px" />
+          <h1 className="typographyTextXsMedium mt-[8px] w-[200px] text-center">
+            You haven’t submited any measurement result.{" "}
+          </h1>
+        </div>
+      </div>
     </div>
   );
 };

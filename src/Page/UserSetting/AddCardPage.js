@@ -4,7 +4,7 @@ import { useState } from "react";
 import { PaymentInputsWrapper, usePaymentInputs } from "react-payment-inputs";
 import { Formik, Field as FormikField } from "formik";
 import { css } from "styled-components";
-import Script from "react-load-script";
+import axios from "axios";
 import images from "react-payment-inputs/images";
 import LogoCreditcard from "../../components/SettingPanel/LogoCreditcard";
 import MasterCardIcon from "../../Assets/Payment/mastercard.svg";
@@ -13,7 +13,7 @@ import VisaIcon from "../../Assets/Payment/visa.svg";
 import Switch from "react-switch";
 import useAPI from "../../hooks/useAPI";
 
-let Omise;
+// let Omise;
 const AddCardPage = () => {
   const {
     meta,
@@ -26,46 +26,54 @@ const AddCardPage = () => {
 
   const navigate = useNavigate();
   const [checked, setChecked] = useState(false);
+  const [error, setError] = useState(false);
   const [apiDefault] = useAPI();
   const handleChange = nextChecked => {
     setChecked(nextChecked);
   };
 
-  const handleLoadScript = () => {
-    Omise = window.Omise;
-    Omise.setPublicKey("pkey_test_5stb95e6pqzxz4rrift");
-  };
-  const createToken = data => {
-    Omise = window.Omise;
-    let tokenParameters = {
+  const createToken = async data => {
+    const createTokenParams = {
       expiration_month: data.expiryDate.substr(0, 2),
       expiration_year: data.expiryDate.substr(4, 6),
       name: data.name,
       number: data.cardNumber.trim(),
       security_code: data.cvc
     };
-    Omise.createToken("card", tokenParameters, async function (statusCode, response) {
-      // response["id"] is token identifier
-      let body = {
-        card_token: response["id"],
-        is_default: checked,
-        name: data.name
-      };
-      const res = await apiDefault.post("/payment/credit-card", body);
-    });
+    const body = {
+      card_token: "",
+      is_default: checked,
+      name: data.name
+    };
+    try {
+      const { data: tokenData } = await axios.post(
+        "https://vault.omise.co/tokens",
+        { card: createTokenParams },
+        { auth: { username: "pkey_test_5stb95e6pqzxz4rrift", password: "" } }
+      );
+      body.card_token = tokenData.id;
+    } catch (error) {
+      console.error(error);
+    }
+    try {
+      await apiDefault.post("/payment/credit-card", body);
+      navigate("/setting/credit-card");
+    } catch (e) {
+      console.log(e);
+      setError(true);
+    }
   };
   const handleSubmit = async data => {
+    console.log(data);
     createToken(data);
-    navigate(-1);
   };
 
   return (
     <div>
-      <Script url="https://cdn.omise.co/omise.js" onLoad={handleLoadScript} />
-      <HeaderWithBack textHeader="Add Card" path={-1} />
+      <HeaderWithBack textHeader="Add credit card" path={-1} />
       <div className="px-[16px]">
         <div className="flex justify-between w-full mt-[24px]">
-          <h1 className="typographyTextMdSemibold">Card detail</h1>
+          <h1 className="typographyTextMdSemibold">Credit card detail</h1>
           <div className="flex w-[118px] justify-between">
             <LogoCreditcard icon={VisaIcon} />
             <LogoCreditcard icon={MasterCardIcon} />
@@ -101,7 +109,7 @@ const AddCardPage = () => {
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col">
                 <h1 className="typographyTextSmMedium text-gray-700 mt-[16px]">
-                  Name on Card
+                  Name on the card
                 </h1>
                 <FormikField name="name">
                   {({ field }) => (
@@ -114,7 +122,7 @@ const AddCardPage = () => {
                   )}
                 </FormikField>
                 <h1 className="mt-[16px] mb-[6px] typographyTextSmMedium text-gray-700">
-                  Card Number
+                  Card number
                 </h1>
                 <PaymentInputsWrapper
                   {...wrapperProps}
@@ -210,7 +218,7 @@ const AddCardPage = () => {
               </div>
               <div className="flex mt-[39px] items-center">
                 <h1 className="text-primary-500 typographyTextXsMedium mr-[16px]">
-                  Set as default bank account
+                  Set as default card
                 </h1>
                 <Switch
                   onChange={handleChange}
@@ -221,14 +229,21 @@ const AddCardPage = () => {
                   offColor="#EAECF0"
                 />
               </div>
+              {error ? (
+                <h1 className=" text-error-500 typographyTextXsMedium mt-[16px]">
+                  Something Wrong Please Try Again
+                </h1>
+              ) : (
+                <></>
+              )}
               <div className="absolute bottom-[20%] left-[25%]">
                 <div className="flex justify-center ">
                   <button
-                    className="bg-primary-500 text-base-white typographyTextMdMedium rounded-[8px] w-[238px] h-[48px]"
+                    className="bg-primary-500 text-base-white typographyTextMdMedium rounded-[8px] w-[228px] h-[48px]"
                     type="submit"
                     value="submit"
                   >
-                    Send
+                    Submit
                   </button>
                 </div>
               </div>

@@ -3,13 +3,7 @@ import RightArrowIcon from "../../Assets/right_arrow_icon.svg";
 import DatepickerIcon from "../../Assets/datepicker.svg";
 import TimerIcon from "../../Assets/time.svg";
 
-const AppointmentDetailCard = ({
-  name,
-  position,
-  picture,
-  date,
-  time,
-}) => {
+const AppointmentDetailCard = ({ name, position, picture, date, time, isButton,onClick }) => {
   return (
     <div className="relative pb-[20px] w-[90vw] mx-[16px] shadow-[0px_1px_3px_rgba(16,24,40,0.1)] bg-base-white border-[1px] border-solid border-gray-200 rounded-[8px] mt-[16px]">
       <div className="flex mt-[32px] w-[75px] h-full relative ">
@@ -23,9 +17,7 @@ const AppointmentDetailCard = ({
         <div className="flex flex-col w-[60vw] ml-[20px] ">
           <div className="flex w-[60vw]">
             <div className="flex flex-col w-[60vw] typographyTextSmMedium">
-              <h1 className="text-start w-[60vw] typographyTextMdMedium ">
-                {name}
-              </h1>
+              <h1 className="text-start w-[60vw] typographyTextMdMedium ">{name}</h1>
               <h1 className="text-start text-gray-500 mt-[8px]">
                 Internist : {position}
               </h1>
@@ -41,6 +33,15 @@ const AppointmentDetailCard = ({
           </div>
         </div>
       </div>
+      {isButton ? (
+        <div className="flex justify-center mt-[8px]">
+          <button className="w-[320px] border-[1px] border-solid border-gray-300 rounded-[8px] h-[40px]" onClick={onClick}>
+            <h1 className="typographyTextSmMedium text-gray-700">Detail</h1> 
+          </button>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

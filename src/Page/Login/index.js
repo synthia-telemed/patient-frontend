@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { Preferences } from "@capacitor/preferences";
 import LoginBackground from "../../Assets/Login/background-login-page.png";
 import { connect } from "react-redux";
 import useAPI from "../../hooks/useAPI";
@@ -22,6 +24,19 @@ const LoginPage = props => {
   } = useForm();
   const navigate = useNavigate();
   const [api] = useAPI();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    Preferences.get({ key: "token" })
+      .then(token => {
+        if (token.value) {
+          dispatch.user.setToken(token.value);
+          return navigate(`/home`);
+        }
+      })
+      .catch(err => console.err(err));
+  });
 
   const onSumbitLogin = async value => {
     if (value?.credential.length < 13) {
@@ -47,10 +62,10 @@ const LoginPage = props => {
         <h1 className="text-center typographyHeadingXsSemibold mt-[34px]">Login</h1>
         <div className="w-ful mx-[15px] mt-[39px]">
           <form onSubmit={handleSubmit(onSumbitLogin)}>
-            <h2 className=" font-body mb-[6px]">Citizen Number</h2>
+            <h2 className=" font-body mb-[6px]">National ID Number</h2>
             <input
               {...register("credential", {
-                required: "Invalid Credential"
+                required: "Your national ID number is not found."
               })}
               type="tel"
               maxLength={13}
@@ -76,7 +91,7 @@ const LoginPage = props => {
             </div>
           </form>
           <h1 className="text-gray-400 typographyTextXsMedium text-center mt-[60px] ">
-            For patient in hospital
+            Only for patient in hospital
           </h1>
         </div>
       </div>

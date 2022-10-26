@@ -20,7 +20,7 @@ const FloatingButton = ({ onClick }) => {
   };
   return (
     <div
-      className="w-[56px] h-[56px] bg-primary-500 p-[12px] rounded-[48px] flex justify-center items-center fixed bottom-[17%] right-[7%] z-[100]"
+      className="w-[56px] h-[56px] bg-primary-500 p-[12px] rounded-[48px] flex justify-center items-center fixed bottom-[17%] right-[7%] z-30"
       onClick={onClick}
     >
       <EditingIcon />

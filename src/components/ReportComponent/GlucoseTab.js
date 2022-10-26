@@ -6,7 +6,7 @@ import AfterMealIcon from "../../Assets/Report/after_meal.svg";
 import DinnerIcon from "../../Assets/Report/dinner.svg";
 import LunchIcon from "../../Assets/Report/lunch-bag.svg";
 import RamenIcon from "../../Assets/Report/ramen.svg";
-const GlucoseTab = ({dateTime}) => {
+const GlucoseTab = ({dateTime,setShowModal}) => {
   const [meal, setMeal] = useState("beforemeal");
   const [apiDefault] = useAPIMeasureMent();
   const [period, setPeriod] = useState("breakfast");
@@ -25,16 +25,17 @@ const GlucoseTab = ({dateTime}) => {
     console.log(body);
     const res = await apiDefault.post(`/glucose`, body);
     console.log(res);
+    setShowModal();
   };
   return (
-    <div className="mt-[36px] bg-base-white">
+    <div className="mt-[36px] bg-base-white h-[550px]">
       <form onSubmit={handleSubmit(submitGlucose)}>
         <h1 className="typographyTextSmMedium text-grey-700 mb-[6px]">Glucose</h1>
         <input
           {...register("Glucose", {
             required: "Invalid Glucose"
           })}
-          type="number"
+          type="tel"
           className="border-[1px] border-solid border-gray-300 rounded-[4px] h-[40px] mt-[6px] px-[8px] w-[342px]"
         />
         <h1 className="typographyTextSmMedium text-grey-700 mt-[16px] mb-[8px]">Meal</h1>
@@ -107,7 +108,7 @@ const GlucoseTab = ({dateTime}) => {
           <button
             type="submit"
             value="submit"
-            className="mt-[72px] bg-[#303ED9] typographyTextMdMedium text-base-white w-[235px] h-[44px] rounded-[8px] mb-[32px]"
+            className="mt-[24px] bg-[#303ED9] typographyTextMdMedium text-base-white w-[235px] h-[44px] rounded-[8px] mb-[32px]"
           >
             Submit
           </button>

@@ -1,3 +1,4 @@
+import { Preferences } from "@capacitor/preferences";
 import ProfileUserIcon from "../../Assets/profileuser.png";
 import SettingButton from "../../components/SettingPanel/SettingButton";
 import PeopleIcon from "../../Assets/UserSetting/peopleIcon.svg";
@@ -12,9 +13,10 @@ const UserSettingPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const onLogout = () => {
-    dispatch.user.removeToken();
-    localStorage.removeItem("jwt");
-    navigate("/login");
+    Preferences.remove({ key: "token" }).then(() => {
+      dispatch.user.removeToken();
+      navigate("/login");
+    });
   };
   return (
     <div className="mt-[71px]">
@@ -31,12 +33,12 @@ const UserSettingPage = () => {
         <div className="mt-[24px]">
           <SettingButton
             icon={PeopleIcon}
-            title="Personal Information"
+            title="Personal information"
             path="/setting/personal-information"
           />
           <SettingButton
             icon={CreditcardIcon}
-            title="Add Credit card/Debit card"
+            title="Credit cards"
             path="/setting/credit-card"
           />
           <SettingButton

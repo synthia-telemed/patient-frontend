@@ -1,7 +1,7 @@
 import PrimaryButton from "../Appointment/PrimaryButton";
 import useAPIMeasureMent from "../../hooks/useApiMeasurement";
 import { useForm } from "react-hook-form";
-const BloodPressureTab = ({ dateTime }) => {
+const BloodPressureTab = ({ dateTime, setShowModal }) => {
   const {
     register,
     formState: { errors },
@@ -18,6 +18,7 @@ const BloodPressureTab = ({ dateTime }) => {
     console.log(body);
     const res = await apiDefault.post(`/blood-pressure`, body);
     console.log(res);
+    setShowModal();
   };
   return (
     <div>
@@ -27,7 +28,7 @@ const BloodPressureTab = ({ dateTime }) => {
           <div className="flex flex-col items-center justify-center w-[64px] ">
             <h1 className="text-gray-500 typographyTextXsMedium mb-[2px]">SYS</h1>
             <input
-              type="number"
+              type="tel"
               {...register("SYS", {
                 required: "Invalid SYS"
               })}
@@ -69,7 +70,7 @@ const BloodPressureTab = ({ dateTime }) => {
           <button
             type="submit"
             value="submit"
-            className="mt-[72px] bg-[#303ED9] typographyTextMdMedium text-base-white w-[235px] h-[44px] rounded-[8px]"
+            className="mt-[24px] bg-[#303ED9] typographyTextMdMedium text-base-white w-[235px] h-[44px] rounded-[8px]"
           >
             Submit
           </button>

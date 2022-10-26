@@ -28,7 +28,6 @@ const AppointmentDetailPage = () => {
   const getDetailAppointment = async () => {
     const res = await apiDefault.get(`/appointment/${state.appointmentID}`);
     setDetailAppointment(res.data);
-    console.log(res);
   };
   const showJoinButtonAppointment = async () => {
     try {
@@ -39,15 +38,28 @@ const AppointmentDetailPage = () => {
       console.log(error);
     }
   };
+  const renderScheduleAppointmentStatusMessage = () => {
+    const now = dayjs();
+    const startDateTime = dayjs(detailAppointment?.start_date_time);
+    if (now.isAfter(startDateTime) && now.diff(startDateTime, "hour") < 3)
+      return (
+        <StatusAppointment
+          textStatus="Please wait for the doctor"
+          bgColor="bg-primary-50"
+          colorText="text-primary-500"
+        />
+      );
+    return null;
+  };
   return (
     <div className="mb-[24px]">
-      <HeaderWithBack textHeader="Appointment Detail" path="/history" />
+      <HeaderWithBack textHeader="Appointment detail" path="/history" />
       <AppointmentDetailCard
         picture={detailAppointment?.doctor?.profile_pic_url}
         name={detailAppointment?.doctor?.full_name}
         position={detailAppointment?.doctor?.position}
-        date={dayjs(detailAppointment?.date_time).format("DD MMMM YYYY")}
-        time={dayjs(detailAppointment?.date_time).utcOffset(7).format("HH:mm")}
+        date={dayjs(detailAppointment?.start_date_time).format("DD MMMM YYYY")}
+        time={dayjs(detailAppointment?.start_date_time).utcOffset(7).format("HH:mm")+"-"+dayjs(detailAppointment?.end_date_time).utcOffset(7).format("HH:mm")}
       />
       {detailAppointment.status === "SCHEDULED" ? (
         <>
@@ -65,17 +77,7 @@ const AppointmentDetailPage = () => {
               />
             </div>
           ) : (
-            // <PrimaryButton
-            //   text="Join Meeting"
-            //   height="40px"
-            //   width="165px"
-            //   onClick={() => {}}
-            // />
-            <StatusAppointment
-              textStatus="Please wait until the doctor come in."
-              bgColor="bg-primary-50"
-              colorText="text-primary-500"
-            />
+            renderScheduleAppointmentStatusMessage()
           )}
           <div className="mt-[16px] mx-[16px]">
             <h1 className="typographyTextLgSemibold">Details</h1>
@@ -88,14 +90,14 @@ const AppointmentDetailPage = () => {
         detailAppointment.invoice === null ? (
         <>
           <StatusAppointment
-            textStatus="You can pay the bill after invoice completed."
+            textStatus="You can pay the invoice after the hospital finish processing your appointment."
             bgColor="bg-primary-50"
             colorText="text-primary-500"
           />
           <div className="mt-[16px] flex flex-col w-full items-center">
             <img src={AppointmentWaitingIcon} alt="" />
             <h1 className="typographyTextSmMedium w-[211px] mt-[8px]">
-              Waiting for the invoice and presciption from hospital.
+              Waiting for the invoice and presciption from the hospital.
             </h1>
           </div>
         </>
@@ -128,7 +130,7 @@ const AppointmentDetailPage = () => {
           ))}
           <div className="mt-[40px]">
             <PrimaryButton
-              text="Checkout"
+              text="Pay invoice"
               width="235px"
               height="48px"
               onClick={() => {
@@ -144,7 +146,7 @@ const AppointmentDetailPage = () => {
         detailAppointment.payment ? (
         <div className="mx-[16px] mt-[10px] ">
           <h1 className=" flex typographyTextXsMedium text-gray-600">
-            Your appointment status :{" "}
+            Your appointment is{" "}
             <BadgeStatus text="Complete" style="bg-success-50 text-success-700" />
           </h1>
           <NextAppointment
