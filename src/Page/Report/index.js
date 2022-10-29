@@ -20,46 +20,11 @@ import {
 
 const ReportPage = () => {
   const [showModal, setShowModal] = useState(false);
-  const [glucoseValue, setGlucoseLevel] = useState({});
+  const [glucoseData, setGlucoseData] = useState({});
   const [apiDefault] = useApiMeasurement();
   const current = new Date();
   const barColors = ["#1f77b4", "#ff7f0e", "#2ca02c"];
   const [selectedDate, handleDateChange] = useState(new Date(current));
-  const { unit, data, x_label, ticks, isNumerical } = {
-    unit: "mmHG",
-    isNumerical: false,
-    data: [
-      {
-        label: "S",
-        values: [80, 120],
-        fill: "#1f77b4"
-      },
-      {
-        label: "M"
-      },
-      {
-        label: "T",
-        values: [90, 130],
-        fill: "#ff7f0e"
-      },
-      {
-        label: "W"
-      },
-      {
-        label: "T",
-        values: [92, 123],
-        fill: "#2ca02c"
-      },
-      {
-        label: "F"
-      },
-      {
-        label: "S",
-        values: [92, 123],
-        fill: "#1f77b4"
-      }
-    ]
-  };
   const { unit2, data2, x_label2, ticks2, isNumerical2 } = {
     unit2: "mg/dL",
     isNumerical2: false,
@@ -103,13 +68,16 @@ const ReportPage = () => {
     const res = await apiDefault.get("/blood-pressure/visualization/patient", {
       params: query
     });
-
-    console.log(res.data);
+    setGlucoseData(res.data);
   };
 
   useEffect(() => {
     fetchGlucoseValue();
   }, []);
+  useEffect(() => {
+    fetchGlucoseValue();
+  }, [showModal]);
+  console.log(glucoseData);
 
   return (
     <div className="overflow-auto h-[1000px]">
@@ -126,16 +94,18 @@ const ReportPage = () => {
           <BadgeStatus text="Normal" style="bg-success-50 text-success-700" />
         </div>
         <ResponsiveContainer width="100%" height={240} className="ml-[-16px]">
-          <BarChart width={830} height={250} data={data} className="mt-[5px]">
+          <BarChart width={830} height={250} data={glucoseData.data} className="mt-[5px]">
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="label"
-              label={x_label}
-              ticks={ticks}
+              // label={glucoseData.xLabel}
+              // ticks={ticks}
               axisLine={false}
               className="typographyTextXsMedium"
-              tickFormatter={isNumerical ? t => `${Math.floor(t / 60)}:00` : t => t}
-              type={isNumerical ? "number" : "category"}
+              tickFormatter={
+                glucoseData.isNumerical ? t => `${Math.floor(t / 60)}:00` : t => t
+              }
+              type={glucoseData.isNumerical ? "number" : "category"}
             />
             <YAxis
               domain={[0, 200]}
@@ -148,20 +118,22 @@ const ReportPage = () => {
                 className="typographyTextXsMedium"
                 width={20}
                 dataKey="values"
-                formatter={v => `${v[1]} ${unit}`}
+                formatter={v => `${v[1]} ${glucoseData.unit}`}
                 position="top"
               />
               <LabelList
                 className="typographyTextXsMedium"
                 width={20}
                 dataKey="values"
-                formatter={v => `${v[0]} ${unit}`}
+                formatter={v => `${v[0]} ${glucoseData.unit}`}
                 position="bottom"
               />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
-        <h1 className="typographyTextXsMedium text-gray-500 text-center">days</h1>
+        <h1 className="typographyTextXsMedium text-gray-500 text-center">
+          {glucoseData.xLabel}
+        </h1>
       </div>
 
       <div className="px-[16px] mt-[16px]">
@@ -202,7 +174,7 @@ const ReportPage = () => {
                 className="typographyTextXsMedium"
                 width={20}
                 dataKey="values"
-                formatter={v => `${v} ${unit2}`}
+                formatter={v => `${v[0]} ${unit2}`}
                 position="top"
               />
             </Bar>
