@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Preferences } from "@capacitor/preferences";
 import { PushNotifications } from "@capacitor/push-notifications";
+import { Capacitor } from "@capacitor/core";
 
 const IndexPage = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ const IndexPage = () => {
     const token = await Preferences.get({ key: "token" });
     if (token.value) {
       dispatch.user.setToken(token.value);
-      await registerPushnotificationListener();
+      if (Capacitor.isNativePlatform()) await registerPushnotificationListener();
       return navigate(`/home`);
     }
     return navigate(`/login`);
