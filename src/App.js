@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { PushNotifications } from "@capacitor/push-notifications";
 import LoginPage from "./Page/Login";
 import OtpVerificationPage from "./Page/Login/otpVerificationPage";
 import VerifiedSuccesPage from "./Page/Login/VerifiedSuccesPage";
@@ -21,6 +22,32 @@ import ReportPage from "./Page/Report";
 
 function App() {
   // const Login = lazy(() => import("./Page/Login"));
+  const registerPushnotificationListener = async () => {
+    await PushNotifications.addListener("pushNotificationReceived", notification => {
+      console.log("Push notification received: ", notification.title);
+    });
+
+    await PushNotifications.addListener(
+      "pushNotificationActionPerformed",
+      ({ notification }) => {
+        console.log(
+          "Push notification action performed",
+          notification.data.appointmentID
+        );
+      }
+    );
+  };
+
+  useEffect(() => {
+    registerPushnotificationListener()
+      .then(() => {
+        console.log("Push notification listener registered");
+      })
+      .catch(err => {
+        console.log("Push notification listener registration failed", err);
+      });
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
