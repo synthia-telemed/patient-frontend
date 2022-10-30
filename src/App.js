@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import { PushNotifications } from "@capacitor/push-notifications";
 import LoginPage from "./Page/Login";
 import OtpVerificationPage from "./Page/Login/otpVerificationPage";
 import VerifiedSuccesPage from "./Page/Login/VerifiedSuccesPage";
@@ -19,34 +18,10 @@ import SummaryReciept from "./Page/Appointment/SummaryReciept";
 import PaymentSuccessFully from "./Page/Appointment/PaymentSuccessFully";
 import VideoCallPage from "./Page/Appointment/videoCallPage";
 import ReportPage from "./Page/Report";
+import IndexPage from "./Page";
 
 function App() {
   // const Login = lazy(() => import("./Page/Login"));
-  const registerPushnotificationListener = async () => {
-    await PushNotifications.addListener("pushNotificationReceived", notification => {
-      console.log("Push notification received: ", notification.title);
-    });
-
-    await PushNotifications.addListener(
-      "pushNotificationActionPerformed",
-      ({ notification }) => {
-        console.log(
-          "Push notification action performed",
-          notification.data.appointmentID
-        );
-      }
-    );
-  };
-
-  useEffect(() => {
-    registerPushnotificationListener()
-      .then(() => {
-        console.log("Push notification listener registered");
-      })
-      .catch(err => {
-        console.log("Push notification listener registration failed", err);
-      });
-  }, []);
 
   return (
     <BrowserRouter>
@@ -77,7 +52,8 @@ function App() {
         <Route path="/history" element={<HistoryPage />} />
         <Route path="/report" element={<ReportPage />} />
         <Route path="/home" element={<HomePage />} />
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="/index" element={<IndexPage />} />
+        <Route path="*" element={<Navigate to="/index" replace />} />
       </Routes>
     </BrowserRouter>
   );
