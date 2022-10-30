@@ -1195,6 +1195,11 @@
   resolved "https://registry.yarnpkg.com/@capacitor/preferences/-/preferences-4.0.1.tgz#fd56f24fe2cde1222cf5c3057d52cd55fd033e7b"
   integrity sha512-FffJjKS4XcodUj/rtFtWizQ9q/oYDSn5opZ+JYwj/EkjiMWMhY/Pk9lN3vwQfp+VJrTt3hjr+bwKXjhTbYBqKw==
 
+"@capacitor/push-notifications@^4.1.1":
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/@capacitor/push-notifications/-/push-notifications-4.1.1.tgz#6ef24939d8e6e8f1277c01589516c8cd8a78674a"
+  integrity sha512-x7LihJJgSOSSH7CzJTVM9PwaYp6CxRT+/Xv9YX0XWHr55pFiWTPYC85vBz0CtFXi4u7UfBDvQWqIU3ThMTdEiw==
+
 "@csstools/normalize.css@*":
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-12.0.0.tgz#a9583a75c3f150667771f30b60d9f059473e62c4"
