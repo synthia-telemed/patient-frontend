@@ -30,7 +30,7 @@ const NotificationPage = () => {
           <NotificationCard
             title={noti.title}
             url={DatepickerIcon}
-            statusNew={noti.is_read}
+            statusNew={!noti.is_read}
             time={dayjs(noti.created_at).fromNow()}
             detail={noti.body}
           />
