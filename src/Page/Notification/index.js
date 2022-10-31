@@ -18,9 +18,13 @@ const NotificationPage = () => {
     });
   }, []);
 
+  const onSetAllAsRead = () => {
+    setNotification(notifications.map(noti => ({ ...noti, is_read: true })));
+  };
+
   return (
     <div>
-      <NotificationHeader />
+      <NotificationHeader onSetAllAsRead={onSetAllAsRead} />
       {notifications.map(noti => {
         return (
           <NotificationCard
