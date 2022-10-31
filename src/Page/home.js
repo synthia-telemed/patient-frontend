@@ -65,7 +65,10 @@ const HomePage = props => {
             <h1 className="typographyTextSmMedium text-primary-500">Welcome Back</h1>
             <h1 className="typographyHeadingXsSemibold">Name User &#9996;</h1>
           </div>
-          <div className="w-[45px] h-[45px] p-[5px] rounded-[15px] bg-primary-50 flex justify-center items-center ">
+          <div
+            className="w-[45px] h-[45px] p-[5px] rounded-[15px] bg-primary-50 flex justify-center items-center "
+            onClick={() => navigate("/notification")}
+          >
             <NotificationIcon />
           </div>
         </div>
