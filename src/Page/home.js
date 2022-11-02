@@ -50,13 +50,19 @@ const HomePage = props => {
   const navigate = useNavigate();
   const [apiDefault] = useAPI();
   const [detailYourAppointment, setDetailYourAppointment] = useState([]);
+  const [name, setName] = useState("");
   useEffect(() => {
     getNextAppointment();
+    getName();
   }, []);
-  useEffect(() => {}, []);
   const getNextAppointment = async () => {
     const res = await apiDefault.get("/appointment/next");
     setDetailYourAppointment(res.data);
+  };
+  const getName = async () => {
+    const res = await apiDefault.get("/info/name");
+    setName(res.data)
+    console.log(res.data)
   };
   console.log(props.user);
   return (
@@ -65,7 +71,7 @@ const HomePage = props => {
         <div className=" flex justify-between mt-[56px] px-[17px]  w-full">
           <div className="w-[173px]">
             <h1 className="typographyTextSmMedium text-primary-500">Welcome Back</h1>
-            <h1 className="typographyHeadingXsSemibold">Name User &#9996;</h1>
+            <h1 className="typographyHeadingXsSemibold">{name?.EN?.firstname} &#9996;</h1>
           </div>
           <div
             className="w-[45px] h-[45px] p-[5px] rounded-[15px] bg-primary-50 flex justify-center items-center "
