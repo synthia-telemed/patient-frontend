@@ -12,6 +12,7 @@ import AppointmentWaitingIcon from "../../Assets/Appointment/appointment_waiting
 import NextAppointment from "../../components/Appointment/NextAppointment";
 import MedicineAndRecieptTab from "../../components/Appointment/MedicineAndRecieptTab";
 import useAPI from "../../hooks/useAPI";
+import Layout from "../../components/Layout";
 const AppointmentDetailPage = () => {
   dayjs.extend(utc);
   const { state } = useLocation();
@@ -52,114 +53,124 @@ const AppointmentDetailPage = () => {
     return null;
   };
   return (
-    <div className="mb-[24px]">
-      <HeaderWithBack textHeader="Appointment detail" path="/history" />
-      <AppointmentDetailCard
-        picture={detailAppointment?.doctor?.profile_pic_url}
-        name={detailAppointment?.doctor?.full_name}
-        position={detailAppointment?.doctor?.position}
-        date={dayjs(detailAppointment?.start_date_time).format("DD MMMM YYYY")}
-        time={dayjs(detailAppointment?.start_date_time).utcOffset(7).format("HH:mm")+"-"+dayjs(detailAppointment?.end_date_time).utcOffset(7).format("HH:mm")}
-      />
-      {detailAppointment.status === "SCHEDULED" ? (
-        <>
-          {showButton ? (
-            <div className="mt-[24px] ">
+    <Layout>
+      <div className="mb-[24px]">
+        <HeaderWithBack textHeader="Appointment detail" path="/history" />
+        <AppointmentDetailCard
+          picture={detailAppointment?.doctor?.profile_pic_url}
+          name={detailAppointment?.doctor?.full_name}
+          position={detailAppointment?.doctor?.position}
+          date={dayjs(detailAppointment?.start_date_time).format("DD MMMM YYYY")}
+          time={
+            dayjs(detailAppointment?.start_date_time).utcOffset(7).format("HH:mm") +
+            "-" +
+            dayjs(detailAppointment?.end_date_time).utcOffset(7).format("HH:mm")
+          }
+        />
+        {detailAppointment.status === "SCHEDULED" ? (
+          <>
+            {showButton ? (
+              <div className="mt-[24px] ">
+                <PrimaryButton
+                  text="Join Meeting"
+                  width="235px"
+                  height="48px"
+                  onClick={() => {
+                    navigate("/appointment/video-call", {
+                      state: { roomID: roomID, appointmentID: state.appointmentID }
+                    });
+                  }}
+                />
+              </div>
+            ) : (
+              renderScheduleAppointmentStatusMessage()
+            )}
+            <div className="mt-[16px] mx-[16px]">
+              <h1 className="typographyTextLgSemibold">Details</h1>
+              <h2 className="typographyTextSmRegular font-[400]">
+                {detailAppointment?.detail}
+              </h2>
+            </div>
+          </>
+        ) : detailAppointment.status === "COMPLETED" &&
+          detailAppointment.invoice === null ? (
+          <>
+            <StatusAppointment
+              textStatus="You can pay the invoice after the hospital finish processing your appointment."
+              bgColor="bg-primary-50"
+              colorText="text-primary-500"
+            />
+            <div className="mt-[16px] flex flex-col w-full items-center">
+              <img src={AppointmentWaitingIcon} alt="" />
+              <h1 className="typographyTextSmMedium w-[211px] mt-[8px]">
+                Waiting for the invoice and presciption from the hospital.
+              </h1>
+            </div>
+          </>
+        ) : detailAppointment.status === "COMPLETED" &&
+          detailAppointment.invoice &&
+          detailAppointment.payment === null ? (
+          <>
+            <StatusAppointment
+              textStatus="Pay the bill for check out on the button bellow."
+              bgColor="bg-success-50"
+              colorText="text-success-700"
+            />
+            <div className="mx-[16px]">
+              <NextAppointment
+                date={dayjs(detailAppointment?.next_appointment).format("DD MMMM YYYY")}
+                time={dayjs(detailAppointment?.next_appointment)
+                  .utcOffset(7)
+                  .format("HH:mm")}
+              />
+            </div>
+            <h1 className="typographyTextLgSemibold mx-[16px] mt-[16px]">
+              Prescriptions
+            </h1>
+            {detailAppointment?.prescriptions?.map(data => (
+              <Prescription
+                medicine={data?.name}
+                description={data?.description}
+                tables={data?.amount}
+                picture={data.picture_url}
+                key={data.index}
+              />
+            ))}
+            <div className="mt-[40px]">
               <PrimaryButton
-                text="Join Meeting"
+                text="Pay invoice"
                 width="235px"
                 height="48px"
                 onClick={() => {
-                  navigate("/appointment/video-call", {
-                    state: { roomID: roomID, appointmentID: state.appointmentID }
+                  navigate("/appointment/summary-reciept", {
+                    state: { appointmentID: state.appointmentID }
                   });
                 }}
               />
             </div>
-          ) : (
-            renderScheduleAppointmentStatusMessage()
-          )}
-          <div className="mt-[16px] mx-[16px]">
-            <h1 className="typographyTextLgSemibold">Details</h1>
-            <h2 className="typographyTextSmRegular font-[400]">
-              {detailAppointment?.detail}
-            </h2>
-          </div>
-        </>
-      ) : detailAppointment.status === "COMPLETED" &&
-        detailAppointment.invoice === null ? (
-        <>
-          <StatusAppointment
-            textStatus="You can pay the invoice after the hospital finish processing your appointment."
-            bgColor="bg-primary-50"
-            colorText="text-primary-500"
-          />
-          <div className="mt-[16px] flex flex-col w-full items-center">
-            <img src={AppointmentWaitingIcon} alt="" />
-            <h1 className="typographyTextSmMedium w-[211px] mt-[8px]">
-              Waiting for the invoice and presciption from the hospital.
+          </>
+        ) : detailAppointment.status === "COMPLETED" &&
+          detailAppointment.invoice &&
+          detailAppointment.payment ? (
+          <div className="mx-[16px] mt-[10px] ">
+            <h1 className=" flex typographyTextXsMedium text-gray-600">
+              Your appointment is{" "}
+              <BadgeStatus text="Complete" style="bg-success-50 text-success-700" />
             </h1>
-          </div>
-        </>
-      ) : detailAppointment.status === "COMPLETED" &&
-        detailAppointment.invoice &&
-        detailAppointment.payment === null ? (
-        <>
-          <StatusAppointment
-            textStatus="Pay the bill for check out on the button bellow."
-            bgColor="bg-success-50"
-            colorText="text-success-700"
-          />
-          <div className="mx-[16px]">
             <NextAppointment
               date={dayjs(detailAppointment?.next_appointment).format("DD MMMM YYYY")}
               time={dayjs(detailAppointment?.next_appointment)
                 .utcOffset(7)
                 .format("HH:mm")}
             />
+            <h1 className="typographyTextLgSemibold mt-[16px]">Medicine And Reciept</h1>
+            <MedicineAndRecieptTab data={detailAppointment} />
           </div>
-          <h1 className="typographyTextLgSemibold mx-[16px] mt-[16px]">Prescriptions</h1>
-          {detailAppointment?.prescriptions?.map(data => (
-            <Prescription
-              medicine={data?.name}
-              description={data?.description}
-              tables={data?.amount}
-              picture={data.picture_url}
-              key={data.index}
-            />
-          ))}
-          <div className="mt-[40px]">
-            <PrimaryButton
-              text="Pay invoice"
-              width="235px"
-              height="48px"
-              onClick={() => {
-                navigate("/appointment/summary-reciept", {
-                  state: { appointmentID: state.appointmentID }
-                });
-              }}
-            />
-          </div>
-        </>
-      ) : detailAppointment.status === "COMPLETED" &&
-        detailAppointment.invoice &&
-        detailAppointment.payment ? (
-        <div className="mx-[16px] mt-[10px] ">
-          <h1 className=" flex typographyTextXsMedium text-gray-600">
-            Your appointment is{" "}
-            <BadgeStatus text="Complete" style="bg-success-50 text-success-700" />
-          </h1>
-          <NextAppointment
-            date={dayjs(detailAppointment?.next_appointment).format("DD MMMM YYYY")}
-            time={dayjs(detailAppointment?.next_appointment).utcOffset(7).format("HH:mm")}
-          />
-          <h1 className="typographyTextLgSemibold mt-[16px]">Medicine And Reciept</h1>
-          <MedicineAndRecieptTab data={detailAppointment} />
-        </div>
-      ) : (
-        <></>
-      )}
-    </div>
+        ) : (
+          <></>
+        )}
+      </div>
+    </Layout>
   );
 };
 export default AppointmentDetailPage;

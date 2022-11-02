@@ -1,8 +1,9 @@
 import HeaderWithBack from "../../components/HeaderWithBack";
 import AgreementDetail from "../../components/SettingPanel/AgreementDetail";
+import Layout from "../../components/Layout";
 const PrivacyPage = () => {
   return (
-    <div>
+    <Layout>
       <HeaderWithBack textHeader="Privacy" path="/setting" />
       <AgreementDetail
         title="Pateint privacy Synthia Health"
@@ -13,7 +14,7 @@ const PrivacyPage = () => {
         detail4="&emsp;&emsp;Turpis commodo nulla odio arcu, bibendum non quam adipiscing lobortis. Massa pulvinar at nisi, eu. Phasellus vitae eros amet, sed orci. Nisl fermentum, sed fames blandit semper viverra sit. Massa aliquet volutpat nibh mattis lectus hendrerit. Consectetur dui fringilla eget lectus dolor tortor hendrerit elementum leo. In adipiscing urna, etiam dictum convallis in magna. Pretium bibendum tellus eget aliquet nulla egestas."
         detail5="&emsp;&emsp;Ut fringilla non neque, aliquet morbi. Vitae adipiscing egestas ultrices turpis odio mauris, dui, et massa. Odio sed feugiat natoque morbi non vel. Est vivamus diam.s"
       />
-    </div>
+    </Layout>
   );
 };
 export default PrivacyPage;

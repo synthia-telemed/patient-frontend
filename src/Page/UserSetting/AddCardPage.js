@@ -12,6 +12,7 @@ import JCBIcon from "../../Assets/Payment/jcb.svg";
 import VisaIcon from "../../Assets/Payment/visa.svg";
 import Switch from "react-switch";
 import useAPI from "../../hooks/useAPI";
+import Layout from "../../components/Layout";
 
 // let Omise;
 const AddCardPage = () => {
@@ -69,7 +70,7 @@ const AddCardPage = () => {
   };
 
   return (
-    <div>
+    <Layout>
       <HeaderWithBack textHeader="Add credit card" path={-1} />
       <div className="px-[16px]">
         <div className="flex justify-between w-full mt-[24px]">
@@ -251,7 +252,7 @@ const AddCardPage = () => {
           )}
         </Formik>
       </div>
-    </div>
+    </Layout>
   );
 };
 export default AddCardPage;

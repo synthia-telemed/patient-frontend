@@ -26,11 +26,11 @@ export const user = {
     setToken: (state, payload) => {
       state.tokenJWT = payload;
 
-      return state;
+      return {...state};
     },
     removeToken: (state, payload) => {
       state.tokenJWT = "";
-      return state;
+      return {...state};
     }
   }
 };

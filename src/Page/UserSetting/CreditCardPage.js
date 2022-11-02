@@ -7,6 +7,7 @@ import MasterCardIcon from "../../Assets/Payment/mastercard.svg";
 import JCBIcon from "../../Assets/Payment/jcb.svg";
 import VisaIcon from "../../Assets/Payment/visa.svg";
 import useAPI from "../../hooks/useAPI";
+import Layout from "../../components/Layout";
 
 const mapState = state => ({
   user: state.user
@@ -26,7 +27,7 @@ const CreditCardPage = props => {
   };
 
   return (
-    <div>
+    <Layout>
       <HeaderWithBack textHeader="Credit cards" path="/setting" />
       {paymentList.map(data =>
         data.brand === "Visa" ? (
@@ -59,7 +60,7 @@ const CreditCardPage = props => {
         )
       )}
       <AddCreditCardButton />
-    </div>
+    </Layout>
   );
 };
 export default connect(mapState)(CreditCardPage);

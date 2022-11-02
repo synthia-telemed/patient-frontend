@@ -1,8 +1,9 @@
 import HeaderWithBack from "../../components/HeaderWithBack";
 import PersonalInformationCard from "../../components/SettingPanel/PersonalInformationCard";
+import Layout from "../../components/Layout";
 const PersonalInformationPage = () => {
   return (
-    <div>
+    <Layout>
       <HeaderWithBack textHeader="Personal Information" path="/setting" />
       <PersonalInformationCard title="Name" value="Kavisara Srisuwatcharee" />
       <PersonalInformationCard title="Birthdate" value="20/06/2000" />
@@ -12,7 +13,7 @@ const PersonalInformationPage = () => {
       <PersonalInformationCard title="Weight" value="45 Kg." />
       <PersonalInformationCard title="Height" value="159 cm." />
       <PersonalInformationCard title="Blood Type" value="A" />
-    </div>
+    </Layout>
   );
 };
 export default PersonalInformationPage;

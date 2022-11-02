@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import Peer from "simple-peer";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Layout from "../../components/Layout";
 
 const VideoCallPage = () => {
   const [isMicOn, setIsMicOn] = useState(false);
@@ -219,6 +220,7 @@ const VideoCallPage = () => {
   };
 
   return (
+    <Layout>
     <div className="h-screen w-screen">
       <video
         className={`absolute top-[5%] right-[10%] w-[120px] h-[200px] object-cover ${
@@ -272,6 +274,7 @@ const VideoCallPage = () => {
         <></>
       )}
     </div>
+    </Layout>
   );
 };
 

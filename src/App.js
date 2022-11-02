@@ -27,6 +27,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* Login Section */}
+        
         <Route path="/login" element={<LoginPage />} />
         <Route path="/otp-verification" element={<OtpVerificationPage />} />
         <Route path="/verified-success" element={<VerifiedSuccesPage />} />

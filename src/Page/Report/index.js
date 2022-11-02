@@ -7,6 +7,7 @@ import BadgeStatus from "../../components/Appointment/BadgeStatus";
 import ReportTab from "../../components/ReportComponent/ReportTab";
 import dayjs from "dayjs";
 import useApiMeasurement from "../../hooks/useApiMeasurement";
+import Layout from "../../components/Layout";
 import {
   BarChart,
   Bar,
@@ -80,6 +81,7 @@ const ReportPage = () => {
   console.log(glucoseData);
 
   return (
+    <Layout>
     <div className="overflow-auto h-[1000px]">
       <HeaderReport />
       <Navbar />
@@ -223,6 +225,7 @@ const ReportPage = () => {
         <></>
       )}
     </div>
+    </Layout>
   );
 };
 export default ReportPage;

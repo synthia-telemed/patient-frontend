@@ -8,6 +8,7 @@ import PrivacyIcon from "../../Assets/UserSetting/privacy.svg";
 import Navbar from "../../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import Layout from "../../components/Layout";
 
 const UserSettingPage = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const UserSettingPage = () => {
     });
   };
   return (
+    <Layout>
     <div className="mt-[71px]">
       <div className="px-[16px] h-[80vh]">
         <div className="flex h-[75px]">
@@ -57,6 +59,7 @@ const UserSettingPage = () => {
       </div>
       <Navbar />
     </div>
+    </Layout>
   );
 };
 export default UserSettingPage;
