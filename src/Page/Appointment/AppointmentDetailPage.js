@@ -12,7 +12,6 @@ import AppointmentWaitingIcon from "../../Assets/Appointment/appointment_waiting
 import NextAppointment from "../../components/Appointment/NextAppointment";
 import MedicineAndRecieptTab from "../../components/Appointment/MedicineAndRecieptTab";
 import useAPI from "../../hooks/useAPI";
-import Layout from "../../components/Layout";
 const AppointmentDetailPage = () => {
   dayjs.extend(utc);
   const { state } = useLocation();
@@ -53,7 +52,7 @@ const AppointmentDetailPage = () => {
     return null;
   };
   return (
-    <Layout>
+    <div>
       <div className="mb-[24px]">
         <HeaderWithBack textHeader="Appointment detail" path="/history" />
         <AppointmentDetailCard
@@ -170,7 +169,7 @@ const AppointmentDetailPage = () => {
           <></>
         )}
       </div>
-    </Layout>
+    </div>
   );
 };
 export default AppointmentDetailPage;

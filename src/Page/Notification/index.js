@@ -6,7 +6,6 @@ import useAPI from "../../hooks/useAPI";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import Layout from '../../components/Layout';
 
 dayjs.extend(relativeTime);
 
@@ -25,7 +24,7 @@ const NotificationPage = () => {
   };
 
   return (
-    <Layout>
+    <div>
       <NotificationHeader onSetAllAsRead={onSetAllAsRead} />
       {notifications.map(noti => {
         return (
@@ -38,7 +37,7 @@ const NotificationPage = () => {
           />
         );
       })}
-    </Layout>
+    </div>
   );
 };
 export default NotificationPage;

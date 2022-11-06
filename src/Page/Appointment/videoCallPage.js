@@ -3,7 +3,6 @@ import io from "socket.io-client";
 import Peer from "simple-peer";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Layout from "../../components/Layout";
 
 const VideoCallPage = () => {
   const [isMicOn, setIsMicOn] = useState(false);
@@ -220,61 +219,61 @@ const VideoCallPage = () => {
   };
 
   return (
-    <Layout>
-    <div className="h-screen w-screen">
-      <video
-        className={`absolute top-[5%] right-[10%] w-[120px] h-[200px] object-cover ${
-          blur ? "" : "z-10"
-        } `}
-        playsInline
-        autoPlay
-        ref={localVideo}
-        muted
-      ></video>
-      {isMicOn ? (
-        <></>
-      ) : (
-        <div className="absolute top-[23%] right-[30%] z-10">
-          <MicrophoneOffIcon color="red" />
-        </div>
-      )}
-      <video
-        className="absolute top-[0%] right-[0%] w-screen h-screen object-cover"
-        playsInline
-        autoPlay
-        ref={remoteVideo}
-      ></video>
-      <div
-        className={`flex justify-between absolute w-[244px] top-[80%] left-[50%] transform translate-y-[-50%] translate-x-[-50%] ${
-          blur ? "z-[-10]" : ""
-        } `}
-      >
-        <button
-          onClick={onToggleCamera}
-          className="bg-[#131517A1] rounded-[32px] w-[48px] h-[48px] background-blur-[3px] flex justify-center items-center"
-        >
-          {isCameraOn ? <VideoCallOnIcon /> : <VideoCallOffIcon />}
-        </button>
-        <button
-          onClick={onToggleMic}
-          className="bg-[#131517A1] rounded-[32px] w-[48px] h-[48px] background-blur-[3px] flex justify-center items-center"
-        >
-          {isMicOn ? <MicrophoneOnIcon /> : <MicrophoneOffIcon color="white" />}
-        </button>
-      </div>
-      {blur ? (
-        <>
-          <div className=" absolute blur-[40px] bg-base-white/30 text-primary-900 w-screen h-screen flex items-center justify-center"></div>
-          <div className="absolute h-screen w-screen flex justify-center items-center flex-col  text-base-white">
-            <h1 className="z-15 relative typographyHeadingSmMedium">Call Ended</h1>
-            <h1 className="z-15 relative typographyHeadingSmMedium">15:20</h1>
+    <div>
+      <div className="h-screen w-screen">
+        <video
+          className={`absolute top-[5%] right-[10%] w-[120px] h-[200px] object-cover ${
+            blur ? "" : "z-10"
+          } `}
+          playsInline
+          autoPlay
+          ref={localVideo}
+          muted
+        ></video>
+        {isMicOn ? (
+          <></>
+        ) : (
+          <div className="absolute top-[23%] right-[30%] z-10">
+            <MicrophoneOffIcon color="red" />
           </div>
-        </>
-      ) : (
-        <></>
-      )}
+        )}
+        <video
+          className="absolute top-[0%] right-[0%] w-screen h-screen object-cover"
+          playsInline
+          autoPlay
+          ref={remoteVideo}
+        ></video>
+        <div
+          className={`flex justify-between absolute w-[244px] top-[80%] left-[50%] transform translate-y-[-50%] translate-x-[-50%] ${
+            blur ? "z-[-10]" : ""
+          } `}
+        >
+          <button
+            onClick={onToggleCamera}
+            className="bg-[#131517A1] rounded-[32px] w-[48px] h-[48px] background-blur-[3px] flex justify-center items-center"
+          >
+            {isCameraOn ? <VideoCallOnIcon /> : <VideoCallOffIcon />}
+          </button>
+          <button
+            onClick={onToggleMic}
+            className="bg-[#131517A1] rounded-[32px] w-[48px] h-[48px] background-blur-[3px] flex justify-center items-center"
+          >
+            {isMicOn ? <MicrophoneOnIcon /> : <MicrophoneOffIcon color="white" />}
+          </button>
+        </div>
+        {blur ? (
+          <>
+            <div className=" absolute blur-[40px] bg-base-white/30 text-primary-900 w-screen h-screen flex items-center justify-center"></div>
+            <div className="absolute h-screen w-screen flex justify-center items-center flex-col  text-base-white">
+              <h1 className="z-15 relative typographyHeadingSmMedium">Call Ended</h1>
+              <h1 className="z-15 relative typographyHeadingSmMedium">15:20</h1>
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
+      </div>
     </div>
-    </Layout>
   );
 };
 

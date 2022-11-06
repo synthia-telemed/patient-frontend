@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { css } from "styled-components";
 import { PaymentInputsWrapper, usePaymentInputs } from "react-payment-inputs";
 import useAPI from "../../hooks/useAPI";
-import Layout from "../../components/Layout";
 import images from "react-payment-inputs/images";
 const CreditCardDetail = () => {
   const {
@@ -39,7 +38,7 @@ const CreditCardDetail = () => {
     navigate("/setting/credit-card");
   };
   return (
-    <Layout>
+    <div>
       <HeaderWithBack textHeader="Credit card" path="/setting/credit-card" />
       <div className="px-[16px]">
         <h1 className="mt-[16px] mb-[6px] typographyTextSmMedium text-gray-700">
@@ -96,7 +95,7 @@ const CreditCardDetail = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 export default CreditCardDetail;

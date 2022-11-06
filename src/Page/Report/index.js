@@ -7,7 +7,6 @@ import BadgeStatus from "../../components/Appointment/BadgeStatus";
 import ReportTab from "../../components/ReportComponent/ReportTab";
 import dayjs from "dayjs";
 import useApiMeasurement from "../../hooks/useApiMeasurement";
-import Layout from "../../components/Layout";
 import {
   BarChart,
   Bar,
@@ -80,7 +79,7 @@ const ReportPage = () => {
   }, [showModal]);
 
   return (
-    <Layout>
+    <div>
       <div className="overflow-auto h-[1000px]">
         <HeaderReport />
         <Navbar />
@@ -231,7 +230,7 @@ const ReportPage = () => {
           <></>
         )}
       </div>
-    </Layout>
+    </div>
   );
 };
 export default ReportPage;

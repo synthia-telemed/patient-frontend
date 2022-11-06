@@ -12,6 +12,7 @@ import JCBIcon from "../../Assets/Payment/jcb.svg";
 import VisaIcon from "../../Assets/Payment/visa.svg";
 import useAPI from "../../hooks/useAPI";
 
+
 const SummaryReciept = () => {
   const { state } = useLocation();
   const navigate = useNavigate();

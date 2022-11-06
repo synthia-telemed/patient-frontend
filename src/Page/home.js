@@ -8,7 +8,6 @@ import AppointmentDetailCard from "../components/Appointment/AppointmentDetailCa
 import Navbar from "../components/Navbar";
 import useAPI from "../hooks/useAPI";
 import EmptyStatusIcon from "../Assets/Home/EmptyStatus.svg";
-import Layout from "../components/Layout";
 
 const mapState = state => ({
   user: state.user
@@ -61,12 +60,12 @@ const HomePage = props => {
   };
   const getName = async () => {
     const res = await apiDefault.get("/info/name");
-    setName(res.data)
-    console.log(res.data)
+    setName(res.data);
+    console.log(res.data);
   };
   console.log(props.user);
   return (
-    <Layout>
+    <div>
       <div>
         <div className=" flex justify-between mt-[56px] px-[17px]  w-full">
           <div className="w-[173px]">
@@ -109,7 +108,7 @@ const HomePage = props => {
           </h1>
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 export default connect(mapState)(HomePage);
