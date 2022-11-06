@@ -2,7 +2,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 const useAPI = () => {
-  const tokenJWT = localStorage.getItem("CapacitorStorage.token");
+  const { tokenJWT } = useSelector(state => state.user);
   const instance = axios.create({
     baseURL: "https://api.synthia.tech/patient/api",
     withCredentials: false
