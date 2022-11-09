@@ -2,29 +2,26 @@ import { useState, React, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import HeaderReport from "../../components/ReportComponent/HeaderReport";
 import FloatingButton from "../../components/ReportComponent/FloatingButton";
-import { DateTimePicker } from "@material-ui/pickers";
+import { DateTimePicker, DatePicker } from "@material-ui/pickers";
 import BadgeStatus from "../../components/Appointment/BadgeStatus";
 import ReportTab from "../../components/ReportComponent/ReportTab";
 import dayjs from "dayjs";
 import useApiMeasurement from "../../hooks/useApiMeasurement";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  LabelList
-} from "recharts";
+import LeftArrow from "../../Assets/arrow-left.svg";
+import RightArrow from "../../Assets/right_arrow_icon.svg";
+import DayTab from "./DayTab";
+import WeekTab from "./WeekTab";
+import MonthTab from "./MonthTab";
 
 const ReportPage = () => {
   const [showModal, setShowModal] = useState(false);
+  const [panel, setPanel] = useState("Day");
   const [bloodPressureData, setBloodPressureData] = useState([]);
   const [apiDefault] = useApiMeasurement();
   const current = new Date();
-  const barColors = ["#1f77b4", "#ff7f0e", "#2ca02c"];
+  // const barColors = ["#1f77b4", "#ff7f0e", "#2ca02c"];
   const [selectedDate, handleDateChange] = useState(new Date(current));
+  const [date, setDate] = useState("");
   const { unit2, data2, x_label2, ticks2, isNumerical2 } = {
     unit2: "mg/dL",
     isNumerical2: false,
@@ -70,6 +67,37 @@ const ReportPage = () => {
     });
     setBloodPressureData(res.data);
   };
+  const addDate = () => {
+    handleDateChange(dayjs(selectedDate).add(1, "day"));
+  };
+  const subtractDate = () => {
+    handleDateChange(dayjs(selectedDate).subtract(1, "day"));
+  };
+  const ButtonPanel = ({ text }) => {
+    return (
+      <div
+        className={`w-[109px] h-[36px] mx-[0.5rem] text-center ${
+          panel === text
+            ? "bg-primary-50 text-primary-500"
+            : "bg-base-white text-gray-500"
+        } rounded-[6px] mt-[16px]`}
+        onClick={() => setPanel(text)}
+      >
+        <h1 className="flex items-center w-full h-full justify-center typographyTextSmSemibold ">
+          {text}
+        </h1>
+      </div>
+    );
+  };
+  const PanelReport = () => {
+    return (
+      <div className="flex w-full justify-center ">
+        <ButtonPanel text="Day" />
+        <ButtonPanel text="Week" />
+        <ButtonPanel text="Month" />
+      </div>
+    );
+  };
 
   useEffect(() => {
     fetchBloodPressure();
@@ -84,64 +112,46 @@ const ReportPage = () => {
         <HeaderReport />
         <Navbar />
         <FloatingButton onClick={onClickReportMeasure} />
-        <div className="px-[16px] mt-[16px]">
-          <h1 className="typographyTextXlSemibold">Blood Pressure</h1>
-          <h1 className="typographyTextSmMedium text-gray-600">Total avg this day</h1>
-          <div className="flex items-center mt-[5px]">
-            <h1 className="typographyHeadingXsSemibold text-success-700 mr-[16px] mb-[19px]">
-              120/80 <span className="typographyTextSmMedium text-gray-600">mmHg</span>
-            </h1>
-            <BadgeStatus text="Normal" style="bg-success-50 text-success-700" />
-          </div>
-          <ResponsiveContainer width="100%" height={240} className="ml-[-16px]">
-            <BarChart
-              width={830}
-              height={250}
-              data={bloodPressureData.data}
-              className="mt-[5px]"
-            >
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey="label"
-                // label={glucoseData.xLabel}
-                ticks={bloodPressureData.isNumerical ? [0, 360, 720, 1080, 1440] : null}
-                axisLine={false}
-                className="typographyTextXsMedium"
-                tickFormatter={
-                  bloodPressureData.isNumerical ? t => `${Math.floor(t / 60)}:00` : t => t
-                }
-                type={bloodPressureData.isNumerical ? "number" : "category"}
-              />
-              <YAxis
-                domain={[0, 200]}
-                axisLine={false}
-                className="typographyTextXsMedium"
-              />
-              <Tooltip />
-              <Bar barSize={10} dataKey="values" fill="fill" radius={30}>
-                <LabelList
-                  className="typographyTextXsMedium"
-                  width={20}
-                  dataKey="values"
-                  formatter={v => `${v[1]} ${bloodPressureData.unit}`}
-                  position="top"
-                />
-                <LabelList
-                  className="typographyTextXsMedium"
-                  width={20}
-                  dataKey="values"
-                  formatter={v => `${v[0]} ${bloodPressureData.unit}`}
-                  position="bottom"
-                />
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-          <h1 className="typographyTextXsMedium text-gray-500 text-center">
-            {bloodPressureData.xLabel}
+        <div className="flex width-[100vw] justify-between mt-[18px] px-[16px]">
+          <img
+            src={LeftArrow}
+            alt=""
+            onClick={() => {
+              subtractDate();
+            }}
+          />
+          <h1 className="text-gray-600 typographyTextSmMedium">
+            {" "}
+            {panel === "Week"
+              ? dayjs(selectedDate).subtract(7, "day").format("DD MMMM YYYY") +
+                " - " +
+                dayjs(selectedDate).format("DD MMMM YYYY")
+              : panel === "Month"
+              ? dayjs(selectedDate).subtract(1, "month").format("DD MMMM YYYY") +
+                " - " +
+                dayjs(selectedDate).format("DD MMMM YYYY")
+              : dayjs(selectedDate).format("DD MMMM YYYY")}
           </h1>
+          <img
+            src={RightArrow}
+            alt=""
+            onClick={() => {
+              addDate();
+            }}
+          />
         </div>
+        <PanelReport />
+        {panel === "Day" ? (
+          <DayTab bloodPressureData={bloodPressureData} />
+        ) : panel === "Week" ? (
+          <WeekTab bloodPressureData={bloodPressureData} />
+        ) : panel === "Month" ? (
+          <MonthTab />
+        ) : (
+          <>Error 404</>
+        )}
 
-        <div className="px-[16px] mt-[16px]">
+        {/* <div className="px-[16px] mt-[16px]">
           <h1 className="typographyTextXlSemibold">Glucose Level</h1>
           <h1 className="typographyTextSmMedium text-gray-600">Total avg this day</h1>
           <div className="flex items-center mt-[5px]">
@@ -186,7 +196,7 @@ const ReportPage = () => {
             </BarChart>
           </ResponsiveContainer>
           <h1 className="typographyTextXsMedium text-gray-500 text-center">days</h1>
-        </div>
+        </div> */}
         {showModal ? (
           <>
             {" "}
