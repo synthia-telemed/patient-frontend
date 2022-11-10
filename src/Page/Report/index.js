@@ -73,6 +73,18 @@ const ReportPage = () => {
   const subtractDate = () => {
     handleDateChange(dayjs(selectedDate).subtract(1, "day"));
   };
+  const addWeekDate = () => {
+    handleDateChange(dayjs(selectedDate).add(7, "day"));
+  };
+  const subtractWeekDate = () => {
+    handleDateChange(dayjs(selectedDate).subtract(7, "day"));
+  };
+  const addMonthDate = () => {
+    handleDateChange(dayjs(selectedDate).add(1, "month"));
+  };
+  const subtractMonthDate = () => {
+    handleDateChange(dayjs(selectedDate).subtract(1, "month"));
+  };
   const ButtonPanel = ({ text }) => {
     return (
       <div
@@ -98,13 +110,51 @@ const ReportPage = () => {
       </div>
     );
   };
-
+  const formatTodayDayjs = () => {
+    return dayjs(selectedDate).isSame(current,"day")
+      ? "Today " + dayjs(selectedDate).format("MMM YYYY")
+      : dayjs(selectedDate).format("DD MMM YYYY");
+  };
+  const formatTodayWeekjs = () => {
+    return dayjs(selectedDate).subtract(7, "day").isSame(current, "day")
+      ? "Today " +
+          dayjs(selectedDate).subtract(7, "day").format("MMM YYYY") +
+          " - " +
+          dayjs(selectedDate).format("DD MMM YYYY")
+      : dayjs(selectedDate).isSame(current, "day")
+      ? dayjs(selectedDate).subtract(7, "day").format("DD MMM YYYY") +
+        " - " +
+        "Today " +
+        dayjs(selectedDate).format("MMM YYYY")
+      : dayjs(selectedDate).subtract(7, "day").format("DD MMM YYYY") +
+        " - " +
+        dayjs(selectedDate).format("DD MMM YYYY");
+  };
+  const formatTodayMonthjs = () => {
+    return dayjs(selectedDate).subtract(1, "month").isSame(current, "day")
+      ? "Today " +
+          dayjs(selectedDate).subtract(1, "month").format("MMM YYYY") +
+          " - " +
+          dayjs(selectedDate).format("DD MMM YYYY")
+      : dayjs(selectedDate).isSame(current, "day")
+      ? dayjs(selectedDate).subtract(1, "month").format("DD MMM YYYY") +
+        " - " +
+        "Today " +
+        dayjs(selectedDate).format("MMM YYYY")
+      : dayjs(selectedDate).subtract(1, "month").format("DD MMM YYYY") +
+        " - " +
+        dayjs(selectedDate).format("DD MMM YYYY");
+  };
   useEffect(() => {
     fetchBloodPressure();
   }, []);
   useEffect(() => {
     fetchBloodPressure();
   }, [showModal]);
+
+  useEffect(() => {
+    handleDateChange(current);
+  }, [panel]);
 
   return (
     <div>
@@ -117,26 +167,30 @@ const ReportPage = () => {
             src={LeftArrow}
             alt=""
             onClick={() => {
-              subtractDate();
+              panel === "Week"
+                ? subtractWeekDate()
+                : panel === "Month"
+                ? subtractMonthDate()
+                : subtractDate();
             }}
           />
           <h1 className="text-gray-600 typographyTextSmMedium">
             {" "}
             {panel === "Week"
-              ? dayjs(selectedDate).subtract(7, "day").format("DD MMMM YYYY") +
-                " - " +
-                dayjs(selectedDate).format("DD MMMM YYYY")
+              ? formatTodayWeekjs()
               : panel === "Month"
-              ? dayjs(selectedDate).subtract(1, "month").format("DD MMMM YYYY") +
-                " - " +
-                dayjs(selectedDate).format("DD MMMM YYYY")
-              : dayjs(selectedDate).format("DD MMMM YYYY")}
+              ? formatTodayMonthjs()
+              : formatTodayDayjs()}
           </h1>
           <img
             src={RightArrow}
             alt=""
             onClick={() => {
-              addDate();
+              panel === "Week"
+                ? addWeekDate()
+                : panel === "Month"
+                ? addMonthDate()
+                : addDate();
             }}
           />
         </div>
@@ -146,57 +200,11 @@ const ReportPage = () => {
         ) : panel === "Week" ? (
           <WeekTab bloodPressureData={bloodPressureData} />
         ) : panel === "Month" ? (
-          <MonthTab />
+          <MonthTab bloodPressureData={bloodPressureData} />
         ) : (
           <>Error 404</>
         )}
 
-        {/* <div className="px-[16px] mt-[16px]">
-          <h1 className="typographyTextXlSemibold">Glucose Level</h1>
-          <h1 className="typographyTextSmMedium text-gray-600">Total avg this day</h1>
-          <div className="flex items-center mt-[5px]">
-            <h1 className="typographyHeadingXsSemibold text-success-700 mr-[16px] mb-[19px]">
-              130
-              <span className="typographyTextSmMedium text-gray-600 ml-[4px]">mg/dL</span>
-            </h1>
-            <BadgeStatus text="Normal" style="bg-success-50 text-success-700" />
-          </div>
-          <ResponsiveContainer width="100%" height={240} className="ml-[-16px] ">
-            <BarChart
-              width={830}
-              height={250}
-              data={data2}
-              className="mt-[5px] z-1 relative"
-            >
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey="label"
-                label={x_label2}
-                ticks={ticks2}
-                axisLine={false}
-                className="typographyTextXsMedium"
-                tickFormatter={isNumerical2 ? t => `${Math.floor(t / 60)}:00` : t => t}
-                type={isNumerical2 ? "number" : "category"}
-              />
-              <YAxis
-                domain={[0, 200]}
-                axisLine={false}
-                className="typographyTextXsMedium"
-              />
-              <Tooltip wrapperStyle={{ zIndex: 1000 }} />
-              <Bar barSize={10} dataKey="values" fill="#8884d8" radius={30}>
-                <LabelList
-                  className="typographyTextXsMedium"
-                  width={20}
-                  dataKey="values"
-                  formatter={v => `${v[0]} ${unit2}`}
-                  position="top"
-                />
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-          <h1 className="typographyTextXsMedium text-gray-500 text-center">days</h1>
-        </div> */}
         {showModal ? (
           <>
             {" "}

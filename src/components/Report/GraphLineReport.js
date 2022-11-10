@@ -1,6 +1,5 @@
 import {
-  BarChart,
-  Bar,
+  LineChart,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -11,15 +10,20 @@ import {
   Legend,
   Line
 } from "recharts";
-import { useState } from "react";
 import BadgeStatus from "../Appointment/BadgeStatus";
-const GraphBarReport = ({ bloodPressureData, name }) => {
-  const [valueGraph, setValueGraph] = useState("");
-  console.log(bloodPressureData)
+const GraphLineReport = ({ bloodPressureData,name }) => {
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
-      setValueGraph(payload[0].value);
-      return <div className=""></div>;
+      return (
+        <div>
+          {/* {payload[0].name} */}
+          Blood Pressure
+          <br />
+          {payload[0].value[0].toFixed(2)}
+          <br />
+          {payload[0].value[1].toFixed(2)}
+        </div>
+      );
     }
     return null;
   };
@@ -27,19 +31,14 @@ const GraphBarReport = ({ bloodPressureData, name }) => {
     <div className="px-[16px] mt-[24px]">
       <h1 className="typographyTextXlSemibold">{name}</h1>
       <h1 className="typographyTextSmMedium text-gray-600">Current Level</h1>
-      <div className="flex items-center  mt-[5px]">
+      <div className="flex items-center mt-[5px]">
         <h1 className="typographyHeadingXsSemibold text-success-700 mr-[16px]">
           120/80 <span className="typographyTextSmMedium text-gray-600">mmHg</span>
         </h1>
         <BadgeStatus text="Normal" style="bg-success-50 text-success-700" />
       </div>
-      <div>
-        {valueGraph ? parseFloat(valueGraph[0]).toFixed(2) : ""}
-        <br />
-        {valueGraph ? parseFloat(valueGraph[1]).toFixed(2) : ""}
-      </div>
       <ResponsiveContainer width="100%" height={240} className="ml-[-16px]">
-        <BarChart
+        <LineChart
           width={830}
           height={250}
           data={bloodPressureData.data}
@@ -61,34 +60,30 @@ const GraphBarReport = ({ bloodPressureData, name }) => {
           <ReferenceLine y={60} stroke="red" />
 
           <YAxis domain={[0, 200]} axisLine={false} className="typographyTextXsMedium" />
-          <Tooltip
-            content={<CustomTooltip />}
-            active={false}
-            cursor={{ fill: "transparent" }}
-          />
+          <Tooltip content={<CustomTooltip />} />
           <Legend
             layout="horizontal"
             verticalAlign="top"
             align="right"
             iconType="circle"
           />
-          <Bar barSize={10} dataKey="values" fill="fill" radius={30}>
+          <Line dataKey="values" fill="fill" radius={30}>
             <LabelList
               className="typographyTextXsMedium"
               width={20}
               dataKey="values"
-              formatter={v => `${v[1].toFixed(2)} ${bloodPressureData.unit}`}
+              formatter={v => `${v[1]} ${bloodPressureData.unit}`}
               position="top"
             />
             <LabelList
               className="typographyTextXsMedium"
               width={20}
               dataKey="values"
-              formatter={v => `${v[0].toFixed(2)} ${bloodPressureData.unit}`}
+              formatter={v => `${v[0]} ${bloodPressureData.unit}`}
               position="bottom"
             />
-          </Bar>
-        </BarChart>
+          </Line>
+        </LineChart>
       </ResponsiveContainer>
       <h1 className="typographyTextXsMedium text-gray-500 text-center">
         {bloodPressureData.xLabel}
@@ -96,4 +91,4 @@ const GraphBarReport = ({ bloodPressureData, name }) => {
     </div>
   );
 };
-export default GraphBarReport;
+export default GraphLineReport;
