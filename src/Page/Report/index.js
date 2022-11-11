@@ -214,9 +214,9 @@ const ReportPage = () => {
         {panel === "Day" ? (
           <DayTab bloodPressureData={bloodPressureData} pulseData={pulseData}  />
         ) : panel === "Week" ? (
-          <WeekTab bloodPressureData={bloodPressureData} />
+          <WeekTab bloodPressureData={bloodPressureData} pulseData={pulseData} />
         ) : panel === "Month" ? (
-          <MonthTab bloodPressureData={bloodPressureData} />
+          <MonthTab bloodPressureData={bloodPressureData} pulseData={pulseData}/>
         ) : (
           <>Error 404</>
         )}

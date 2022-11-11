@@ -1,11 +1,11 @@
 import GraphBarReport from "../../components/Report/GraphBarReport";
 import GraphLineReport from "../../components/Report/GraphLineReport";
 import EmptyGraph from "../../Assets/Report/empty_graph.svg";
-const WeekTab = ({ bloodPressureData }) => {
+const WeekTab = ({ bloodPressureData, pulseData }) => {
   return (
     <div className="px-[16px] mt-[16px] mb-[100px]">
       {/* <GraphLineReport data={bloodPressureData} name="Glucose" /> */}
-      {bloodPressureData?.data?.length === 0 ? (
+      {bloodPressureData?.data?.length === 0 && pulseData?.data?.length === 0 ? (
         <div className="flex flex-col justify-center items-center h-[50vh]">
           {" "}
           <img src={EmptyGraph} width="218px" height="148px" alt="" />{" "}
@@ -35,7 +35,19 @@ const WeekTab = ({ bloodPressureData }) => {
           }
         />
       )}
-      {/* <GraphBarReport data={bloodPressureData} name="Pulse" /> */}
+      {pulseData?.data?.length === 0 ? (
+        <></>
+      ) : (
+        <GraphBarReport
+          data={pulseData}
+          name="Pulse"
+          isLegend={true}
+          panel="Week"
+          isHaveLastLabelList={false}
+          summaryValue={parseFloat(pulseData?.summary?.pulse).toFixed(2) + " "}
+          detailGraph="Total avg this day"
+        />
+      )}
     </div>
   );
 };
