@@ -20,10 +20,21 @@ const GraphBarReport = ({
   isLegend,
   detailGraph,
   summaryValue,
-  isHaveLastLabelList
+  isHaveLastLabelList,
+  panel
 }) => {
   const [valueGraph, setValueGraph] = useState("");
-  const barColors = ["#3F6CCA", "#203B73", "#4F84F6"];
+  const barColors = [
+    "#3F6CCA",
+    "#203B73",
+    "#4F84F6",
+    "#3F6CCA",
+    "#203B73",
+    "#4F84F6",
+    "#3F6CCA",
+    "#203B73",
+    "#4F84F6"
+  ];
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       setValueGraph(payload[0].value);
@@ -86,8 +97,11 @@ const GraphBarReport = ({
             className="typographyTextXsMedium"
             tick={{ fontSize: 12 }}
             tickFormatter={
-              // bloodPressureData.isNumerical ? t => `${Math.floor(t / 60)}:00` : t => t
-              t => dayjs.unix(t).format("HH:mm")
+              panel === "Day"
+                ? t => dayjs.unix(t).format("HH:mm")
+                : panel === "Week"
+                ? t => dayjs.unix(t).format("ddd")
+                : t => dayjs.unix(t).format("DD MMM")
             }
             type={"number"}
             // type={bloodPressureData.isNumerical ? "number" : "category"}
@@ -116,9 +130,9 @@ const GraphBarReport = ({
             <></>
           )}
           <Bar barSize={10} dataKey="values" radius={30}>
-          {data&&data.data&&data?.data.map((entry, index) => (
-            <Cell fill={barColors[index]}/>
-        ))}
+            {data &&
+              data.data &&
+              data?.data.map((entry, index) => <Cell fill={barColors[index]} />)}
             <LabelList
               className="typographyTextXsMedium"
               width={20}

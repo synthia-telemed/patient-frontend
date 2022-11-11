@@ -95,6 +95,8 @@ const ReportPage = () => {
   const subtractMonthDate = () => {
     handleDateChange(dayjs(selectedDate).subtract(1, "month"));
   };
+  console.log(pulseData)
+  console.log(bloodPressureData , 'bloodPressure')
   const ButtonPanel = ({ text }) => {
     return (
       <div

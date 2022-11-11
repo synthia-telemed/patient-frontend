@@ -24,6 +24,7 @@ const DayTab = ({ bloodPressureData, pulseData }) => {
           isLegend={false}
           detailGraph="Total avg this day"
           isHaveLastLabelList={true}
+          panel="Day"
           summaryValue={
             parseFloat(bloodPressureData?.summary?.systolic).toFixed(2) +
             " / " +
@@ -39,6 +40,7 @@ const DayTab = ({ bloodPressureData, pulseData }) => {
           data={pulseData}
           name="Pulse"
           isLegend={true}
+          panel="Day"
           isHaveLastLabelList={false}
           summaryValue={parseFloat(pulseData?.summary?.pulse).toFixed(2) + " "}
           detailGraph="Total avg this day"
