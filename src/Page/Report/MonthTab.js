@@ -3,9 +3,9 @@ import GraphLineReport from "../../components/Report/GraphLineReport";
 const MonthTab = ({ bloodPressureData }) => {
   return (
     <div className="px-[16px] mt-[16px] mb-[100px]">
-      <GraphLineReport bloodPressureData={bloodPressureData} name="Glucose" />
-      <GraphBarReport bloodPressureData={bloodPressureData} name="Blood Pressure" />
-      <GraphBarReport bloodPressureData={bloodPressureData} name="Pulse" />
+      <GraphLineReport data={bloodPressureData} name="Glucose" />
+      <GraphBarReport data={bloodPressureData} name="Blood Pressure" />
+      <GraphBarReport data={bloodPressureData} name="Pulse" />
     </div>
   );
 };

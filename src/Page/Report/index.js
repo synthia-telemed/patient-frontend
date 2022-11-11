@@ -17,11 +17,11 @@ const ReportPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [panel, setPanel] = useState("Day");
   const [bloodPressureData, setBloodPressureData] = useState([]);
+  const [pulseData, setPulseData] = useState([]);
   const [apiDefault] = useApiMeasurement();
   const current = new Date();
-  // const barColors = ["#1f77b4", "#ff7f0e", "#2ca02c"];
   const [selectedDate, handleDateChange] = useState(new Date(current));
-  const [date, setDate] = useState("");
+
   const { unit2, data2, x_label2, ticks2, isNumerical2 } = {
     unit2: "mg/dL",
     isNumerical2: false,
@@ -60,12 +60,22 @@ const ReportPage = () => {
     setShowModal(false);
   };
   const fetchBloodPressure = async () => {
-    const query = { granularity: "month", date: current.toISOString() };
+    console.log(panel.toLowerCase());
+    const query = { granularity: panel.toLowerCase(), date: selectedDate.toISOString() };
     console.log(current.toISOString());
     const res = await apiDefault.get("/blood-pressure/visualization/patient", {
       params: query
     });
     setBloodPressureData(res.data);
+  };
+  const fetchPulsePressure = async () => {
+    console.log(panel.toLowerCase());
+    const query = { granularity: panel.toLowerCase(), date: selectedDate.toISOString() };
+    console.log(current.toISOString());
+    const res = await apiDefault.get("/pulse/visualization/patient", {
+      params: query
+    });
+    setPulseData(res.data);
   };
   const addDate = () => {
     handleDateChange(dayjs(selectedDate).add(1, "day"));
@@ -111,7 +121,7 @@ const ReportPage = () => {
     );
   };
   const formatTodayDayjs = () => {
-    return dayjs(selectedDate).isSame(current,"day")
+    return dayjs(selectedDate).isSame(current, "day")
       ? "Today " + dayjs(selectedDate).format("MMM YYYY")
       : dayjs(selectedDate).format("DD MMM YYYY");
   };
@@ -147,18 +157,22 @@ const ReportPage = () => {
   };
   useEffect(() => {
     fetchBloodPressure();
+    fetchPulsePressure();
   }, []);
   useEffect(() => {
     fetchBloodPressure();
-  }, [showModal]);
+    fetchPulsePressure();
+  }, [showModal, selectedDate]);
 
   useEffect(() => {
     handleDateChange(current);
   }, [panel]);
 
+  console.log(pulseData,"pukls");
+
   return (
     <div>
-      <div className="overflow-auto h-[1000px]">
+      <div className={bloodPressureData ? "" : `overflow-auto h-[1000px]`}>
         <HeaderReport />
         <Navbar />
         <FloatingButton onClick={onClickReportMeasure} />
@@ -196,7 +210,7 @@ const ReportPage = () => {
         </div>
         <PanelReport />
         {panel === "Day" ? (
-          <DayTab bloodPressureData={bloodPressureData} />
+          <DayTab bloodPressureData={bloodPressureData} pulseData={pulseData}  />
         ) : panel === "Week" ? (
           <WeekTab bloodPressureData={bloodPressureData} />
         ) : panel === "Month" ? (
