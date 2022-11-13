@@ -17,52 +17,28 @@ const ReportPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [panel, setPanel] = useState("Day");
   const [bloodPressureData, setBloodPressureData] = useState([]);
+  const [glucoseData, setGlucoseData] = useState([]);
   const [pulseData, setPulseData] = useState([]);
   const [apiDefault] = useApiMeasurement();
   const current = new Date();
   const [selectedDate, handleDateChange] = useState(new Date(current));
-
-  const { unit2, data2, x_label2, ticks2, isNumerical2 } = {
-    unit2: "mg/dL",
-    isNumerical2: false,
-    data2: [
-      {
-        label: "S",
-        values: 120
-      },
-      {
-        label: "M"
-      },
-      {
-        label: "T",
-        values: 130
-      },
-      {
-        label: "W"
-      },
-      {
-        label: "T",
-        values: 123
-      },
-      {
-        label: "F"
-      },
-      {
-        label: "S",
-        values: 123
-      }
-    ]
-  };
   const onClickReportMeasure = () => {
     setShowModal(true);
   };
   const onClickCloseModal = () => {
     setShowModal(false);
   };
+  const fetchGlucose = async () => {
+    console.log(panel.toLowerCase());
+    const query = { granularity: panel.toLowerCase(), date: selectedDate.toISOString() };
+    const res = await apiDefault.get("/glucose/visualization/patient", {
+      params: query
+    });
+    setGlucoseData(res.data);
+  };
   const fetchBloodPressure = async () => {
     console.log(panel.toLowerCase());
     const query = { granularity: panel.toLowerCase(), date: selectedDate.toISOString() };
-    console.log(current.toISOString());
     const res = await apiDefault.get("/blood-pressure/visualization/patient", {
       params: query
     });
@@ -71,7 +47,6 @@ const ReportPage = () => {
   const fetchPulsePressure = async () => {
     console.log(panel.toLowerCase());
     const query = { granularity: panel.toLowerCase(), date: selectedDate.toISOString() };
-    console.log(current.toISOString());
     const res = await apiDefault.get("/pulse/visualization/patient", {
       params: query
     });
@@ -95,8 +70,6 @@ const ReportPage = () => {
   const subtractMonthDate = () => {
     handleDateChange(dayjs(selectedDate).subtract(1, "month"));
   };
-  console.log(pulseData)
-  console.log(bloodPressureData , 'bloodPressure')
   const ButtonPanel = ({ text }) => {
     return (
       <div
@@ -160,10 +133,12 @@ const ReportPage = () => {
   useEffect(() => {
     fetchBloodPressure();
     fetchPulsePressure();
+    fetchGlucose();
   }, []);
   useEffect(() => {
     fetchBloodPressure();
     fetchPulsePressure();
+    fetchGlucose();
   }, [showModal, selectedDate]);
 
   useEffect(() => {
@@ -177,7 +152,7 @@ const ReportPage = () => {
       <div className={bloodPressureData ? "" : `overflow-auto h-[1000px]`}>
         <HeaderReport />
         <Navbar />
-        <FloatingButton onClick={onClickReportMeasure} />
+        {/* <FloatingButton onClick={onClickReportMeasure} /> */}
         <div className="flex width-[100vw] justify-between mt-[18px] px-[16px]">
           <img
             src={LeftArrow}
@@ -212,11 +187,11 @@ const ReportPage = () => {
         </div>
         <PanelReport />
         {panel === "Day" ? (
-          <DayTab bloodPressureData={bloodPressureData} pulseData={pulseData}  />
+          <DayTab bloodPressureData={bloodPressureData} pulseData={pulseData} glucoseData={glucoseData}  />
         ) : panel === "Week" ? (
-          <WeekTab bloodPressureData={bloodPressureData} pulseData={pulseData} />
+          <WeekTab bloodPressureData={bloodPressureData} pulseData={pulseData} glucoseData={glucoseData} />
         ) : panel === "Month" ? (
-          <MonthTab bloodPressureData={bloodPressureData} pulseData={pulseData}/>
+          <MonthTab bloodPressureData={bloodPressureData} pulseData={pulseData} glucoseData={glucoseData}/>
         ) : (
           <>Error 404</>
         )}

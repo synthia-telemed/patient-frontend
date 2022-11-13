@@ -1,36 +1,52 @@
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Switch from "react-switch";
 import useAPIMeasureMent from "../../hooks/useApiMeasurement";
 import BeforeMealIcon from "../../Assets/Report/before_meal.svg";
 import AfterMealIcon from "../../Assets/Report/after_meal.svg";
 import DinnerIcon from "../../Assets/Report/dinner.svg";
 import LunchIcon from "../../Assets/Report/lunch-bag.svg";
 import RamenIcon from "../../Assets/Report/ramen.svg";
-const GlucoseTab = ({dateTime,setShowModal}) => {
-  const [meal, setMeal] = useState("beforemeal");
+const GlucoseTab = ({ dateTime, setShowModal }) => {
+  const [period, setPeriod] = useState("BEFORE_MEAL");
   const [apiDefault] = useAPIMeasureMent();
-  const [period, setPeriod] = useState("breakfast");
+  const [checked, setChecked] = useState(false);
+  // const [period, c] = useState("breakfast");
   const {
     register,
     formState: { errors },
     handleSubmit
   } = useForm();
+  const handleChange = nextChecked => {
+    setChecked(nextChecked);
+  };
   const submitGlucose = async value => {
     const body = {
       dateTime: dateTime.toISOString(),
       value: parseInt(value.Glucose),
-      isBeforeMeal: meal==="beforemeal"?true:false,
-      meal: period
+      period: period
     };
     console.log(body);
     const res = await apiDefault.post(`/glucose`, body);
     console.log(res);
     setShowModal();
   };
+  useEffect(() => {
+    if (checked) {
+      setPeriod("FASTING");
+    } else {
+      setPeriod("BEFORE_MEAL");
+    }
+  }, [checked]);
+  useEffect(() => {
+    if (period === "BEFORE_MEAL" || period === "AFTER_MEAL") {
+      setChecked(false);
+    }
+  }, [period]);
   return (
-    <div className="mt-[36px] bg-base-white h-[550px]">
+    <div className="mt-[36px] bg-base-white h-[250px]">
       <form onSubmit={handleSubmit(submitGlucose)}>
-        <h1 className="typographyTextSmMedium text-grey-700 mb-[6px]">Glucose</h1>
+        <h1 className="typographyTextMdSemibold text-grey-700 mb-[6px]">Glucose</h1>
         <input
           {...register("Glucose", {
             required: "Invalid Glucose"
@@ -38,12 +54,14 @@ const GlucoseTab = ({dateTime,setShowModal}) => {
           type="tel"
           className="border-[1px] border-solid border-gray-300 rounded-[4px] h-[40px] mt-[6px] px-[8px] w-[342px]"
         />
-        <h1 className="typographyTextSmMedium text-grey-700 mt-[16px] mb-[8px]">Meal</h1>
+        <h1 className="typographyTextMdSemibold text-grey-700 mt-[16px] mb-[8px]">
+          Meal
+        </h1>
         <div className="flex w-full justify-center px-[16px]">
           <div
-            onClick={() => setMeal("beforemeal")}
+            onClick={() => setPeriod("BEFORE_MEAL")}
             className={`p-[8px] ${
-              meal === "beforemeal"
+              period === "BEFORE_MEAL"
                 ? "bg-gray-200 border-[1.5px] border-solid border-gray-300"
                 : ""
             } w-[102px] h-[104px] flex justify-center items-center flex-col rounded-[8px]  mr-[64px]`}
@@ -54,9 +72,9 @@ const GlucoseTab = ({dateTime,setShowModal}) => {
             </h1>
           </div>
           <div
-            onClick={() => setMeal("aftermeal")}
+            onClick={() => setPeriod("AFTER_MEAL")}
             className={`p-[8px] ${
-              meal === "aftermeal"
+              period === "AFTER_MEAL"
                 ? "bg-gray-200 border-[1.5px] border-solid border-gray-300"
                 : ""
             } w-[102px] h-[104px] flex justify-center items-center flex-col rounded-[8px]`}
@@ -65,11 +83,22 @@ const GlucoseTab = ({dateTime,setShowModal}) => {
             <h1 className="typographyTextSmMedium text-gray-800 mt-[20px]">After Meal</h1>
           </div>
         </div>
+        <div className="flex justify-between mt-[16px]">
+          <h1 className="typographyTextMdSemibold ">Fasting</h1>
+          <Switch
+            onChange={handleChange}
+            checked={checked}
+            checkedIcon={false}
+            uncheckedIcon={false}
+            onColor="#303ED9"
+            offColor="#EAECF0"
+          />
+        </div>
 
-        <h1 className="typographyTextSmMedium text-grey-700 mt-[16px] mb-[8px]">
+        {/* <h1 className="typographyTextSmMedium text-grey-700 mt-[16px] mb-[8px]">
           Period
-        </h1>
-        <div className="flex w-full justify-between ">
+        </h1> */}
+        {/* <div className="flex w-full justify-between ">
           <div
             onClick={() => setPeriod("breakfast")}
             className={`p-[8px] ${
@@ -103,7 +132,7 @@ const GlucoseTab = ({dateTime,setShowModal}) => {
             <img src={DinnerIcon} alt="" />
             <h1 className="typographyTextSmMedium text-gray-800 mt-[20px]">Dinner</h1>
           </div>
-        </div>
+        </div> */}
         <div className="flex justify-center">
           <button
             type="submit"

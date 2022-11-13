@@ -21,6 +21,7 @@ const GraphBarReport = ({
   detailGraph,
   summaryValue,
   isHaveLastLabelList,
+  isHaveTopLabelList,
   panel
 }) => {
   const [valueGraph, setValueGraph] = useState("");
@@ -43,6 +44,7 @@ const GraphBarReport = ({
     return null;
   };
   // console.log(data && data.data && data.length && data.data[0].values, "here");
+  console.log(data.data, "here");
 
   return (
     <div className=" mt-[24px]">
@@ -80,13 +82,22 @@ const GraphBarReport = ({
         <div> {valueGraph ? valueGraph : ""}</div>
       ) : (
         <div>
-          {valueGraph ? parseFloat(valueGraph[0]).toFixed(2) : ""}
+          {valueGraph ? Math.round(valueGraph[0]) : ""}
           <br />
-          {valueGraph ? parseFloat(valueGraph[1]).toFixed(2) : ""}
+          {valueGraph ? Math.round(valueGraph[1]) : ""}
         </div>
       )}
       <ResponsiveContainer width="100%" height={240} className="ml-[-16px]">
-        <BarChart width={830} height={250} data={data?.data} className="mt-[5px]">
+        <BarChart
+          width={830}
+          height={250}
+          data={
+            name === "Glucose"
+              ? data?.data?.beforeMeal
+              : data?.data
+          }
+          className="mt-[5px]"
+        >
           <CartesianGrid vertical={false} />
           <XAxis
             dataKey="label"
@@ -129,30 +140,49 @@ const GraphBarReport = ({
           ) : (
             <></>
           )}
-          <Bar barSize={10} dataKey="values" radius={30}>
-            {data &&
+          <Bar barSize={10} dataKey={name === "Glucose" ? "value" : "values"} radius={30}>
+            {name === "Glucose" &&
+              data &&
               data.data &&
-              data?.data.map((entry, index) => <Cell fill={barColors[index]} />)}
-            <LabelList
-              className="typographyTextXsMedium"
-              width={20}
-              dataKey="values"
-              formatter={
-                data &&
-                data.data &&
-                data.data.length &&
-                data?.data[0].values === parseInt(data?.data[0].values)
-                  ? v => v
-                  : v => `${v[1]?.toFixed(2)} ${data?.unit}`
-              }
-              position="top"
-            />
+              data.data.beforeMeal &&
+              data?.data?.beforeMeal.map((entry, index) => (
+                <Cell
+                  fill={
+                    data &&
+                    data.data &&
+                    data.data.beforeMeal &&
+                    data?.data?.beforeMeal[index].color
+                  }
+                />
+              ))}
+            {name !== "Glucose" &&
+              data &&
+              data?.data &&
+              data?.data.map((entry, index) => <Cell fill={data?.data[index].color} />)}
+            {isHaveTopLabelList ? (
+              <LabelList
+                className="typographyTextXsMedium"
+                width={20}
+                dataKey="values"
+                formatter={
+                  data &&
+                  data?.data &&
+                  data?.data.length &&
+                  data?.data[0].values === parseInt(data?.data[0].values)
+                    ? v => Math.round(v)
+                    : v => `${Math.round(v[1])} ${data?.unit}`
+                }
+                position="top"
+              />
+            ) : (
+              <></>
+            )}
             {isHaveLastLabelList ? (
               <LabelList
                 className="typographyTextXsMedium"
                 width={20}
                 dataKey="values"
-                formatter={v => `${v[0]?.toFixed(2)} ${data?.unit}`}
+                formatter={v => `${Math.round(v[0])} ${data?.unit}`}
                 position="bottom"
               />
             ) : (

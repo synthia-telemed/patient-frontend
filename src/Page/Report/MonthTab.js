@@ -1,7 +1,7 @@
 import GraphBarReport from "../../components/Report/GraphBarReport";
 import GraphLineReport from "../../components/Report/GraphLineReport";
 import EmptyGraph from "../../Assets/Report/empty_graph.svg";
-const MonthTab = ({ bloodPressureData,pulseData }) => {
+const MonthTab = ({ bloodPressureData, pulseData }) => {
   return (
     <div className="px-[16px] mt-[16px] mb-[100px]">
       {/* <GraphLineReport data={bloodPressureData} name="Glucose" /> */}
@@ -22,15 +22,16 @@ const MonthTab = ({ bloodPressureData,pulseData }) => {
       ) : (
         <GraphBarReport
           data={bloodPressureData}
-          name="Glucose"
+          name="Blood Pressure"
           isLegend={false}
           detailGraph="Total avg this day"
-          isHaveLastLabelList={true}
+          isHaveLastLabelList={false}
+          isHaveTopLabelList={false}
           panel="Month"
           summaryValue={
-            parseFloat(bloodPressureData?.summary?.systolic).toFixed(2) +
+            Math.round(bloodPressureData?.summary?.systolic) +
             " / " +
-            parseFloat(bloodPressureData?.summary?.diastolic).toFixed(2) +
+            Math.round(bloodPressureData?.summary?.diastolic) +
             " "
           }
         />
@@ -44,7 +45,8 @@ const MonthTab = ({ bloodPressureData,pulseData }) => {
           isLegend={true}
           panel="Week"
           isHaveLastLabelList={false}
-          summaryValue={parseFloat(pulseData?.summary?.pulse).toFixed(2) + " "}
+          isHaveTopLabelList={false}
+          summaryValue={Math.round(pulseData?.summary?.pulse) + " "}
           detailGraph="Total avg this day"
         />
       )}

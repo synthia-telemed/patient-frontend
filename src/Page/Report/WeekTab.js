@@ -22,15 +22,16 @@ const WeekTab = ({ bloodPressureData, pulseData }) => {
       ) : (
         <GraphBarReport
           data={bloodPressureData}
-          name="Glucose"
+          name="Blood Pressure"
           isLegend={false}
           detailGraph="Total avg this day"
           isHaveLastLabelList={true}
+          isHaveTopLabelList={true}
           panel="Week"
           summaryValue={
-            parseFloat(bloodPressureData?.summary?.systolic).toFixed(2) +
+            Math.round(bloodPressureData?.summary?.systolic) +
             " / " +
-            parseFloat(bloodPressureData?.summary?.diastolic).toFixed(2) +
+            Math.round(bloodPressureData?.summary?.diastolic) +
             " "
           }
         />
@@ -44,7 +45,8 @@ const WeekTab = ({ bloodPressureData, pulseData }) => {
           isLegend={true}
           panel="Week"
           isHaveLastLabelList={false}
-          summaryValue={parseFloat(pulseData?.summary?.pulse).toFixed(2) + " "}
+          isHaveTopLabelList={true}
+          summaryValue={Math.round(pulseData?.summary?.pulse) + " "}
           detailGraph="Total avg this day"
         />
       )}

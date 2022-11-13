@@ -1,9 +1,14 @@
 import GraphBarReport from "../../components/Report/GraphBarReport";
 import EmptyGraph from "../../Assets/Report/empty_graph.svg";
-const DayTab = ({ bloodPressureData, pulseData }) => {
+const DayTab = ({ bloodPressureData, pulseData, glucoseData }) => {
+  console.log(glucoseData);
+  const newGlucoseData = [glucoseData];
+
   return (
     <div className="px-[16px] mt-[16px] mb-[100px]">
-      {bloodPressureData?.data?.length === 0 && pulseData?.data?.length === 0 ? (
+      {bloodPressureData?.data?.length === 0 &&
+      pulseData?.data?.length === 0 &&
+      glucoseData?.data?.length === 0 ? (
         <div className="flex flex-col justify-center items-center h-[50vh]">
           {" "}
           <img src={EmptyGraph} width="218px" height="148px" alt="" />{" "}
@@ -20,15 +25,37 @@ const DayTab = ({ bloodPressureData, pulseData }) => {
       ) : (
         <GraphBarReport
           data={bloodPressureData}
-          name="Glucose"
+          name="Blood Pressure"
           isLegend={false}
           detailGraph="Total avg this day"
           isHaveLastLabelList={true}
+          isHaveTopLabelList={true}
           panel="Day"
           summaryValue={
-            parseFloat(bloodPressureData?.summary?.systolic).toFixed(2) +
+            Math.round(bloodPressureData?.summary?.systolic) +
             " / " +
-            parseFloat(bloodPressureData?.summary?.diastolic).toFixed(2) +
+            Math.round(bloodPressureData?.summary?.diastolic) +
+            " "
+          }
+        />
+      )}
+      {glucoseData?.data?.afterMeal.length === 0 &&
+      glucoseData?.data?.beforeMeal.length === 0 &&
+      glucoseData?.data?.fasting.length === 0 ? (
+        <></>
+      ) : (
+        <GraphBarReport
+          data={glucoseData}
+          name="Glucose"
+          isLegend={false}
+          detailGraph="Total avg this day"
+          isHaveLastLabelList={false}
+          isHaveTopLabelList={true}
+          panel="Day"
+          summaryValue={
+            Math.round(glucoseData?.summary?.systolic) +
+            " / " +
+            Math.round(glucoseData?.summary?.diastolic) +
             " "
           }
         />
@@ -42,7 +69,8 @@ const DayTab = ({ bloodPressureData, pulseData }) => {
           isLegend={true}
           panel="Day"
           isHaveLastLabelList={false}
-          summaryValue={parseFloat(pulseData?.summary?.pulse).toFixed(2) + " "}
+          isHaveTopLabelList={true}
+          summaryValue={Math.round(pulseData?.summary?.pulse) + " "}
           detailGraph="Total avg this day"
         />
       )}

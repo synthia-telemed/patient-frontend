@@ -1,10 +1,24 @@
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import ReportTab from "../components/ReportComponent/ReportTab";
+import FloatingButton from "../components/ReportComponent/FloatingButton";
+import { DateTimePicker } from "@material-ui/pickers";
 
 const Navbar = () => {
   const pathname = window.location.pathname;
+  const [showModal, setShowModal] = useState(false);
+  const current = new Date();
+  const [selectedDate, handleDateChange] = useState(new Date(current));
+  useEffect(() => {}, [showModal]);
+
+  const onClickReportMeasure = () => {
+    setShowModal(true);
+  };
+  const onClickCloseModal = () => {
+    setShowModal(false);
+  };
   const ButtonNavbar = ({ text, textStyle, bgStyle, icon, path, colorIcon, active }) => {
     const navigate = useNavigate();
-
     const ProfileIcon = ({ color }) => {
       return (
         <svg
@@ -239,14 +253,57 @@ const Navbar = () => {
   const componentNav = [
     { label: "Home", link: "/home", page: "Home", icon: "home" },
     { label: "History", link: "/history", page: "History", icon: "history" },
+    { label: "", link: "", page: "", icon: "" },
     { label: "Report", link: "/report", page: "Report", icon: "report" },
     { label: "About", link: "/setting", page: "About", icon: "about" }
   ];
   return (
     <div className="w-screen h-[100px] fixed bottom-[0%] px-[24px] py-[18px] border-t-[1px] border-solid border-gray-100 rounded-bl-[24px] rounded-br-[24px] bg-base-white z-[100] ">
+      {showModal ? (
+        <>
+          {" "}
+          <div className="fixed inset-0 z-50 outline-none focus:outline-none overflow-auto">
+            <div className="absolute bottom-[0%] w-auto mx-auto max-w-3xl ">
+              {/*content*/}
+              <div className="bg-base-white h-[600px] w-screen px-[16px] py-[24px] rounded-tl-[20px] rounded-tr-[20px]">
+                <div className="flex justify-between">
+                  <h1 className="typographyTextLgSemibold">Report Measurement Result</h1>
+                  <span
+                    className="w-[24px] h-[24px] text-gray-600 text-[24px] flex justify-center items-center"
+                    onClick={() => setShowModal(false)}
+                  >
+                    ×
+                  </span>
+                </div>
+                <div className="mt-[12px] ">
+                  <div className="flex items-center ">
+                    <h1 className="typographyTextSmMedium">Date & Time</h1>
+                    <div className="ml-[5px]">
+                      <DateTimePicker
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        inputVariant="outlined"
+                      />
+                    </div>
+                  </div>
+                  <ReportTab
+                    selectedDate={selectedDate}
+                    setShowModal={onClickCloseModal}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="opacity-50 fixed inset-0 z-40 bg-base-white"></div>
+        </>
+      ) : (
+        <></>
+      )}
       <div className="flex justify-between">
         {componentNav.map(item => {
-          return (
+          return item.label === "" ? (
+            <FloatingButton onClick={onClickReportMeasure}/>
+          ) : (
             <ButtonNavbar
               text={item.label}
               key={item.page}
