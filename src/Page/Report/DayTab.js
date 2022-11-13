@@ -20,25 +20,6 @@ const DayTab = ({ bloodPressureData, pulseData, glucoseData }) => {
       ) : (
         <></>
       )}
-      {bloodPressureData?.data?.length === 0 ? (
-        <></>
-      ) : (
-        <GraphBarReport
-          data={bloodPressureData}
-          name="Blood Pressure"
-          isLegend={false}
-          detailGraph="Total avg this day"
-          isHaveLastLabelList={true}
-          isHaveTopLabelList={true}
-          panel="Day"
-          summaryValue={
-            Math.round(bloodPressureData?.summary?.systolic) +
-            " / " +
-            Math.round(bloodPressureData?.summary?.diastolic) +
-            " "
-          }
-        />
-      )}
       {glucoseData?.data?.afterMeal.length === 0 &&
       glucoseData?.data?.beforeMeal.length === 0 &&
       glucoseData?.data?.fasting.length === 0 ? (
@@ -60,13 +41,33 @@ const DayTab = ({ bloodPressureData, pulseData, glucoseData }) => {
           }
         />
       )}
+      {bloodPressureData?.data?.length === 0 ? (
+        <></>
+      ) : (
+        <GraphBarReport
+          data={bloodPressureData}
+          name="Blood Pressure"
+          isLegend={false}
+          detailGraph="Total avg this day"
+          isHaveLastLabelList={true}
+          isHaveTopLabelList={true}
+          panel="Day"
+          summaryValue={
+            Math.round(bloodPressureData?.summary?.systolic) +
+            " / " +
+            Math.round(bloodPressureData?.summary?.diastolic) +
+            " "
+          }
+        />
+      )}
+
       {pulseData?.data?.length === 0 ? (
         <></>
       ) : (
         <GraphBarReport
           data={pulseData}
           name="Pulse"
-          isLegend={true}
+          isLegend={false}
           panel="Day"
           isHaveLastLabelList={false}
           isHaveTopLabelList={true}

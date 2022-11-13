@@ -91,11 +91,7 @@ const GraphBarReport = ({
         <BarChart
           width={830}
           height={250}
-          data={
-            name === "Glucose"
-              ? data?.data?.beforeMeal
-              : data?.data
-          }
+          data={name === "Glucose" ? "" : data?.data}
           className="mt-[5px]"
         >
           <CartesianGrid vertical={false} />
@@ -140,7 +136,12 @@ const GraphBarReport = ({
           ) : (
             <></>
           )}
-          <Bar barSize={10} dataKey={name === "Glucose" ? "value" : "values"} radius={30}>
+          <Bar
+            barSize={10}
+            data={name === "Glucose" ? data?.data?.beforeMeal : ""}
+            dataKey={name === "Glucose" ? "value" : "values"}
+            radius={30}
+          >
             {name === "Glucose" &&
               data &&
               data.data &&

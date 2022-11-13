@@ -10,8 +10,10 @@ import {
   Legend,
   Line
 } from "recharts";
+import dayjs from "dayjs";
 import BadgeStatus from "../Appointment/BadgeStatus";
-const GraphLineReport = ({ bloodPressureData,name }) => {
+const GraphLineReport = ({ data, name, panel }) => {
+  console.log(data, "graph");
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
@@ -30,31 +32,42 @@ const GraphLineReport = ({ bloodPressureData,name }) => {
   return (
     <div className="px-[16px] mt-[24px]">
       <h1 className="typographyTextXlSemibold">{name}</h1>
-      <h1 className="typographyTextSmMedium text-gray-600">Current Level</h1>
       <div className="flex items-center mt-[5px]">
-        <h1 className="typographyHeadingXsSemibold text-success-700 mr-[16px]">
-          120/80 <span className="typographyTextSmMedium text-gray-600">mmHg</span>
+        <h1 className="typographyTextXsMedium text-gray-600">
+          Your Glucose in this week :
         </h1>
-        <BadgeStatus text="Normal" style="bg-success-50 text-success-700" />
+        {data?.summary?.status === "Normal" ? (
+          <BadgeStatus text="Normal" style="bg-success-50 text-success-700" />
+        ) : data?.summary?.status === "Abnormal" ? (
+          <BadgeStatus text="Abnormal" style="bg-error-50 text-error-700" />
+        ) : data?.summary?.status === "Warning" ? (
+          <BadgeStatus text="Warning" style="bg-warning-50 text-warning-700" />
+        ) : (
+          <BadgeStatus text="New" style="bg-primary-50 text-primary-700" />
+        )}
       </div>
       <ResponsiveContainer width="100%" height={240} className="ml-[-16px]">
-        <LineChart
-          width={830}
-          height={250}
-          data={bloodPressureData.data}
-          className="mt-[5px]"
-        >
+        <LineChart width="100%" height={250} className="mt-[5px]">
           <CartesianGrid vertical={false} />
           <XAxis
             dataKey="label"
             // label={glucoseData.xLabel}
-            ticks={bloodPressureData.isNumerical ? [0, 360, 720, 1080, 1440] : null}
+            interval="preserveStartEnd"
+            ticks={data?.ticks}
             axisLine={false}
+            // domain={data?.domain}
+            domain={data?.domain}
+            type="number"
             className="typographyTextXsMedium"
+            tick={{ fontSize: 12 }}
+            width="100%"
             tickFormatter={
-              bloodPressureData.isNumerical ? t => `${Math.floor(t / 60)}:00` : t => t
+              panel === "Day"
+                ? t => dayjs.unix(t).format("HH:mm")
+                : panel === "Week"
+                ? t => dayjs.unix(t).format("ddd")
+                : t => dayjs.unix(t).format("DD MMM")
             }
-            type={bloodPressureData.isNumerical ? "number" : "category"}
           />
           <ReferenceLine y={150} stroke="red" />
           <ReferenceLine y={60} stroke="red" />
@@ -67,27 +80,12 @@ const GraphLineReport = ({ bloodPressureData,name }) => {
             align="right"
             iconType="circle"
           />
-          <Line dataKey="values" fill="fill" radius={30}>
-            <LabelList
-              className="typographyTextXsMedium"
-              width={20}
-              dataKey="values"
-              formatter={v => `${v[1]} ${bloodPressureData.unit}`}
-              position="top"
-            />
-            <LabelList
-              className="typographyTextXsMedium"
-              width={20}
-              dataKey="values"
-              formatter={v => `${v[0]} ${bloodPressureData.unit}`}
-              position="bottom"
-            />
-          </Line>
+          <Line data={data.data.fasting} dataKey="value" radius={30}></Line>
+          <Line data={data.data.beforeMeal} dataKey="value" radius={30}></Line>
+          <Line data={data.data.afterMeal} dataKey="value" radius={30}></Line>
         </LineChart>
       </ResponsiveContainer>
-      <h1 className="typographyTextXsMedium text-gray-500 text-center">
-        {bloodPressureData.xLabel}
-      </h1>
+      <h1 className="typographyTextXsMedium text-gray-500 text-center">{data.xLabel}</h1>
     </div>
   );
 };

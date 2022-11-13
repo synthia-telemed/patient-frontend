@@ -1,7 +1,7 @@
 import GraphBarReport from "../../components/Report/GraphBarReport";
 import GraphLineReport from "../../components/Report/GraphLineReport";
 import EmptyGraph from "../../Assets/Report/empty_graph.svg";
-const MonthTab = ({ bloodPressureData, pulseData }) => {
+const MonthTab = ({ bloodPressureData, pulseData, glucoseData }) => {
   return (
     <div className="px-[16px] mt-[16px] mb-[100px]">
       {/* <GraphLineReport data={bloodPressureData} name="Glucose" /> */}
@@ -17,6 +17,21 @@ const MonthTab = ({ bloodPressureData, pulseData }) => {
       ) : (
         <></>
       )}
+      {glucoseData?.data?.afterMeal.length === 0 &&
+      glucoseData?.data?.beforeMeal.length === 0 &&
+      glucoseData?.data?.fasting.length === 0 ? (
+        <></>
+      ) : (
+        <GraphLineReport
+          data={glucoseData}
+          name="Glucose"
+          isLegend={false}
+          detailGraph="Total avg this month"
+          isHaveLastLabelList={false}
+          isHaveTopLabelList={true}
+          panel=" Month"
+        />
+      )}
       {bloodPressureData?.data?.length === 0 ? (
         <></>
       ) : (
@@ -24,7 +39,7 @@ const MonthTab = ({ bloodPressureData, pulseData }) => {
           data={bloodPressureData}
           name="Blood Pressure"
           isLegend={false}
-          detailGraph="Total avg this day"
+          detailGraph="Total avg this month"
           isHaveLastLabelList={false}
           isHaveTopLabelList={false}
           panel="Month"
@@ -42,12 +57,12 @@ const MonthTab = ({ bloodPressureData, pulseData }) => {
         <GraphBarReport
           data={pulseData}
           name="Pulse"
-          isLegend={true}
+          isLegend={false}
           panel="Week"
           isHaveLastLabelList={false}
           isHaveTopLabelList={false}
           summaryValue={Math.round(pulseData?.summary?.pulse) + " "}
-          detailGraph="Total avg this day"
+          detailGraph="Total avg this month"
         />
       )}
       {/* <GraphBarReport data={bloodPressureData} name="Pulse" /> */}

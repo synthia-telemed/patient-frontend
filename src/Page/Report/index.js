@@ -59,10 +59,10 @@ const ReportPage = () => {
     handleDateChange(dayjs(selectedDate).subtract(1, "day"));
   };
   const addWeekDate = () => {
-    handleDateChange(dayjs(selectedDate).add(7, "day"));
+    handleDateChange(dayjs(selectedDate).add(6, "day"));
   };
   const subtractWeekDate = () => {
-    handleDateChange(dayjs(selectedDate).subtract(7, "day"));
+    handleDateChange(dayjs(selectedDate).subtract(6, "day"));
   };
   const addMonthDate = () => {
     handleDateChange(dayjs(selectedDate).add(1, "month"));
@@ -101,17 +101,17 @@ const ReportPage = () => {
       : dayjs(selectedDate).format("DD MMM YYYY");
   };
   const formatTodayWeekjs = () => {
-    return dayjs(selectedDate).subtract(7, "day").isSame(current, "day")
+    return dayjs(selectedDate).subtract(6, "day").isSame(current, "day")
       ? "Today " +
-          dayjs(selectedDate).subtract(7, "day").format("MMM YYYY") +
+          dayjs(selectedDate).subtract(6, "day").format("MMM YYYY") +
           " - " +
           dayjs(selectedDate).format("DD MMM YYYY")
       : dayjs(selectedDate).isSame(current, "day")
-      ? dayjs(selectedDate).subtract(7, "day").format("DD MMM YYYY") +
+      ? dayjs(selectedDate).subtract(6, "day").format("DD MMM YYYY") +
         " - " +
         "Today " +
         dayjs(selectedDate).format("MMM YYYY")
-      : dayjs(selectedDate).subtract(7, "day").format("DD MMM YYYY") +
+      : dayjs(selectedDate).subtract(6, "day").format("DD MMM YYYY") +
         " - " +
         dayjs(selectedDate).format("DD MMM YYYY");
   };
