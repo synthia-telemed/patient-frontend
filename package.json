@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@capacitor/android": "^4.1.0",
+    "@capacitor/assets": "^2.0.1",
     "@capacitor/cli": "^4.1.0",
     "@capacitor/core": "^4.1.0",
     "@capacitor/ios": "^4.1.0",
@@ -43,7 +44,8 @@
     "eject": "react-scripts eject",
     "ionic:build": "npm run build",
     "ionic:serve": "npm run start",
-    "open:ios": "yarn build && cap sync && cap open ios"
+    "open:ios": "yarn build && cap sync && cap open ios",
+    "gen-icon": "capacitor-assets generate"
   },
   "eslintConfig": {
     "extends": [
