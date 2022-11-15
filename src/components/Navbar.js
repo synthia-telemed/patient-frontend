@@ -17,7 +17,16 @@ const Navbar = () => {
   const onClickCloseModal = () => {
     setShowModal(false);
   };
-  const ButtonNavbar = ({ text, textStyle, bgStyle, icon, path, colorIcon, active }) => {
+  const ButtonNavbar = ({
+    text,
+    textStyle,
+    bgStyle,
+    icon,
+    path,
+    colorIcon,
+    active,
+    key
+  }) => {
     const navigate = useNavigate();
     const ProfileIcon = ({ color }) => {
       return (
@@ -300,13 +309,13 @@ const Navbar = () => {
         <></>
       )}
       <div className="flex justify-between">
-        {componentNav.map(item => {
+        {componentNav.map((item, index) => {
           return item.label === "" ? (
-            <FloatingButton onClick={onClickReportMeasure}/>
+            <FloatingButton key={index} onClick={onClickReportMeasure} />
           ) : (
             <ButtonNavbar
               text={item.label}
-              key={item.page}
+              key={index}
               icon={item.icon}
               path={item.link}
               textStyle={item.link === pathname ? "text-primary-500" : "text-gray-500"}

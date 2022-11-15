@@ -14,6 +14,7 @@ import {
 import dayjs from "dayjs";
 import { useState, useEffect } from "react";
 import BadgeStatus from "../Appointment/BadgeStatus";
+import StatusAlert from "./StatusAlert";
 const GraphBarReport = ({
   data,
   name,
@@ -87,6 +88,7 @@ const GraphBarReport = ({
       ) : (
         <></>
       )}
+      {/* <StatusAlert/> */}
       <ResponsiveContainer width="100%" height={240} className="ml-[-16px]">
         <BarChart width={830} height={250} data={data?.data} className="mt-[5px]">
           <CartesianGrid vertical={false} />
