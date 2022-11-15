@@ -1,9 +1,7 @@
 import { useState, React, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import HeaderReport from "../../components/ReportComponent/HeaderReport";
-import FloatingButton from "../../components/ReportComponent/FloatingButton";
-import { DateTimePicker, DatePicker } from "@material-ui/pickers";
-import BadgeStatus from "../../components/Appointment/BadgeStatus";
+import { DateTimePicker } from "@material-ui/pickers";
 import ReportTab from "../../components/ReportComponent/ReportTab";
 import dayjs from "dayjs";
 import useApiMeasurement from "../../hooks/useApiMeasurement";
@@ -102,39 +100,18 @@ const ReportPage = () => {
     );
   };
   const formatTodayDayjs = () => {
-    return dayjs(selectedDate).isSame(current, "day")
-      ? "Today " + dayjs(selectedDate).format("MMM YYYY")
-      : dayjs(selectedDate).format("DD MMM YYYY");
+    const formatter = dayjs(selectedDate).isSame(current, "day") ? "[Today], D MMM YYYY" : "D MMM YYYY"
+    return dayjs(selectedDate).format(formatter);
   };
   const formatTodayWeekjs = () => {
-    return dayjs(selectedDate).subtract(6, "day").isSame(current, "day")
-      ? "Today " +
-          dayjs(selectedDate).subtract(6, "day").format("MMM YYYY") +
-          " - " +
-          dayjs(selectedDate).format("DD MMM YYYY")
-      : dayjs(selectedDate).isSame(current, "day")
-      ? dayjs(selectedDate).subtract(6, "day").format("DD MMM YYYY") +
-        " - " +
-        "Today " +
-        dayjs(selectedDate).format("MMM YYYY")
-      : dayjs(selectedDate).subtract(6, "day").format("DD MMM YYYY") +
-        " - " +
-        dayjs(selectedDate).format("DD MMM YYYY");
+    const fromDate = dayjs(selectedDate).subtract(6, "day").format("D MMM YYYY")
+    const toDate = dayjs(selectedDate).format("D MMM YYYY")
+    return `${fromDate} - ${toDate}`
   };
   const formatTodayMonthjs = () => {
-    return dayjs(selectedDate).subtract(30, "day").isSame(current, "day")
-      ? "Today " +
-          dayjs(selectedDate).subtract(30, "day").format("MMM YYYY") +
-          " - " +
-          dayjs(selectedDate).format("DD MMM YYYY")
-      : dayjs(selectedDate).isSame(current, "day")
-      ? dayjs(selectedDate).subtract(30, "day").format("DD MMM YYYY") +
-        " - " +
-        "Today " +
-        dayjs(selectedDate).format("MMM YYYY")
-      : dayjs(selectedDate).subtract(30, "day").format("DD MMM YYYY") +
-        " - " +
-        dayjs(selectedDate).format("DD MMM YYYY");
+    const fromDate = dayjs(selectedDate).subtract(1, 'month').add(1, 'day').format("D MMM YYYY")
+    const toDate = dayjs(selectedDate).format("D MMM YYYY")
+    return `${fromDate} - ${toDate}`
   };
   useEffect(() => {
     fetchAll();
