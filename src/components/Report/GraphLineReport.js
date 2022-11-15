@@ -22,9 +22,9 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
   useEffect(() => {}, [onClick]);
 
   const CustomTooltip = ({ active, payload }) => {
+    setOnClick(active)
     if (active && payload && payload.length) {
       if (name === "Glucose") {
-        setOnClick(true);
         setValueGraphFasting(
           payload[0]?.name === "Fasting"
             ? Math.round(parseFloat(payload[0].payload.value))
@@ -41,11 +41,13 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
             : "-"
         );
       } else {
-        setOnClick(true);
         setValueGraph(payload[0].payload.values);
       }
       return <div></div>;
     }
+    setValueGraphBeforeMeal("-")
+    setValueGraphFasting("-")
+    setValueGraphAfterMeal("-")
     return null;
   };
   const CheckGlucoseStatus = ({ valueGraph }) => {
