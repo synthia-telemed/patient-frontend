@@ -12,7 +12,7 @@ import {
   Cell
 } from "recharts";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BadgeStatus from "../Appointment/BadgeStatus";
 const GraphBarReport = ({
   data,
@@ -22,29 +22,19 @@ const GraphBarReport = ({
   summaryValue,
   isHaveLastLabelList,
   isHaveTopLabelList,
-  panel
+  panel,
+  isToolTip
 }) => {
   const [valueGraph, setValueGraph] = useState("");
-  const barColors = [
-    "#3F6CCA",
-    "#203B73",
-    "#4F84F6",
-    "#3F6CCA",
-    "#203B73",
-    "#4F84F6",
-    "#3F6CCA",
-    "#203B73",
-    "#4F84F6"
-  ];
+  // const [colorGraph, setColorGraph] = useState("");
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       setValueGraph(payload[0].value);
+      // setColorGraph(payload[0].payload.period === "Fasting" ? "#131957" : "#303ed9");
       return <div className=""></div>;
     }
     return null;
   };
-  // console.log(data && data.data && data.length && data.data[0].values, "here");
-  console.log(data.data, "here");
 
   return (
     <div className=" mt-[24px]">
@@ -75,25 +65,30 @@ const GraphBarReport = ({
           <BadgeStatus text="New" style="bg-primary-50 text-primary-700" />
         )}
       </div>
-      {data &&
-      data.data &&
-      data.data.length &&
-      data?.data[0].values === parseInt(data?.data[0].values) ? (
-        <div> {valueGraph ? valueGraph : ""}</div>
-      ) : (
+      {isToolTip ? (
         <div>
-          {valueGraph ? Math.round(valueGraph[0]) : ""}
-          <br />
-          {valueGraph ? Math.round(valueGraph[1]) : ""}
+          <h1 className="typographyTextSmMedium text-gray-600">
+            Top Value{" "}
+            <span className="typographyHeadingXsSemibold text-success-700">
+              {" "}
+              {valueGraph ? Math.round(valueGraph[0]) : ""}
+            </span>{" "}
+            mmHg
+          </h1>
+          <h1 className="typographyTextSmMedium text-gray-600">
+            Bottom Value{" "}
+            <span className="typographyHeadingXsSemibold text-success-700">
+              {" "}
+              {valueGraph ? Math.round(valueGraph[1]) : ""}
+            </span>{" "}
+             mmHg
+          </h1>
         </div>
+      ) : (
+        <></>
       )}
       <ResponsiveContainer width="100%" height={240} className="ml-[-16px]">
-        <BarChart
-          width={830}
-          height={250}
-          data={name === "Glucose" ? "" : data?.data}
-          className="mt-[5px]"
-        >
+        <BarChart width={830} height={250} data={data?.data} className="mt-[5px]">
           <CartesianGrid vertical={false} />
           <XAxis
             dataKey="label"
@@ -113,19 +108,22 @@ const GraphBarReport = ({
             type={"number"}
             // type={bloodPressureData.isNumerical ? "number" : "category"}
           />
-          <ReferenceLine y={150} stroke="red" />
-          <ReferenceLine y={60} stroke="red" />
           <YAxis
             domain={[0, 200]}
             tick={{ fontSize: 12 }}
             axisLine={false}
             className="typographyTextXsMedium"
           />
-          <Tooltip
-            content={<CustomTooltip />}
-            active={false}
-            cursor={{ fill: "transparent" }}
-          />
+          {isToolTip ? (
+            <Tooltip
+              wrapperStyle={{ top: 0, left: -20 }}
+              content={<CustomTooltip />}
+              active={false}
+              cursor={{ fill: "transparent" }}
+            />
+          ) : (
+            <></>
+          )}
           {isLegend ? (
             <Legend
               layout="horizontal"
@@ -136,13 +134,8 @@ const GraphBarReport = ({
           ) : (
             <></>
           )}
-          <Bar
-            barSize={10}
-            data={name === "Glucose" ? data?.data?.beforeMeal : ""}
-            dataKey={name === "Glucose" ? "value" : "values"}
-            radius={30}
-          >
-            {name === "Glucose" &&
+          <Bar barSize={10} dataKey={name === "Glucose" ? "value" : "values"} radius={30}>
+            {/* {name === "Glucose" &&
               data &&
               data.data &&
               data.data.beforeMeal &&
@@ -150,16 +143,29 @@ const GraphBarReport = ({
                 <Cell
                   fill={
                     data &&
-                    data.data &&
-                    data.data.beforeMeal &&
+                    data?.data &&
+                    data?.data?.beforeMeal &&
                     data?.data?.beforeMeal[index].color
                   }
                 />
+              ))} */}
+            {data &&
+              data.data &&
+              Array.isArray(data.data) &&
+              data.data.map((entry, index) => (
+                // entry.label&&
+                <Cell
+                  fill={
+                    name === "Glucose"
+                      ? data?.data[index]?.period === "Fasting"
+                        ? "#131957"
+                        : data?.data[index]?.period === "Before Meal"
+                        ? "#303ed9"
+                        : ""
+                      : data?.data[index]?.color
+                  }
+                />
               ))}
-            {name !== "Glucose" &&
-              data &&
-              data?.data &&
-              data?.data.map((entry, index) => <Cell fill={data?.data[index].color} />)}
             {isHaveTopLabelList ? (
               <LabelList
                 className="typographyTextXsMedium"

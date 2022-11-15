@@ -3,13 +3,17 @@ import GraphLineReport from "../../components/Report/GraphLineReport";
 import EmptyGraph from "../../Assets/Report/empty_graph.svg";
 const WeekTab = ({ bloodPressureData, pulseData, glucoseData }) => {
   return (
-    <div className="px-[16px] mt-[16px] mb-[100px]">
+    <div className="px-[16px] mt-[16px] mb-[150px]">
       {/* <GraphLineReport data={bloodPressureData} name="Glucose" /> */}
-      {bloodPressureData?.data?.length === 0 &&
-      pulseData?.data?.length === 0 &&
-      glucoseData?.data?.afterMeal.length === 0 &&
-      glucoseData?.data?.beforeMeal.length === 0 &&
-      glucoseData?.data?.fasting.length === 0 ? (
+      {pulseData &&
+      pulseData.data &&
+      bloodPressureData &&
+      bloodPressureData.data &&
+      bloodPressureData?.data.length &&
+      pulseData?.data.length &&
+      !Array.isArray(glucoseData?.data) ? (
+        <></>
+      ) : (
         <div className="flex flex-col justify-center items-center h-[50vh]">
           {" "}
           <img src={EmptyGraph} width="218px" height="148px" alt="" />{" "}
@@ -18,31 +22,30 @@ const WeekTab = ({ bloodPressureData, pulseData, glucoseData }) => {
             You haven’t submited any measurement result.
           </h1>
         </div>
-      ) : (
-        <></>
       )}
-      {glucoseData?.data?.afterMeal.length === 0 &&
-      glucoseData?.data?.beforeMeal.length === 0 &&
-      glucoseData?.data?.fasting.length === 0 ? (
-        <></>
-      ) : (
+      {!Array.isArray(glucoseData?.data) &&
+      glucoseData?.data?.afterMeal.length &&
+      glucoseData?.data?.beforeMeal.length &&
+      glucoseData?.data?.fasting.length ? (
         <GraphLineReport
           data={glucoseData}
           name="Glucose"
           isLegend={false}
           detailGraph="Total avg this Week"
           isHaveLastLabelList={false}
+          isToolTip={true}
           isHaveTopLabelList={true}
           panel="Week"
         />
-      )}
-      {bloodPressureData?.data?.length === 0 ? (
-        <></>
       ) : (
+        <></>
+      )}
+      {bloodPressureData?.data?.length ? (
         <GraphBarReport
           data={bloodPressureData}
           name="Blood Pressure"
           isLegend={false}
+          isToolTip={false}
           detailGraph="Total avg this Week"
           isHaveLastLabelList={true}
           isHaveTopLabelList={true}
@@ -54,20 +57,23 @@ const WeekTab = ({ bloodPressureData, pulseData, glucoseData }) => {
             " "
           }
         />
-      )}
-      {pulseData?.data?.length === 0 ? (
-        <></>
       ) : (
+        <></>
+      )}
+      {pulseData?.data?.length ? (
         <GraphBarReport
           data={pulseData}
           name="Pulse"
           isLegend={false}
+          isToolTip={false}
           panel="Week"
           isHaveLastLabelList={false}
           isHaveTopLabelList={true}
           summaryValue={Math.round(pulseData?.summary?.pulse) + " "}
           detailGraph="Total avg this day"
         />
+      ) : (
+        <></>
       )}
     </div>
   );

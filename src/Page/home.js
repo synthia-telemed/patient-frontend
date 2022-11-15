@@ -7,6 +7,8 @@ import DefaultProfile from "../Assets/default_profile.png";
 import AppointmentDetailCard from "../components/Appointment/AppointmentDetailCard";
 import Navbar from "../components/Navbar";
 import useAPI from "../hooks/useAPI";
+import LatestCardResult from "../components/LatestCardResult";
+import useAPIMeasureMent from "../hooks/useApiMeasurement";
 import EmptyStatusIcon from "../Assets/Home/EmptyStatus.svg";
 
 const mapState = state => ({
@@ -48,12 +50,20 @@ const HomePage = props => {
   dayjs.extend(utc);
   const navigate = useNavigate();
   const [apiDefault] = useAPI();
+  const [apiMeasurement] = useAPIMeasureMent();
   const [detailYourAppointment, setDetailYourAppointment] = useState([]);
+  const [latestMeasurement, setLatestMeasurement] = useState([]);
   const [name, setName] = useState("");
   useEffect(() => {
     getNextAppointment();
     getName();
+    getLastMeasurementResult();
   }, []);
+
+  const getLastMeasurementResult = async () => {
+    const res = await apiMeasurement.get("/home/latest");
+    setLatestMeasurement(res.data);
+  };
   const getNextAppointment = async () => {
     const res = await apiDefault.get("/appointment/next");
     setDetailYourAppointment(res.data);
@@ -61,9 +71,8 @@ const HomePage = props => {
   const getName = async () => {
     const res = await apiDefault.get("/info/name");
     setName(res.data);
-    console.log(res.data);
   };
-  console.log(props.user);
+  console.log(latestMeasurement, "Lastedas");
   return (
     <div>
       <div>
@@ -100,13 +109,66 @@ const HomePage = props => {
       />
       <Navbar />
       <div className="mt-[30px] px-[16px]">
-        <h1 className="typographyTextMdSemibold">Today's status</h1>
-        <div className="flex flex-col justify-center items-center h-[300px] ">
-          <img src={EmptyStatusIcon} alt="" width="200px" height="148px" />
-          <h1 className="typographyTextXsMedium mt-[8px] w-[200px] text-center">
-            You haven’t submited any measurement result.{" "}
-          </h1>
-        </div>
+        <h1 className="typographyTextMdSemibold">Latest measurement result</h1>
+        {!Object.keys(latestMeasurement?.glucose ? latestMeasurement?.glucose : {})
+          .length &&
+        !Object.keys(
+          latestMeasurement?.bloodPressure ? latestMeasurement?.bloodPressure : {}
+        ).length &&
+        !Object.keys(latestMeasurement?.pulse ? latestMeasurement?.pulse : {}).length ? (
+          <div className="flex flex-col justify-center items-center h-[300px] ">
+            <img src={EmptyStatusIcon} alt="" width="200px" height="148px" />
+            <h1 className="typographyTextXsMedium mt-[8px] w-[200px] text-center">
+              You haven’t submited any measurement result.{" "}
+            </h1>
+          </div>
+        ) : (
+          <div className="flex flex-col mb-[150px]">
+            {Object.keys(latestMeasurement?.glucose).length ? (
+              <LatestCardResult
+                status={latestMeasurement?.glucose?.fasting?.status}
+                value={latestMeasurement?.glucose?.fasting?.value}
+                unit={latestMeasurement?.glucose?.fasting?.unit}
+                dateTime={latestMeasurement?.glucose?.fasting?.dateTime}
+                secondValue={true}
+                status2={latestMeasurement?.glucose?.beforeMeal?.status}
+                value2={latestMeasurement?.glucose?.beforeMeal?.value}
+                unit2={latestMeasurement?.glucose?.beforeMeal?.unit}
+                name="Glucose Level"
+              />
+            ) : (
+              <></>
+            )}
+            {Object.keys(latestMeasurement?.bloodPressure).length ? (
+              <LatestCardResult
+                status={latestMeasurement?.bloodPressure?.status}
+                value={
+                  latestMeasurement?.bloodPressure?.systolic +
+                  " / " +
+                  latestMeasurement?.bloodPressure?.diastolic
+                }
+                secondValue={false}
+                unit={latestMeasurement?.bloodPressure?.unit}
+                dateTime={latestMeasurement?.bloodPressure?.dateTime}
+                name="BloodPressure"
+              />
+            ) : (
+              <></>
+            )}
+            {Object.keys(latestMeasurement?.pulse).length ? (
+              <LatestCardResult
+                status={latestMeasurement?.pulse?.status}
+                value={latestMeasurement?.pulse?.value}
+                unit={latestMeasurement?.pulse?.unit}
+                secondValue={false}
+                dateTime={latestMeasurement?.pulse?.dateTime}
+                name="Pulse"
+              />
+            ) : (
+              <></>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

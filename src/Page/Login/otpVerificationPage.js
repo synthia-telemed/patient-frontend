@@ -31,7 +31,6 @@ const OtpVerificationPage = props => {
     try {
       const body = { credential: location.state?.citizenNumber };
       const res = await api.post("/auth/signin", body);
-      console.log(res);
     } catch (error) {
       setErrorMessage("Invalid PIN. Please try again");
       console.log(error);
