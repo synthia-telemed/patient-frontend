@@ -23,11 +23,19 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
+      console.log(active);
+      console.log(payload);
       if (name === "Glucose") {
         setOnClick(true);
-        setValueGraphFasting(payload[0].payload.value);
-        setValueGraphBeforeMeal(payload[1].payload.value);
-        setValueGraphAfterMeal(payload[2].payload.value);
+        setValueGraphFasting(
+          payload[0]?.name === "Fasting" ? payload[0].payload.value : "-"
+        );
+        setValueGraphBeforeMeal(
+          payload[1]?.name === "BeforeMeal" ? payload[1].payload.value : "-"
+        );
+        setValueGraphAfterMeal(
+          payload[2]?.name === "AfterMeal" ? payload[2].payload.value : "-"
+        );
       } else {
         setOnClick(true);
         setValueGraph(payload[0].payload.values);
@@ -144,7 +152,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
             <div className="w-[16px] h-[16px] bg-[#131957] rounded-[16px]"></div>{" "}
             <h1 className="typographyTextXsRegular ml-[4px] text-gray-600">Fasting</h1>
             <h1 className="typographyHeadingXsSemibold text-success-700 ml-[8px]">
-              {valueGraphFasting ? Math.round(valueGraphFasting) : ""}
+              {valueGraphFasting === "-" ? "-" : Math.round(valueGraphFasting)}
             </h1>
             <h1 className="typographyTextXsRegular ml-[8px] text-gray-600">mg/dL</h1>
             <CheckGlucoseStatus valueGraph={parseInt(valueGraphFasting)} />
@@ -153,7 +161,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
             <div className="w-[16px] h-[16px] bg-[#303ed9] rounded-[16px]"></div>{" "}
             <h1 className="typographyTextXsRegular ml-[4px] text-gray-600">BeforeMeal</h1>
             <h1 className="typographyHeadingXsSemibold text-success-700 ml-[8px]">
-              {valueGraphBeforeMeal ? Math.round(valueGraphBeforeMeal) : ""}
+              {valueGraphBeforeMeal === "-" ? "-" : Math.round(valueGraphBeforeMeal)}
             </h1>
             <h1 className="typographyTextXsRegular ml-[8px] text-gray-600">mg/dL</h1>
             <CheckBeforeMealStatus valueGraph={parseInt(valueGraphBeforeMeal)} />
@@ -162,7 +170,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
             <div className="w-[16px] h-[16px] bg-[#4F84F6] rounded-[16px]"></div>{" "}
             <h1 className="typographyTextXsRegular ml-[4px] text-gray-600">AfterMeal</h1>
             <h1 className="typographyHeadingXsSemibold text-success-700 ml-[8px]">
-              {valueGraphAfterMeal ? Math.round(valueGraphAfterMeal) : ""}
+              {valueGraphAfterMeal === "-" ? "-" : Math.round(valueGraphAfterMeal)}
             </h1>
             <h1 className="typographyTextXsRegular ml-[8px] text-gray-600">mg/dL</h1>
             <CheckAfterMealStatus valueGraph={parseInt(valueGraphAfterMeal)} />
@@ -176,6 +184,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
           <CartesianGrid vertical={false} />
           <XAxis
             dataKey="label"
+            allowDuplicatedCategory={false}
             // label={glucoseData.xLabel}
             interval="preserveStartEnd"
             ticks={data?.ticks}
