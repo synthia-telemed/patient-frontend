@@ -15,26 +15,30 @@ import dayjs from "dayjs";
 import BadgeStatus from "../Appointment/BadgeStatus";
 const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
   const [valueGraph, setValueGraph] = useState("");
-  const [valueGraphBeforeMeal, setValueGraphBeforeMeal] = useState("");
-  const [valueGraphFasting, setValueGraphFasting] = useState("");
-  const [valueGraphAfterMeal, setValueGraphAfterMeal] = useState("");
+  const [valueGraphBeforeMeal, setValueGraphBeforeMeal] = useState("-");
+  const [valueGraphFasting, setValueGraphFasting] = useState("-");
+  const [valueGraphAfterMeal, setValueGraphAfterMeal] = useState("-");
   const [onClick, setOnClick] = useState(false);
   useEffect(() => {}, [onClick]);
 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
-      console.log(active);
-      console.log(payload);
       if (name === "Glucose") {
         setOnClick(true);
         setValueGraphFasting(
-          payload[0]?.name === "Fasting" ? payload[0].payload.value : "-"
+          payload[0]?.name === "Fasting"
+            ? Math.round(parseFloat(payload[0].payload.value))
+            : "-"
         );
         setValueGraphBeforeMeal(
-          payload[1]?.name === "BeforeMeal" ? payload[1].payload.value : "-"
+          payload[1]?.name === "BeforeMeal"
+            ? Math.round(parseFloat(payload[1].payload.value))
+            : "-"
         );
         setValueGraphAfterMeal(
-          payload[2]?.name === "AfterMeal" ? payload[2].payload.value : "-"
+          payload[2]?.name === "AfterMeal"
+            ? Math.round(parseFloat(payload[2].payload.value))
+            : "-"
         );
       } else {
         setOnClick(true);
@@ -45,6 +49,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
     return null;
   };
   const CheckGlucoseStatus = ({ valueGraph }) => {
+    if (typeof valueGraph !== "number") return <></>;
     return (
       <>
         {valueGraph >= 70 && valueGraph <= 99 ? (
@@ -60,6 +65,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
     );
   };
   const CheckBeforeMealStatus = ({ valueGraph }) => {
+    if (typeof valueGraph !== "number") return <></>;
     return (
       <>
         {valueGraph >= 80 && valueGraph <= 130 ? (
@@ -73,6 +79,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
     );
   };
   const CheckAfterMealStatus = ({ valueGraph }) => {
+    if (typeof valueGraph !== "number") return <></>;
     return (
       <>
         {valueGraph <= 180 ? (
@@ -146,38 +153,36 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
         ) : (
           <></>
         )
-      ) : valueGraphFasting && valueGraphBeforeMeal && valueGraphAfterMeal && onClick ? (
+      ) : (
         <div>
           <div className="flex items-center">
             <div className="w-[16px] h-[16px] bg-[#131957] rounded-[16px]"></div>{" "}
             <h1 className="typographyTextXsRegular ml-[4px] text-gray-600">Fasting</h1>
             <h1 className="typographyHeadingXsSemibold text-success-700 ml-[8px]">
-              {valueGraphFasting === "-" ? "-" : Math.round(valueGraphFasting)}
+              {valueGraphFasting}
             </h1>
             <h1 className="typographyTextXsRegular ml-[8px] text-gray-600">mg/dL</h1>
-            <CheckGlucoseStatus valueGraph={parseInt(valueGraphFasting)} />
+            <CheckGlucoseStatus valueGraph={valueGraphFasting} />
           </div>
           <div className="flex items-center">
             <div className="w-[16px] h-[16px] bg-[#303ed9] rounded-[16px]"></div>{" "}
             <h1 className="typographyTextXsRegular ml-[4px] text-gray-600">BeforeMeal</h1>
             <h1 className="typographyHeadingXsSemibold text-success-700 ml-[8px]">
-              {valueGraphBeforeMeal === "-" ? "-" : Math.round(valueGraphBeforeMeal)}
+              {valueGraphBeforeMeal}
             </h1>
             <h1 className="typographyTextXsRegular ml-[8px] text-gray-600">mg/dL</h1>
-            <CheckBeforeMealStatus valueGraph={parseInt(valueGraphBeforeMeal)} />
+            <CheckBeforeMealStatus valueGraph={valueGraphBeforeMeal} />
           </div>
           <div className="flex items-center">
             <div className="w-[16px] h-[16px] bg-[#4F84F6] rounded-[16px]"></div>{" "}
             <h1 className="typographyTextXsRegular ml-[4px] text-gray-600">AfterMeal</h1>
             <h1 className="typographyHeadingXsSemibold text-success-700 ml-[8px]">
-              {valueGraphAfterMeal === "-" ? "-" : Math.round(valueGraphAfterMeal)}
+              {valueGraphAfterMeal}
             </h1>
             <h1 className="typographyTextXsRegular ml-[8px] text-gray-600">mg/dL</h1>
-            <CheckAfterMealStatus valueGraph={parseInt(valueGraphAfterMeal)} />
+            <CheckAfterMealStatus valueGraph={valueGraphAfterMeal} />
           </div>
         </div>
-      ) : (
-        <></>
       )}
       <ResponsiveContainer width="100%" height={240} className="ml-[-16px]">
         <LineChart width="100%" height={250} className="mt-[5px]">
