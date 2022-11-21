@@ -145,16 +145,13 @@ const VideoCallPage = () => {
     socket.current.on("room-closed", duration => {
       console.log("Closing the room");
       setBlur(true);
-      setTimeout(
-        () =>
-          navigate("/appointment/detail", {
-            state: { appointmentID: state.appointmentID }
-          }),
-        3000
-      );
-
-      if (remoteVideo.current.srcObject) stopMediaStream(remoteVideo.current.srcObject);
-      if (localVideo.current.srcObject) stopMediaStream(localVideo.current.srcObject);
+      setTimeout(() => {
+        if (remoteVideo.current.srcObject) stopMediaStream(remoteVideo.current.srcObject);
+        if (localVideo.current.srcObject) stopMediaStream(localVideo.current.srcObject);
+        navigate("/appointment/detail", {
+          state: { appointmentID: state.appointmentID }
+        });
+      }, 3000);
     });
     socket.current.on("user-left", () => {
       console.log("User left");
