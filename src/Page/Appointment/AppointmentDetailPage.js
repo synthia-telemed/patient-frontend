@@ -24,6 +24,7 @@ const AppointmentDetailPage = () => {
     getDetailAppointment();
     showJoinButtonAppointment();
   }, []);
+  console.log(detailAppointment);
 
   const getDetailAppointment = async () => {
     const res = await apiDefault.get(`/appointment/${state.appointmentID}`);
@@ -44,7 +45,7 @@ const AppointmentDetailPage = () => {
     if (now.isAfter(startDateTime) && now.diff(startDateTime, "hour") < 3)
       return (
         <StatusAppointment
-          textStatus="Please wait for the doctor"
+          textStatus="Please wait until the doctor open the room"
           bgColor="bg-primary-50"
           colorText="text-primary-500"
         />
@@ -61,17 +62,18 @@ const AppointmentDetailPage = () => {
           position={detailAppointment?.doctor?.position}
           date={dayjs(detailAppointment?.start_date_time).format("DD MMMM YYYY")}
           time={
-            dayjs(detailAppointment?.start_date_time).utcOffset(7).format("HH:mm") +
+            dayjs(detailAppointment?.start_date_time).utcOffset(7).format("HH:mm A") +
             "-" +
-            dayjs(detailAppointment?.end_date_time).utcOffset(7).format("HH:mm")
+            dayjs(detailAppointment?.end_date_time).utcOffset(7).format("HH:mm A")
           }
+          duration={detailAppointment?.duration}
         />
         {detailAppointment.status === "SCHEDULED" ? (
           <>
             {showButton ? (
               <div className="mt-[24px] ">
                 <PrimaryButton
-                  text="Join Meeting"
+                  text="Join appointment"
                   width="235px"
                   height="48px"
                   onClick={() => {
@@ -99,6 +101,12 @@ const AppointmentDetailPage = () => {
               bgColor="bg-primary-50"
               colorText="text-primary-500"
             />
+            <div className="mt-[16px] mx-[16px]">
+              <h1 className="typographyTextLgSemibold">Details</h1>
+              <h2 className="typographyTextSmRegular font-[400]">
+                {detailAppointment?.detail}
+              </h2>
+            </div>
             <div className="mt-[16px] flex flex-col w-full items-center">
               <img src={AppointmentWaitingIcon} alt="" />
               <h1 className="typographyTextSmMedium w-[211px] mt-[8px]">
@@ -115,12 +123,19 @@ const AppointmentDetailPage = () => {
               bgColor="bg-success-50"
               colorText="text-success-700"
             />
-            <div className="mx-[16px]">
+            <div className="mx-[16px] mt-[20px]">
               <NextAppointment
                 date={dayjs(detailAppointment?.next_appointment).format("DD MMMM YYYY")}
-                time={dayjs(detailAppointment?.next_appointment)
-                  .utcOffset(7)
-                  .format("HH:mm")}
+                time={
+                  dayjs(detailAppointment?.next_appointment)
+                    .utcOffset(7)
+                    .format("HH:mm A") +
+                  " - " +
+                  dayjs(detailAppointment?.next_appointment)
+                    .add(30, "minute")
+                    .utcOffset(7)
+                    .format("HH:mm A")
+                }
               />
             </div>
             <h1 className="typographyTextLgSemibold mx-[16px] mt-[16px]">
@@ -152,17 +167,28 @@ const AppointmentDetailPage = () => {
           detailAppointment.invoice &&
           detailAppointment.payment ? (
           <div className="mx-[16px] mt-[10px] ">
-            <h1 className=" flex typographyTextXsMedium text-gray-600">
-              Your appointment is{" "}
+            <div className="flex items-center">
+              <h1 className=" flex typographyTextXsMedium text-gray-600 mr-[10px]">
+                Your appointment is
+              </h1>
               <BadgeStatus text="Complete" style="bg-success-50 text-success-700" />
-            </h1>
+            </div>
             <NextAppointment
               date={dayjs(detailAppointment?.next_appointment).format("DD MMMM YYYY")}
-              time={dayjs(detailAppointment?.next_appointment)
-                .utcOffset(7)
-                .format("HH:mm")}
+              time={
+                dayjs(detailAppointment?.next_appointment)
+                  .utcOffset(7)
+                  .format("HH:mm A") +
+                " - " +
+                dayjs(detailAppointment?.next_appointment)
+                  .add(30, "minute")
+                  .utcOffset(7)
+                  .format("HH:mm A")
+              }
             />
-            <h1 className="typographyTextLgSemibold mt-[16px]">Medicine And Reciept</h1>
+            <h1 className="typographyTextLgSemibold mt-[16px]">
+              Prescriptions and invoice
+            </h1>
             <MedicineAndRecieptTab data={detailAppointment} />
           </div>
         ) : (

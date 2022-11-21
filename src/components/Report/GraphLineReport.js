@@ -36,12 +36,12 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
             : "-"
         );
         setValueGraphBeforeMeal(
-          payload[1]?.name === "BeforeMeal"
+          payload[1]?.name === "Before meal"
             ? Math.round(parseFloat(payload[1].payload.value))
             : "-"
         );
         setValueGraphAfterMeal(
-          payload[2]?.name === "AfterMeal"
+          payload[2]?.name === "After meal"
             ? Math.round(parseFloat(payload[2].payload.value))
             : "-"
         );
@@ -231,7 +231,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
           )}
           <YAxis
             domain={[0, 200]}
-            tick={{ fontSize: 12,dx: -15 }}
+            tick={{ fontSize: 12,dx: -5 }}
             axisLine={false}
             label={{
               value: data?.unit,

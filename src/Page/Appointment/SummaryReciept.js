@@ -12,7 +12,6 @@ import JCBIcon from "../../Assets/Payment/jcb.svg";
 import VisaIcon from "../../Assets/Payment/visa.svg";
 import useAPI from "../../hooks/useAPI";
 
-
 const SummaryReciept = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -62,9 +61,13 @@ const SummaryReciept = () => {
     <div>
       <HeaderWithBack textHeader="Your invoice" path={-1} />
       <h1 className="typographyTextMdSemibold mx-[16px] mt-[16px]">Expense</h1>
-      <RecieptDetailCard data={detailAppointment.invoice} />
+      <div className="mx-[16px]">
+        <RecieptDetailCard data={detailAppointment.invoice} />
+      </div>
       <h1 className="typographyTextMdSemibold mx-[16px] mt-[16px]">Total Charges</h1>
-      <CardTotalCharges detailAppointment={detailAppointment} />
+      <div className="mx-[16px]">
+        <CardTotalCharges detailAppointment={detailAppointment} />
+      </div>
 
       {paymentList.map(data =>
         data.brand === "Visa" ? (

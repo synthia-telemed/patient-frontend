@@ -28,36 +28,38 @@ const CreditCardPage = props => {
   return (
     <div>
       <HeaderWithBack textHeader="Credit cards" path="/setting" />
-      {paymentList.map(data =>
-        data.brand === "Visa" ? (
-          <CreditCardBox
-            id={data.id}
-            isDefault={data.is_default}
-            key={data.id}
-            icon={VisaIcon}
-            numberCard={`**** ${data.last_4_digits}`}
-            expireDate={data.expiry}
-          />
-        ) : data.brand === "MasterCard" ? (
-          <CreditCardBox
-            id={data.id}
-            isDefault={data.is_default}
-            key={data.id}
-            icon={MasterCardIcon}
-            numberCard={`**** ${data.last_4_digits}`}
-            expireDate={data.expiry}
-          />
-        ) : (
-          <CreditCardBox
-            id={data.id}
-            isDefault={data.is_default}
-            key={data.id}
-            icon={JCBIcon}
-            numberCard={`**** ${data.last_4_digits}`}
-            expireDate={data.expiry}
-          />
-        )
-      )}
+      <div className="mx-[16px]">
+        {paymentList.map(data =>
+          data.brand === "Visa" ? (
+            <CreditCardBox
+              id={data.id}
+              isDefault={data.is_default}
+              key={data.id}
+              icon={VisaIcon}
+              numberCard={`**** ${data.last_4_digits}`}
+              expireDate={data.expiry}
+            />
+          ) : data.brand === "MasterCard" ? (
+            <CreditCardBox
+              id={data.id}
+              isDefault={data.is_default}
+              key={data.id}
+              icon={MasterCardIcon}
+              numberCard={`**** ${data.last_4_digits}`}
+              expireDate={data.expiry}
+            />
+          ) : (
+            <CreditCardBox
+              id={data.id}
+              isDefault={data.is_default}
+              key={data.id}
+              icon={JCBIcon}
+              numberCard={`**** ${data.last_4_digits}`}
+              expireDate={data.expiry}
+            />
+          )
+        )}
+      </div>
       <AddCreditCardButton />
     </div>
   );

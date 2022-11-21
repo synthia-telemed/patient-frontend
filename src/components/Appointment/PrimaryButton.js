@@ -13,7 +13,7 @@ const PrimaryButton = ({
       <div
         className={` bg-primary-500  w-[${width}] rounded-[8px]  h-full flex justify-center items-center`}
       >
-        <h1 className="typographyTextSmMedium text-base-white text-center">{text}</h1>
+        <h1 className="typographyTextSmSemibold text-base-white text-center">{text}</h1>
       </div>
     </div>
   );

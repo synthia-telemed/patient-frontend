@@ -222,7 +222,7 @@ const VideoCallPage = () => {
     <div>
       <div className="h-screen w-screen">
         <video
-          className={`absolute top-[5%] right-[10%] w-[120px] h-[200px] object-cover ${
+          className={`absolute rounded-[8px] top-[5%] right-[10%] w-[120px] h-[200px] object-cover ${
             blur ? "" : "z-10"
           } `}
           playsInline
@@ -234,7 +234,7 @@ const VideoCallPage = () => {
           <></>
         ) : (
           <div className="absolute top-[23%] right-[30%] z-10">
-            <MicrophoneOffIcon color="red" />
+            <MicrophoneOffIcon color="white" />
           </div>
         )}
         <video

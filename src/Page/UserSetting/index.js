@@ -34,9 +34,17 @@ const UserSettingPage = () => {
       <div className="mt-[71px]">
         <div className="px-[16px] h-[80vh]">
           <div className="flex h-[75px]">
-            <img src={informationUser?.profile_pic_url} className="rounded-[48px]" alt="" />
+            <img
+              src={informationUser?.profile_pic_url}
+              className="rounded-[48px]"
+              alt=""
+            />
             <div className="flex flex-col ml-[16px] justify-center">
-              <h1 className="typographyTextMdSemibold">{informationUser?.name_en?.firstname+" " +informationUser?.name_en?.lastname}</h1>
+              <h1 className="typographyTextMdSemibold">
+                {informationUser?.name_en?.firstname +
+                  " " +
+                  informationUser?.name_en?.lastname}
+              </h1>
               <h2 className="typographyTextXsMedium text-gray-700">
                 Siriraj Piyamaharajkarun Hospital
               </h2>
@@ -60,12 +68,14 @@ const UserSettingPage = () => {
             />
             <SettingButton icon={PrivacyIcon} title="Privacy" path="/setting/privacy" />
           </div>
-          <button
-            onClick={onLogout}
-            className="w-[235px] h-[44px] border-solid border-[1.5px] border-primary-500 rounded-[8px] text-primary-500 absolute bottom-[20%] left-[23%]"
-          >
-            Logout
-          </button>
+          <div className="flex items-center">
+            <button
+              onClick={onLogout}
+              className="w-[235px] h-[44px] border-solid border-[1.5px] border-primary-500 rounded-[8px] text-primary-500 absolute bottom-[20%] left-[23%]"
+            >
+              <h1 className="typographyTextMdMedium"> Logout</h1>
+            </button>
+          </div>
         </div>
         <Navbar />
       </div>

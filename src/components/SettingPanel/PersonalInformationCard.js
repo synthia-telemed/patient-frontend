@@ -4,7 +4,7 @@ const PersonalInformationCard = ({ title, value }) => {
       <h1 className="typographyTextSmMedium text-gray-700">{title}</h1>
       <input
         type="text"
-        className="w-[90vw] rounded-[8px] p-[8px] bg-gray-50 border-[1px] border-solid border-gray-300 mt-[6px] typographyTextMdRegular"
+        className="w-[90vw] rounded-[8px] p-[8px] bg-gray-50 border-[1px] border-solid border-gray-300 mt-[6px] typographyTextMdRegular placeholder:text-gray-700"
         disabled={true}
         placeholder={value}
       />

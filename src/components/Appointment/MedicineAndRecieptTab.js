@@ -3,11 +3,11 @@ import MedicineTab from "./MedicineTab";
 import RecieptTab from "./RecieptTab";
 const MedicineAndRecieptTab = ({ data }) => {
   console.log(data);
-  const [panel, setPanel] = useState("Prescription");
+  const [panel, setPanel] = useState("Prescriptions");
   const Panel = () => {
     return (
       <div className="flex w-full justify-center ">
-        <ButtonPanel text="Prescription" />
+        <ButtonPanel text="Prescriptions" />
         <ButtonPanel text="Invoice" />
       </div>
     );
@@ -31,7 +31,7 @@ const MedicineAndRecieptTab = ({ data }) => {
   return (
     <div>
       <Panel />
-      {panel === "Prescription" ? (
+      {panel === "Prescriptions" ? (
         <MedicineTab data={data} />
       ) : panel === "Invoice" ? (
         <RecieptTab data={data} />

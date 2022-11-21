@@ -29,7 +29,7 @@ const PersonalInformationPage = () => {
         title="Birthdate"
         value={dayjs(informationUser?.birth_date).format("YYYY-MM-DD")}
       />
-      <PersonalInformationCard title="Patient Number" value="-" />
+      <PersonalInformationCard title="Patient Number" value={informationUser?.id} />
       <PersonalInformationCard
         title="National ID Number"
         value={informationUser?.national_id}

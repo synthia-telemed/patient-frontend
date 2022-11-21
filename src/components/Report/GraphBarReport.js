@@ -72,15 +72,17 @@ const GraphBarReport = ({
             Top Value{" "}
             <span className="typographyHeadingXsSemibold text-success-700">
               {" "}
-              {valueGraph ? Math.round(valueGraph[0]) : ""}
-            </span>{" "}
+              {valueGraph ? Math.round(valueGraph[0]) : "-"}
+            </span>
+            {" " + data?.unit}
           </h1>
           <h1 className="typographyTextSmMedium text-gray-600">
             Bottom Value{" "}
             <span className="typographyHeadingXsSemibold text-success-700">
               {" "}
-              {valueGraph ? Math.round(valueGraph[1]) : ""}
-            </span>{" "}
+              {valueGraph ? Math.round(valueGraph[1]) : "-"}
+            </span>
+            {" " + data?.unit}
           </h1>
         </div>
       ) : (
@@ -118,7 +120,7 @@ const GraphBarReport = ({
           )}
           <YAxis
             domain={[0, 200]}
-            tick={{ fontSize: 12, dx: -15 }}
+            tick={{ fontSize: 12, dx: -5 }}
             axisLine={false}
             style={{ textAnchor: "end" }}
             label={{

@@ -56,8 +56,8 @@ const HistoryCardWithDayjs = ({ data, loading }) => {
               position={data.doctor.position}
               colorStatus="bg-secondary-100 text-primary-500 "
               date={dayjs(data.start_date_time).format("DD MMMM YYYY")}
-              startTime={dayjs(data.start_date_time).utcOffset(7).format("HH:mm")}
-              endTime={dayjs(data.end_date_time).utcOffset(7).format("HH:mm")}
+              startTime={dayjs(data.start_date_time).utcOffset(7).format("HH:mm A")}
+              endTime={dayjs(data.end_date_time).utcOffset(7).format("HH:mm A")}
             />
           );
         })
