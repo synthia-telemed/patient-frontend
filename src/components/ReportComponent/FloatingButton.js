@@ -2,8 +2,8 @@ const FloatingButton = ({ onClick }) => {
   const EditingIcon = () => {
     return (
       <svg
-        width="22"
-        height="22"
+        width="48"
+        height="48"
         viewBox="0 0 22 22"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +20,7 @@ const FloatingButton = ({ onClick }) => {
   };
   return (
     <div
-      className="w-[56px] h-[56px] bg-primary-500 p-[12px] rounded-[48px] flex justify-center items-center relative top-[-30px] z-30 border-[6px] border-solid border-[rgba(172, 178, 240, 0.3)]"
+      className="w-[64px] h-[64px] bg-primary-500 p-[12px] rounded-[48px] flex justify-center items-center relative top-[-30px] z-30 border-[6px] border-solid border-[rgba(172, 178, 240, 0.3)]"
       onClick={onClick}
     >
       <EditingIcon />
