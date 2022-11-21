@@ -110,12 +110,7 @@ const HomePage = props => {
       <Navbar />
       <div className="mt-[30px] px-[16px]">
         <h1 className="typographyTextMdSemibold">Latest measurement result</h1>
-        {!Object.keys(latestMeasurement?.glucose ? latestMeasurement?.glucose : {})
-          .length &&
-        !Object.keys(
-          latestMeasurement?.bloodPressure ? latestMeasurement?.bloodPressure : {}
-        ).length &&
-        !Object.keys(latestMeasurement?.pulse ? latestMeasurement?.pulse : {}).length ? (
+        {Object.keys(latestMeasurement).length === 0 ? (
           <div className="flex flex-col justify-center items-center h-[300px] ">
             <img src={EmptyStatusIcon} alt="" width="200px" height="148px" />
             <h1 className="typographyTextXsMedium mt-[8px] w-[200px] text-center">
@@ -124,7 +119,7 @@ const HomePage = props => {
           </div>
         ) : (
           <div className="flex flex-col mb-[150px]">
-            {Object.keys(latestMeasurement?.glucose).length ? (
+            {latestMeasurement?.glucose ? (
               <LatestCardResult
                 status={latestMeasurement?.glucose?.fasting?.status}
                 value={latestMeasurement?.glucose?.fasting?.value}
@@ -139,7 +134,7 @@ const HomePage = props => {
             ) : (
               <></>
             )}
-            {Object.keys(latestMeasurement?.bloodPressure).length ? (
+            {latestMeasurement?.bloodPressure ? (
               <LatestCardResult
                 status={latestMeasurement?.bloodPressure?.status}
                 value={
@@ -155,7 +150,7 @@ const HomePage = props => {
             ) : (
               <></>
             )}
-            {Object.keys(latestMeasurement?.pulse).length ? (
+            {latestMeasurement?.pulse ? (
               <LatestCardResult
                 status={latestMeasurement?.pulse?.status}
                 value={latestMeasurement?.pulse?.value}
