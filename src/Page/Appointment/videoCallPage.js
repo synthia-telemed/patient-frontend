@@ -13,6 +13,7 @@ const VideoCallPage = () => {
   const { tokenJWT: token } = useSelector(s => s.user);
 
   const socket = useRef();
+  const webRTCPeer = useRef();
   const localVideo = useRef();
   const remoteVideo = useRef();
   const MicrophoneOffIcon = ({ color }) => {
@@ -126,6 +127,7 @@ const VideoCallPage = () => {
       stream: localVideo.current.srcObject,
       initiator: isInitiator
     });
+    webRTCPeer.current = peer;
     peer.on("signal", data => {
       socket.current.emit("signal", data);
     });
@@ -163,6 +165,16 @@ const VideoCallPage = () => {
         roomID: state.roomID,
         jwtToken: token
       });
+    });
+  };
+
+  const onLeave = () => {
+    socket.current.disconnect();
+    webRTCPeer.current.destroy();
+    if (remoteVideo.current.srcObject) stopMediaStream(remoteVideo.current.srcObject);
+    if (localVideo.current.srcObject) stopMediaStream(localVideo.current.srcObject);
+    navigate("/appointment/detail", {
+      state: { appointmentID: state.appointmentID }
     });
   };
 
@@ -253,6 +265,12 @@ const VideoCallPage = () => {
             className="bg-[#131517A1] rounded-[32px] w-[48px] h-[48px] background-blur-[3px] flex justify-center items-center"
           >
             {isCameraOn ? <VideoCallOnIcon /> : <VideoCallOffIcon />}
+          </button>
+          <button
+            onClick={onLeave}
+            className="bg-[#131517A1] rounded-[32px] w-[48px] h-[48px] background-blur-[3px] flex justify-center items-center"
+          >
+            Leave
           </button>
           <button
             onClick={onToggleMic}
