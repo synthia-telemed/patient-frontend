@@ -31,7 +31,7 @@ const MonthTab = ({ bloodPressureData, pulseData, glucoseData }) => {
       glucoseData?.data?.fasting.length ? (
         <GraphLineReport
           data={glucoseData}
-          name="Glucose"
+          name="Glucose Level"
           isLegend={false}
           detailGraph="Total avg this month"
           isHaveLastLabelList={false}

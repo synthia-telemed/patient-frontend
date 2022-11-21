@@ -89,9 +89,9 @@ const HeaderReport = () => {
         <h1 className="typographyHeadingXsSemibold">My Report ✨</h1>
         {/* <h1 className="typographyTextSmMedium text-gray-600">Today, 19 May 2022</h1> */}
       </div>
-      <div className="w-[45px] h-[45px] p-[5px] rounded-[15px] bg-primary-50 flex justify-center items-center ">
+      {/* <div className="w-[45px] h-[45px] p-[5px] rounded-[15px] bg-primary-50 flex justify-center items-center ">
         <CalendarIcon />
-      </div>
+      </div> */}
     </div>
   );
 };

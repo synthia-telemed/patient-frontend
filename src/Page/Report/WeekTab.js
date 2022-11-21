@@ -29,9 +29,9 @@ const WeekTab = ({ bloodPressureData, pulseData, glucoseData }) => {
       glucoseData?.data?.fasting.length ? (
         <GraphLineReport
           data={glucoseData}
-          name="Glucose"
+          name="Glucose Level"
           isLegend={false}
-          detailGraph="Total avg this Week"
+          detailGraph=""
           isHaveLastLabelList={false}
           isToolTip={true}
           isHaveTopLabelList={true}
@@ -46,7 +46,7 @@ const WeekTab = ({ bloodPressureData, pulseData, glucoseData }) => {
           name="Blood Pressure"
           isLegend={false}
           isToolTip={false}
-          detailGraph="Total avg this Week"
+          detailGraph=""
           isHaveLastLabelList={true}
           isHaveTopLabelList={true}
           panel="Week"
@@ -70,7 +70,7 @@ const WeekTab = ({ bloodPressureData, pulseData, glucoseData }) => {
           isHaveLastLabelList={false}
           isHaveTopLabelList={true}
           summaryValue={Math.round(pulseData?.summary?.pulse) + " "}
-          detailGraph="Total avg this day"
+          detailGraph=""
         />
       ) : (
         <></>

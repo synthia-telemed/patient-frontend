@@ -74,7 +74,6 @@ const GraphBarReport = ({
               {" "}
               {valueGraph ? Math.round(valueGraph[0]) : ""}
             </span>{" "}
-            mmHg
           </h1>
           <h1 className="typographyTextSmMedium text-gray-600">
             Bottom Value{" "}
@@ -82,7 +81,6 @@ const GraphBarReport = ({
               {" "}
               {valueGraph ? Math.round(valueGraph[1]) : ""}
             </span>{" "}
-             mmHg
           </h1>
         </div>
       ) : (
@@ -94,11 +92,12 @@ const GraphBarReport = ({
           <CartesianGrid vertical={false} />
           <XAxis
             dataKey="label"
-            // label={glucoseData.xLabel}
+            interval="preserveStartEnd"
             ticks={data?.ticks}
             axisLine={false}
             domain={data?.domain}
             className="typographyTextXsMedium"
+            type="number"
             tick={{ fontSize: 12 }}
             tickFormatter={
               panel === "Day"
@@ -107,14 +106,31 @@ const GraphBarReport = ({
                 ? t => dayjs.unix(t).format("ddd")
                 : t => dayjs.unix(t).format("DD MMM")
             }
-            type={"number"}
             // type={bloodPressureData.isNumerical ? "number" : "category"}
           />
+          {name === "Blood Pressure" || name === "Pulse" ? (
+            <>
+              <ReferenceLine y={150} stroke="red" />
+              <ReferenceLine y={60} stroke="red" />
+            </>
+          ) : (
+            <></>
+          )}
           <YAxis
             domain={[0, 200]}
-            tick={{ fontSize: 12 }}
+            tick={{ fontSize: 12, dx: -15 }}
             axisLine={false}
-            className="typographyTextXsMedium"
+            style={{ textAnchor: "end" }}
+            label={{
+              value: data?.unit,
+              angle: -90,
+              position: "insideLeft",
+              fontFamily: "Poppins",
+              fontWeight: 500,
+              fontSize: "12px",
+              fill: "#475467"
+            }}
+            // label={data?.unit}
           />
           {isToolTip ? (
             <Tooltip
@@ -136,8 +152,14 @@ const GraphBarReport = ({
           ) : (
             <></>
           )}
-          <Bar barSize={10} dataKey={name === "Glucose" ? "value" : "values"} radius={30}>
-            {/* {name === "Glucose" &&
+          <Bar
+            barSize={10}
+            dataKey={name === "Glucose Level" ? "value" : "values"}
+            isAnimationActive={false}
+            radius={name === "Blood Pressure" ? 30 : 4}
+            // wrapperStyle={{ borderTopLeftRadius: "4px", borderTopRightRadius: "4px" }}
+          >
+            {/* {name === "Glucose Level" &&
               data &&
               data.data &&
               data.data.beforeMeal &&
@@ -158,7 +180,7 @@ const GraphBarReport = ({
                 // entry.label&&
                 <Cell
                   fill={
-                    name === "Glucose"
+                    name === "Glucose Level"
                       ? data?.data[index]?.period === "Fasting"
                         ? "#131957"
                         : data?.data[index]?.period === "Before Meal"
@@ -168,6 +190,7 @@ const GraphBarReport = ({
                   }
                 />
               ))}
+
             {isHaveTopLabelList ? (
               <LabelList
                 className="typographyTextXsMedium"
@@ -179,7 +202,7 @@ const GraphBarReport = ({
                   data?.data.length &&
                   data?.data[0].values === parseInt(data?.data[0].values)
                     ? v => Math.round(v)
-                    : v => `${Math.round(v[1])} ${data?.unit}`
+                    : v => `${Math.round(v[1])}`
                 }
                 position="top"
               />
@@ -191,7 +214,7 @@ const GraphBarReport = ({
                 className="typographyTextXsMedium"
                 width={20}
                 dataKey="values"
-                formatter={v => `${Math.round(v[0])} ${data?.unit}`}
+                formatter={v => `${Math.round(v[0])}`}
                 position="bottom"
               />
             ) : (

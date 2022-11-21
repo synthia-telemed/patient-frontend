@@ -72,11 +72,10 @@ const HomePage = props => {
     const res = await apiDefault.get("/info/name");
     setName(res.data);
   };
-  console.log(latestMeasurement, "Lastedas");
   return (
-    <div>
+    <div className="">
       <div>
-        <div className=" flex justify-between mt-[56px] px-[17px]  w-full">
+        <div className=" flex justify-between mt-[56px] px-[17px] w-full">
           <div className="w-[173px]">
             <h1 className="typographyTextSmMedium text-primary-500">Welcome Back</h1>
             <h1 className="typographyHeadingXsSemibold">{name?.EN?.firstname} &#9996;</h1>
@@ -108,7 +107,7 @@ const HomePage = props => {
         isButton={true}
       />
       <Navbar />
-      <div className="mt-[30px] px-[16px]">
+      <div className="mt-[30px] px-[16px] ">
         <h1 className="typographyTextMdSemibold">Latest measurement result</h1>
         {Object.keys(latestMeasurement).length === 0 ? (
           <div className="flex flex-col justify-center items-center h-[300px] ">

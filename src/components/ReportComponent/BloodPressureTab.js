@@ -57,7 +57,7 @@ const BloodPressureTab = ({ dateTime, setShowModal }) => {
           </div>
         </div>
         <div>
-          <h1 className="text-gray-700 typographyTextSmMedium mt-[36px]">Palse Rate</h1>
+          <h1 className="text-gray-700 typographyTextSmMedium mt-[36px]">Pulse Rate</h1>
           <input
             {...register("Palserate", {
               required: "Invalid Palse Rate"

@@ -267,16 +267,16 @@ const Navbar = () => {
     { label: "About", link: "/setting", page: "About", icon: "about" }
   ];
   return (
-    <div className="w-screen h-[100px] fixed bottom-[0%] px-[24px] py-[18px] border-t-[1px] border-solid border-gray-100 rounded-bl-[24px] rounded-br-[24px] bg-base-white z-[100] ">
+    <div className="w-screen h-[100px] fixed bottom-[0%] px-[24px] py-[18px] border-t-[1px] border-solid border-gray-100 rounded-bl-[24px] rounded-br-[24px] bg-base-white z-50 ">
       {showModal ? (
         <>
           {" "}
-          <div className="fixed inset-0 z-50 outline-none focus:outline-none overflow-auto">
-            <div className="absolute bottom-[0%] w-auto mx-auto max-w-3xl ">
+          <div className="fixed inset-0 overflow-hidden z-50 outline-none focus:outline-none bg-[#00000033] ">
+            <div className="absolute z-50 bottom-[0%] w-auto mx-auto max-w-3xl ">
               {/*content*/}
-              <div className="bg-base-white h-[600px] w-screen px-[16px] py-[24px] rounded-tl-[20px] rounded-tr-[20px]">
+              <div className="bg-base-white z-50 h-[550px] w-screen px-[16px] py-[24px] rounded-tl-[20px] rounded-tr-[20px]">
                 <div className="flex justify-between">
-                  <h1 className="typographyTextLgSemibold">Report Measurement Result</h1>
+                  <h1 className="typographyTextLgSemibold">Report measurement Result</h1>
                   <span
                     className="w-[24px] h-[24px] text-gray-600 text-[24px] flex justify-center items-center"
                     onClick={() => setShowModal(false)}
@@ -290,6 +290,22 @@ const Navbar = () => {
                     <div className="ml-[5px]">
                       <DateTimePicker
                         value={selectedDate}
+                        inputProps={{
+                          style: {
+                            color: "#475467",
+                            // borderColor: colors.muted5,
+                            fontFamily: "Poppins",
+                            // borderStyle: 'solid',
+                            // borderWidth: borderWidths[1],
+                            marginLeft: "20px",
+                            fontWeight: 500,
+                            width: "180px",
+                            borderRadius: "8px",
+                            outline: "none",
+                            fontSize: "12px",
+                            padding: `8px`
+                          }
+                        }}
                         onChange={handleDateChange}
                         inputVariant="outlined"
                       />

@@ -26,9 +26,9 @@ const DayTab = ({ bloodPressureData, pulseData, glucoseData }) => {
       {glucoseData && glucoseData.data && glucoseData?.data.length ? (
         <GraphBarReport
           data={glucoseData}
-          name="Glucose"
+          name="Glucose Level"
           isLegend={false}
-          detailGraph="Total avg this day"
+          detailGraph="Latest result"
           isHaveLastLabelList={false}
           isHaveTopLabelList={true}
           isToolTip={false}
@@ -44,7 +44,7 @@ const DayTab = ({ bloodPressureData, pulseData, glucoseData }) => {
           name="Blood Pressure"
           isLegend={false}
           isToolTip={false}
-          detailGraph="Total avg this day"
+          detailGraph="Latest result"
           isHaveLastLabelList={true}
           isHaveTopLabelList={true}
           panel="Day"
@@ -69,7 +69,7 @@ const DayTab = ({ bloodPressureData, pulseData, glucoseData }) => {
           isHaveLastLabelList={false}
           isHaveTopLabelList={true}
           summaryValue={Math.round(pulseData?.summary?.pulse) + " "}
-          detailGraph="Total avg this day"
+          detailGraph="Latest result"
         />
       ) : (
         <></>

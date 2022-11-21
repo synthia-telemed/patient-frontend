@@ -33,18 +33,16 @@ const GlucoseTab = ({ dateTime, setShowModal }) => {
   };
   useEffect(() => {
     if (checked) {
-      setPeriod("FASTING");
-    } else {
       setPeriod("BEFORE_MEAL");
     }
   }, [checked]);
   useEffect(() => {
-    if (period === "BEFORE_MEAL" || period === "AFTER_MEAL") {
+    if (period === "AFTER_MEAL") {
       setChecked(false);
     }
   }, [period]);
   return (
-    <div className="mt-[36px] bg-base-white h-[250px]">
+    <div className="mt-[14px] bg-base-white h-[200px]">
       <form onSubmit={handleSubmit(submitGlucose)}>
         <h1 className="typographyTextMdSemibold text-grey-700 mb-[6px]">Glucose</h1>
         <input
@@ -94,45 +92,10 @@ const GlucoseTab = ({ dateTime, setShowModal }) => {
             offColor="#EAECF0"
           />
         </div>
+        <h1 className="typographyTextXsRegular">
+          (Test in the morning before food or water)
+        </h1>
 
-        {/* <h1 className="typographyTextSmMedium text-grey-700 mt-[16px] mb-[8px]">
-          Period
-        </h1> */}
-        {/* <div className="flex w-full justify-between ">
-          <div
-            onClick={() => setPeriod("breakfast")}
-            className={`p-[8px] ${
-              period === "breakfast"
-                ? "bg-gray-200 border-[1.5px] border-solid border-gray-300"
-                : ""
-            } w-[102px] h-[104px] flex justify-center items-center flex-col rounded-[8px]  `}
-          >
-            <img src={LunchIcon} alt="" />
-            <h1 className="typographyTextSmMedium text-gray-800 mt-[20px]">Breakfast</h1>
-          </div>
-          <div
-            onClick={() => setPeriod("lunch")}
-            className={`p-[8px] ${
-              period === "lunch"
-                ? "bg-gray-200 border-[1.5px] border-solid border-gray-300"
-                : ""
-            } w-[102px] h-[104px] flex justify-center items-center flex-col rounded-[8px]  `}
-          >
-            <img src={RamenIcon} alt="" />
-            <h1 className="typographyTextSmMedium text-gray-800 mt-[20px]">Lunch</h1>
-          </div>
-          <div
-            onClick={() => setPeriod("dinner")}
-            className={`p-[8px] ${
-              period === "dinner"
-                ? "bg-gray-200 border-[1.5px] border-solid border-gray-300"
-                : ""
-            } w-[102px] h-[104px] flex justify-center items-center flex-col rounded-[8px]`}
-          >
-            <img src={DinnerIcon} alt="" />
-            <h1 className="typographyTextSmMedium text-gray-800 mt-[20px]">Dinner</h1>
-          </div>
-        </div> */}
         <div className="flex justify-center">
           <button
             type="submit"

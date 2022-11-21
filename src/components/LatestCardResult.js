@@ -107,7 +107,7 @@ const LatestCardResult = ({
             <h1 className="ml-[4px] typographyTextMdSemibold ">{name}</h1>
           </div>
           <h1 className="typographyTextXsMedium text-gray-600">
-            Last monitoring at {dayjs(dateTime).format("H:mm")}
+            Last monitoring at {dayjs(dateTime).format("H:mm A")}
           </h1>
         </div>
         <div className="flex items-center mt-[11px]">
@@ -127,7 +127,7 @@ const LatestCardResult = ({
               {" "}
               {value}{" "}
             </span>
-            <span className="typographyTextXsRegular ml-[4px] text-gray-600">{unit}</span>
+            <span className="typographyTextXsRegular ml-[4px] mr-[4px] text-gray-600">{unit}</span>
           </h1>
           {status === "Normal" ? (
             <BadgeStatus text="Normal" style="bg-success-50 text-success-700" />
@@ -142,12 +142,12 @@ const LatestCardResult = ({
         {secondValue ? (
           <div className="flex items-center mt-[11px]">
             <h1 className="typographyTextXsRegular text-gray-600">
-              BeforeMeal{" "}
+              Before meal{" "}
               <span className="typographyTextMdSemibold text-success-700 ml-[4px]">
                 {" "}
                 {value2}{" "}
               </span>
-              <span className="typographyTextXsRegular ml-[4px] text-gray-600">
+              <span className="typographyTextXsRegular ml-[4px] mr-[4px] text-gray-600">
                 {unit2}
               </span>
             </h1>

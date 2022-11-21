@@ -12,9 +12,13 @@ import {
 } from "recharts";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import BadgeStatus from "../Appointment/BadgeStatus";
+
+dayjs.extend(utc);
 const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
   const [valueGraph, setValueGraph] = useState("");
+  const [pulseLabel, setPulseLabel] = useState("");
   const [valueGraphBeforeMeal, setValueGraphBeforeMeal] = useState("-");
   const [valueGraphFasting, setValueGraphFasting] = useState("-");
   const [valueGraphAfterMeal, setValueGraphAfterMeal] = useState("-");
@@ -22,9 +26,10 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
   useEffect(() => {}, [onClick]);
 
   const CustomTooltip = ({ active, payload }) => {
-    setOnClick(active)
+    setPulseLabel(payload[0]?.payload?.label);
+    setOnClick(active);
     if (active && payload && payload.length) {
-      if (name === "Glucose") {
+      if (name === "Glucose Level") {
         setValueGraphFasting(
           payload[0]?.name === "Fasting"
             ? Math.round(parseFloat(payload[0].payload.value))
@@ -45,9 +50,9 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
       }
       return <div></div>;
     }
-    setValueGraphBeforeMeal("-")
-    setValueGraphFasting("-")
-    setValueGraphAfterMeal("-")
+    setValueGraphBeforeMeal("-");
+    setValueGraphFasting("-");
+    setValueGraphAfterMeal("-");
     return null;
   };
   const CheckGlucoseStatus = ({ valueGraph }) => {
@@ -95,7 +100,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
     );
   };
   return (
-    <div className="px-[16px] mt-[24px]">
+    <div className="mt-[24px]">
       <h1 className="typographyTextXlSemibold">{name}</h1>
       {name === "Pulse" ? (
         <>
@@ -144,14 +149,21 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
       )}
       {data && data.data && data.data.length && data?.data[0].values ? (
         valueGraph && onClick ? (
-          <div className="flex items-center">
-            <div className="w-[16px] h-[16px] bg-[#4F84F6] rounded-[16px]"></div>
-            <h1 className="typographyTextXsRegular ml-[4px] text-gray-600">Pulse</h1>{" "}
-            <h1 className="typographyHeadingXsSemibold text-success-700 ml-[8px]">
-              {valueGraph ? Math.round(valueGraph) : ""}
+          <>
+            <div className="flex items-center">
+              <div className="w-[16px] h-[16px] bg-[#4F84F6] rounded-[16px]"></div>
+              <h1 className="typographyTextXsRegular ml-[4px] text-gray-600">
+                Pulse
+              </h1>{" "}
+              <h1 className="typographyHeadingXsSemibold text-success-700 ml-[8px]">
+                {valueGraph ? Math.round(valueGraph) : ""}
+              </h1>
+              <h1 className="typographyTextXsRegular ml-[8px] text-gray-600">bpm</h1>
+            </div>
+            <h1 className="typographyTextXsRegular text-gray-600 ml-[4px]">
+              Date : {dayjs(pulseLabel).format("DD MMMM")}
             </h1>
-            <h1 className="typographyTextXsRegular ml-[8px] text-gray-600">bpm</h1>
-          </div>
+          </>
         ) : (
           <></>
         )
@@ -168,7 +180,9 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
           </div>
           <div className="flex items-center">
             <div className="w-[16px] h-[16px] bg-[#303ed9] rounded-[16px]"></div>{" "}
-            <h1 className="typographyTextXsRegular ml-[4px] text-gray-600">BeforeMeal</h1>
+            <h1 className="typographyTextXsRegular ml-[4px] text-gray-600">
+              Before meal
+            </h1>
             <h1 className="typographyHeadingXsSemibold text-success-700 ml-[8px]">
               {valueGraphBeforeMeal}
             </h1>
@@ -177,7 +191,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
           </div>
           <div className="flex items-center">
             <div className="w-[16px] h-[16px] bg-[#4F84F6] rounded-[16px]"></div>{" "}
-            <h1 className="typographyTextXsRegular ml-[4px] text-gray-600">AfterMeal</h1>
+            <h1 className="typographyTextXsRegular ml-[4px] text-gray-600">After meal</h1>
             <h1 className="typographyHeadingXsSemibold text-success-700 ml-[8px]">
               {valueGraphAfterMeal}
             </h1>
@@ -187,21 +201,18 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
         </div>
       )}
       <ResponsiveContainer width="100%" height={240} className="ml-[-16px]">
-        <LineChart width="100%" height={250} className="mt-[5px]">
+        <LineChart width={830} height={250} className="mt-[5px]">
           <CartesianGrid vertical={false} />
           <XAxis
             dataKey="label"
             allowDuplicatedCategory={false}
-            // label={glucoseData.xLabel}
             interval="preserveStartEnd"
             ticks={data?.ticks}
             axisLine={false}
-            // domain={data?.domain}
             domain={data?.domain}
             type="number"
             className="typographyTextXsMedium"
             tick={{ fontSize: 12 }}
-            width="100%"
             tickFormatter={
               panel === "Day"
                 ? t => dayjs.unix(t).format("HH:mm")
@@ -210,11 +221,32 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
                 : t => dayjs.unix(t).format("DD MMM")
             }
           />
-
-          <YAxis domain={[0, 200]} axisLine={false} className="typographyTextXsMedium" />
+          {name === "Blood Pressure" || name === "Pulse" ? (
+            <>
+              <ReferenceLine y={150} stroke="red" />
+              <ReferenceLine y={60} stroke="red" />
+            </>
+          ) : (
+            <></>
+          )}
+          <YAxis
+            domain={[0, 200]}
+            tick={{ fontSize: 12,dx: -15 }}
+            axisLine={false}
+            label={{
+              value: data?.unit,
+              angle: -90,
+              position: "insideLeft",
+              fontFamily: "Poppins",
+              fontWeight: 500,
+              fontSize: "12px",
+              fill: "#475467"
+            }}
+            className="typographyTextXsMedium"
+          />
           <Tooltip content={<CustomTooltip />} />
           <Legend
-            wrapperStyle={{ fontSize: "12px" }}
+            wrapperStyle={{ fontSize: "12px", padding: "10px" }}
             layout="horizontal"
             verticalAlign="top"
             align="right"
@@ -226,6 +258,9 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
                 data={data.data}
                 name="Pulse"
                 dataKey="values"
+                strokeWidth={2}
+                isAnimationActive={false}
+                fill="#4F84F6"
                 stroke="#4F84F6"
               ></Line>
             </>
@@ -234,25 +269,31 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
               <Line
                 name="Fasting"
                 data={data.data.fasting}
+                strokeWidth={2}
                 dataKey="value"
                 stroke="#131957"
                 fill="#131957"
+                isAnimationActive={false}
                 radius={30}
               ></Line>
               <Line
-                name="BeforeMeal"
+                name="Before meal"
                 data={data.data.beforeMeal}
+                strokeWidth={2}
                 dataKey="value"
                 stroke="#303ed9"
                 fill="#303ed9"
+                isAnimationActive={false}
                 radius={30}
               ></Line>
               <Line
-                name="AfterMeal"
+                name="After meal"
                 data={data.data.afterMeal}
+                strokeWidth={2}
                 dataKey="value"
                 stroke="#4F84F6"
                 fill="#4F84F6"
+                isAnimationActive={false}
                 radius={30}
               ></Line>
             </>
