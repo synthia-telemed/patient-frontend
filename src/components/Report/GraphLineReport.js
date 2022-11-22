@@ -266,7 +266,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
                 data={data.data}
                 name="Pulse"
                 dataKey="values"
-                strokeWidth={2}
+                strokeWidth={3}
                 isAnimationActive={false}
                 fill="#4F84F6"
                 stroke="#4F84F6"
@@ -277,7 +277,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
               <Line
                 name="Fasting"
                 data={data.data.fasting}
-                strokeWidth={2}
+                strokeWidth={3}
                 dataKey="value"
                 stroke="#131957"
                 fill="#131957"
@@ -287,7 +287,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
               <Line
                 name="Before meal"
                 data={data.data.beforeMeal}
-                strokeWidth={2}
+                strokeWidth={3}
                 dataKey="value"
                 stroke="#303ed9"
                 fill="#303ed9"
@@ -297,7 +297,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
               <Line
                 name="After meal"
                 data={data.data.afterMeal}
-                strokeWidth={2}
+                strokeWidth={3}
                 dataKey="value"
                 stroke="#4F84F6"
                 fill="#4F84F6"
