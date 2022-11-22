@@ -208,7 +208,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
           </div>
         </div>
       )}
-      <ResponsiveContainer width="100%" height={240} className="ml-[-16px]">
+      <ResponsiveContainer width="100%" height={240} className="ml-[-5px]">
         <LineChart width={830} height={250} className="mt-[5px]">
           <CartesianGrid vertical={false} />
           <XAxis

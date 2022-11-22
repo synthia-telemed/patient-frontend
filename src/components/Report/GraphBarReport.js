@@ -113,7 +113,7 @@ const GraphBarReport = ({
         <></>
       )} */}
       {/* <StatusAlert/> */}
-      <ResponsiveContainer width="100%" height={240} className="ml-[-16px]">
+      <ResponsiveContainer width="100%" height={240} className="ml-[-5px]">
         <BarChart width={830} height={250} data={data?.data} className="mt-[5px]">
           <CartesianGrid vertical={false} />
           <XAxis
