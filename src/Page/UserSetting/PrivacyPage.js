@@ -5,13 +5,20 @@ const PrivacyPage = () => {
     <div>
       <HeaderWithBack textHeader="Privacy" path="/setting" />
       <AgreementDetail
-        title="Pateint privacy Synthia Health"
-        detail="&emsp;&emsp;Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, sit vestibulum, convallis vestibulum eget non commodo lectus fermentum. Quam tempus cursus viverra urna egestas ornare lobortis eu vitae. Donec vel, adipiscing sagittis nibh orci. Lacus quis turpis quis mi molestie morbi tellus. Orci quam morbi risus eget. Consectetur amet aenean scelerisque nibh risus. Ornare etiam vitae, non, molestie curabitur ut proin. 
-        Turpis suspendisse gravida nibh amet. Blandit gravida vitae eu, quam semper ut ultrices. Hendrerit scelerisque tellus lorem maecenas vitae. Mi faucibus senectus nec in ipsum."
-        detail2="&emsp;&emsp;Turpis commodo nulla odio arcu, bibendum non quam adipiscing lobortis. Massa pulvinar at nisi, eu. Phasellus vitae eros amet, sed orci. Nisl fermentum, sed fames blandit semper viverra sit. Massa aliquet volutpat nibh mattis lectus hendrerit. Consectetur dui fringilla eget lectus dolor tortor hendrerit elementum leo. In adipiscing urna, etiam dictum convallis in magna. Pretium bibendum tellus eget aliquet nulla egestas."
-        detail3="&emsp;&emsp;Ut fringilla non neque, aliquet morbi. Vitae adipiscing egestas ultrices turpis odio mauris, dui, et massa. Odio sed feugiat natoque morbi non vel. Est vivamus diam."
-        detail4="&emsp;&emsp;Turpis commodo nulla odio arcu, bibendum non quam adipiscing lobortis. Massa pulvinar at nisi, eu. Phasellus vitae eros amet, sed orci. Nisl fermentum, sed fames blandit semper viverra sit. Massa aliquet volutpat nibh mattis lectus hendrerit. Consectetur dui fringilla eget lectus dolor tortor hendrerit elementum leo. In adipiscing urna, etiam dictum convallis in magna. Pretium bibendum tellus eget aliquet nulla egestas."
-        detail5="&emsp;&emsp;Ut fringilla non neque, aliquet morbi. Vitae adipiscing egestas ultrices turpis odio mauris, dui, et massa. Odio sed feugiat natoque morbi non vel. Est vivamus diam.s"
+        title="Synthia Patient Privacy Policy"
+        detail="&emsp;&emsp;We're no strangers to love. You know the rules and so do I. A full commitment's what I'm thinking of. You wouldn't get this from any other guy"
+        detail2="&emsp;&emsp;I just wanna tell you how I'm feeling. Gotta make you understand."
+        detail3="&emsp;&emsp;Never gonna give you up. Never gonna let you down. Never gonna run around and desert you. Never gonna make you cry. Never gonna say goodbye. Never gonna tell a lie and hurt you"
+        detail4="&emsp;&emsp;We've known each other for so long. Your heart's been aching, but. You're too shy to say it. Inside, we both know what's been going on. We know the game and we're gonna play it"
+        detail5="&emsp;&emsp;And if you ask me how I'm feeling. Don't tell me you're too blind to see"
+        detail6="&emsp;&emsp;Never gonna give you up. Never gonna let you down. Never gonna run around and desert you. Never gonna make you cry. Never gonna say goodbye. Never gonna tell a lie and hurt you"
+        detail7="&emsp;&emsp;Never gonna give you up. Never gonna let you down. Never gonna run around and desert you. Never gonna make you cry. Never gonna say goodbye. Never gonna tell a lie and hurt you"
+        detail8="&emsp;&emsp;Never gonna give, never gonna give. Never gonna give, never gonna give."
+        detail9="&emsp;&emsp;We've known each other for so long. Your heart's been aching, but. You're too shy to say it. Inside, we both know what's been going on. We know the game and we're gonna play it"
+        detail10="&emsp;&emsp;I just wanna tell you how I'm feeling. Gotta make you understand"
+        detail11="&emsp;&emsp;Never gonna give you up. Never gonna let you down. Never gonna run around and desert you. Never gonna make you cry. Never gonna say goodbye. Never gonna tell a lie and hurt you"
+        detail12="&emsp;&emsp;Never gonna give you up. Never gonna let you down. Never gonna run around and desert you. Never gonna make you cry. Never gonna say goodbye. Never gonna tell a lie and hurt you"
+        detail13="&emsp;&emsp;Never gonna give you up. Never gonna let you down. Never gonna run around and desert you. Never gonna make you cry. Never gonna say goodbye. Never gonna tell a lie and hurt you"
       />
     </div>
   );

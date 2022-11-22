@@ -18,13 +18,16 @@ import SummaryReciept from "./Page/Appointment/SummaryReciept";
 import PaymentSuccessFully from "./Page/Appointment/PaymentSuccessFully";
 import VideoCallPage from "./Page/Appointment/videoCallPage";
 import ReportPage from "./Page/Report";
+import IndexPage from "./Page";
 
 function App() {
   // const Login = lazy(() => import("./Page/Login"));
+
   return (
     <BrowserRouter>
       <Routes>
         {/* Login Section */}
+        
         <Route path="/login" element={<LoginPage />} />
         <Route path="/otp-verification" element={<OtpVerificationPage />} />
         <Route path="/verified-success" element={<VerifiedSuccesPage />} />
@@ -50,7 +53,8 @@ function App() {
         <Route path="/history" element={<HistoryPage />} />
         <Route path="/report" element={<ReportPage />} />
         <Route path="/home" element={<HomePage />} />
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="/index" element={<IndexPage />} />
+        <Route path="*" element={<Navigate to="/index" replace />} />
       </Routes>
     </BrowserRouter>
   );

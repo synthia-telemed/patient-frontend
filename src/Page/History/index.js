@@ -5,6 +5,7 @@ import HistoryCompleteTab from "./HistoryCompleteTab";
 import HistoryCancelTab from "./HistoryCancelTab";
 import Navbar from "../../components/Navbar";
 import useAPI from "../../hooks/useAPI";
+
 const HistoryPage = () => {
   const [panel, setPanel] = useState("Upcoming");
   const [listAppointment, setListAppointment] = useState({});
@@ -47,6 +48,7 @@ const HistoryPage = () => {
     );
   };
   return (
+    <div>
     <div className="pb-[150px]">
       <div className="px-[16px]">
         <Header textHeader="Appointment history" />
@@ -62,6 +64,7 @@ const HistoryPage = () => {
         )}
       </div>
       <Navbar />
+    </div>
     </div>
   );
 };

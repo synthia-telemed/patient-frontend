@@ -71,7 +71,7 @@ const CreditCardDetail = () => {
         </PaymentInputsWrapper>
         <div className="flex mt-[39px] items-center">
           <h1 className="text-primary-500 typographyTextXsMedium mr-[16px]">
-            Set as default bank account
+            Set as default card
           </h1>
           <Switch
             onChange={handleChange}

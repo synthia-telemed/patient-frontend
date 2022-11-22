@@ -8,7 +8,7 @@ const CreditCardBox = ({ icon, numberCard, expireDate, isDefault, id }) => {
           state: { numberCard: numberCard, isDefault: isDefault, icon: icon, id: id }
         })
       }
-      className="border-[1px] border-solid border-gray-300 flex items-center p-[16px] mx-[16px] rounded-[8px] mt-[24px]"
+      className="border-[1px] border-solid border-gray-300 flex items-center p-[16px] rounded-[8px] mt-[24px]"
     >
       <img src={icon} alt="" />
       <div className="flex flex-col ml-[24px]">

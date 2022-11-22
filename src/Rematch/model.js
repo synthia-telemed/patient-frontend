@@ -19,18 +19,26 @@ export const count = {
 
 export const user = {
   state: {
+    firstname: "default",
+    fullname: "default",
+    pictureURL: "",
     tokenJWT: ""
   },
   reducers: {
     setName: (state, payload) => payload,
     setToken: (state, payload) => {
       state.tokenJWT = payload;
-
-      return state;
+      return { ...state };
     },
     removeToken: (state, payload) => {
       state.tokenJWT = "";
-      return state;
+      return { ...state };
+    },
+    setProfile: (state, payload) => {
+      state.firstname = payload.firstname;
+      state.fullname = payload.fullname;
+      state.pictureURL = payload.pictureURL;
+      return { ...state };
     }
   }
 };

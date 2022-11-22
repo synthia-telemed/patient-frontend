@@ -5,12 +5,19 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import DefaultProfile from "../Assets/default_profile.png";
 import AppointmentDetailCard from "../components/Appointment/AppointmentDetailCard";
+import LoadingIcon from "../components/LoadingIcon";
 import Navbar from "../components/Navbar";
 import useAPI from "../hooks/useAPI";
+import LatestCardResult from "../components/LatestCardResult";
+import useAPIMeasureMent from "../hooks/useApiMeasurement";
 import EmptyStatusIcon from "../Assets/Home/EmptyStatus.svg";
 
 const mapState = state => ({
   user: state.user
+});
+
+const mapDispatch = dispatch => ({
+  setProfile: value => dispatch.user.setProfile(value)
 });
 
 const NotificationIcon = () => {
@@ -48,24 +55,45 @@ const HomePage = props => {
   dayjs.extend(utc);
   const navigate = useNavigate();
   const [apiDefault] = useAPI();
+  const [apiMeasurement] = useAPIMeasureMent();
   const [detailYourAppointment, setDetailYourAppointment] = useState([]);
+  const [latestMeasurement, setLatestMeasurement] = useState([]);
+  const [isLoadingLatestResult, setIsLoadingLatestResult] = useState(true);
   useEffect(() => {
     getNextAppointment();
+    getName();
+    getLastMeasurementResult();
   }, []);
+  console.log(latestMeasurement, " Lates");
+  const getLastMeasurementResult = async () => {
+    const res = await apiMeasurement.get("/home/latest");
+    setLatestMeasurement(res.data);
+    setIsLoadingLatestResult(false);
+  };
   const getNextAppointment = async () => {
     const res = await apiDefault.get("/appointment/next");
     setDetailYourAppointment(res.data);
   };
-  console.log(props.user);
+  const getName = async () => {
+    const { data } = await apiDefault.get("/info");
+    props.setProfile({
+      firstname: data.name_en.firstname,
+      fullname: data.name_en.full_name,
+      pictureURL: data.profile_pic_url
+    });
+  };
   return (
     <div className="">
       <div>
-        <div className=" flex justify-between mt-[56px] px-[17px]  w-full">
+        <div className=" flex justify-between mt-[56px] px-[17px] w-full">
           <div className="w-[173px]">
             <h1 className="typographyTextSmMedium text-primary-500">Welcome Back</h1>
-            <h1 className="typographyHeadingXsSemibold">Name User &#9996;</h1>
+            <h1 className="typographyHeadingXsMedium">{props.user.firstname} &#9996;</h1>
           </div>
-          <div className="w-[45px] h-[45px] p-[5px] rounded-[15px] bg-primary-50 flex justify-center items-center ">
+          <div
+            className="w-[45px] h-[45px] p-[5px] rounded-[15px] bg-primary-50 flex justify-center items-center "
+            onClick={() => navigate("/notification")}
+          >
             <NotificationIcon />
           </div>
         </div>
@@ -89,16 +117,66 @@ const HomePage = props => {
         isButton={true}
       />
       <Navbar />
-      <div className="mt-[30px] px-[16px]">
-        <h1 className="typographyTextMdSemibold">Today's status</h1>
-        <div className="flex flex-col justify-center items-center h-[300px] ">
-          <img src={EmptyStatusIcon} alt="" width="200px" height="148px" />
-          <h1 className="typographyTextXsMedium mt-[8px] w-[200px] text-center">
-            You haven’t submited any measurement result.{" "}
-          </h1>
-        </div>
+      <div className="mt-[30px] px-[16px] ">
+        <h1 className="typographyTextMdSemibold">Latest measurement result</h1>
+        {isLoadingLatestResult ? (
+          <LoadingIcon />
+        ) : Object.keys(latestMeasurement).length === 0 ? (
+          <div className="flex flex-col justify-center items-center h-[300px] ">
+            <img src={EmptyStatusIcon} alt="" width="200px" height="148px" />
+            <h1 className="typographyTextXsMedium mt-[8px] w-[200px] text-center">
+              You haven’t submited any measurement result.{" "}
+            </h1>
+          </div>
+        ) : (
+          <div className="flex flex-col mb-[150px]">
+            {latestMeasurement?.glucose ? (
+              <LatestCardResult
+                status={latestMeasurement?.glucose?.fasting?.status}
+                value={latestMeasurement?.glucose?.fasting?.value}
+                unit={latestMeasurement?.glucose?.fasting?.unit}
+                dateTime={latestMeasurement?.glucose?.fasting?.dateTime}
+                secondValue={true}
+                status2={latestMeasurement?.glucose?.beforeMeal?.status}
+                value2={latestMeasurement?.glucose?.beforeMeal?.value}
+                unit2={latestMeasurement?.glucose?.beforeMeal?.unit}
+                name="Glucose Level"
+              />
+            ) : (
+              <></>
+            )}
+            {latestMeasurement?.bloodPressure ? (
+              <LatestCardResult
+                status={latestMeasurement?.bloodPressure?.status}
+                value={
+                  latestMeasurement?.bloodPressure?.systolic +
+                  " / " +
+                  latestMeasurement?.bloodPressure?.diastolic
+                }
+                secondValue={false}
+                unit={latestMeasurement?.bloodPressure?.unit}
+                dateTime={latestMeasurement?.bloodPressure?.dateTime}
+                name="BloodPressure"
+              />
+            ) : (
+              <></>
+            )}
+            {latestMeasurement?.pulse ? (
+              <LatestCardResult
+                status={latestMeasurement?.pulse?.status}
+                value={latestMeasurement?.pulse?.value}
+                unit={latestMeasurement?.pulse?.unit}
+                secondValue={false}
+                dateTime={latestMeasurement?.pulse?.dateTime}
+                name="Pulse"
+              />
+            ) : (
+              <></>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
 };
-export default connect(mapState)(HomePage);
+export default connect(mapState, mapDispatch)(HomePage);

@@ -6,19 +6,20 @@ const PaymentMethod = ({
   onChange,
   id,
   onSelect,
-  onClick,
+  onClick
 }) => {
   return (
     <div
-      className="border-[1px] border-solid border-gray-300 flex items-center p-[16px] mx-[16px] rounded-[8px] mt-[24px]"
+      className={`border-[1px] border-solid ${
+        onSelect===id ? "border-primary-400" : "border-gray-300"
+      } flex items-center p-[16px] mx-[16px] rounded-[8px] mt-[24px]`}
       onClick={() => onClick(id)}
     >
       <input
-        checked={onSelect===id ? true : false}
-        type="checkbox"
+        checked={onSelect === id ? true : false}
+        type="radio"
         value={id}
-        onChange={() => {}}
-        className="mr-[24px] text-blue-600 bg-gray-100 w-6 h-6 rounded-full"
+        className="mr-[24px] accent-primary-500 rounded-full w-[20px] h-[20px]"
       />
       <img src={icon} alt="" />
       <div className="flex flex-col ml-[24px]">

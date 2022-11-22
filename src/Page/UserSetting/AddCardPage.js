@@ -57,7 +57,7 @@ const AddCardPage = () => {
     }
     try {
       await apiDefault.post("/payment/credit-card", body);
-      navigate("/setting/credit-card");
+      navigate(-1);
     } catch (e) {
       console.log(e);
       setError(true);

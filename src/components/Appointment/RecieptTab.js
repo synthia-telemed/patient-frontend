@@ -8,15 +8,15 @@ const RecieptTab = (detailAppointment) => {
   console.log(detailAppointment.data?.payment.credit_card.brand);
   return (
     <>
-      <h1 className="typographyTextMdSemibold mx-[16px] mt-[16px]">
+      <h1 className="typographyTextMdSemibold mt-[16px]">
         Summary Expense
       </h1>
       <RecieptDetailCard data={detailAppointment.data.invoice} />
-      <h1 className="typographyTextMdSemibold mx-[16px] mt-[16px]">
+      <h1 className="typographyTextMdSemibold mt-[16px]">
         Total Charges
       </h1>
       <CardTotalCharges detailAppointment={detailAppointment.data} />
-      <h1 className="typographyTextMdSemibold mx-[16px] mt-[16px]">
+      <h1 className="typographyTextMdSemibold mt-[16px]">
         Payment methods
       </h1>
       {detailAppointment.data?.payment?.credit_card.brand === "Visa" ? (

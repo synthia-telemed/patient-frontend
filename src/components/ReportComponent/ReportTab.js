@@ -2,11 +2,11 @@ import { useState } from "react";
 import BloodPressureTab from "./BloodPressureTab";
 import GlucoseTab from "./GlucoseTab";
 const ReportTab = ({selectedDate,setShowModal}) => {
-  const [panel, setPanel] = useState("Blood pressure/Palse");
+  const [panel, setPanel] = useState("Blood pressure/Pulse");
   const Panel = () => {
     return (
       <div className="flex w-full justify-center ">
-        <ButtonPanel text="Blood pressure/Palse" />
+        <ButtonPanel text="Blood pressure/Pulse" />
         <ButtonPanel text="Glucose level" />
       </div>
     );
@@ -30,7 +30,7 @@ const ReportTab = ({selectedDate,setShowModal}) => {
   return (
     <div className="mt-[12px]">
       <Panel />
-      {panel === "Blood pressure/Palse" ? (
+      {panel === "Blood pressure/Pulse" ? (
         <BloodPressureTab dateTime={selectedDate} setShowModal={setShowModal} />
       ) : panel === "Glucose level" ? (
         <GlucoseTab dateTime={selectedDate} setShowModal={setShowModal}/>
