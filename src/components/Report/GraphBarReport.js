@@ -194,20 +194,33 @@ const GraphBarReport = ({
               ))}
 
             {isHaveTopLabelList ? (
-              <LabelList
-                className="typographyTextXsMedium"
-                width={20}
-                dataKey="values"
-                formatter={
-                  data &&
-                  data?.data &&
-                  data?.data.length &&
-                  data?.data[0].values === parseInt(data?.data[0].values)
-                    ? v => Math.round(v)
-                    : v => `${Math.round(v[1])}`
-                }
-                position="top"
-              />
+              name === "Pulse" ? (
+                <LabelList
+                  className="typographyTextXsMedium"
+                  width={20}
+                  dataKey="values"
+                  formatter={
+                    v => Math.round(v)
+                    // v => `${Math.round(v[1])}`
+                  }
+                  position="top"
+                />
+              ) : (
+                <LabelList
+                  className="typographyTextXsMedium"
+                  width={20}
+                  dataKey="values"
+                  formatter={
+                    data &&
+                    data?.data &&
+                    data?.data.length &&
+                    data?.data[0].values === parseInt(data?.data[0].values)
+                      ? v => Math.round(v)
+                      : v => `${Math.round(v[1])}`
+                  }
+                  position="top"
+                />
+              )
             ) : (
               <></>
             )}

@@ -59,7 +59,7 @@ const HomePage = props => {
     getName();
     getLastMeasurementResult();
   }, []);
-
+  console.log(latestMeasurement ," Lates")
   const getLastMeasurementResult = async () => {
     const res = await apiMeasurement.get("/home/latest");
     setLatestMeasurement(res.data);
