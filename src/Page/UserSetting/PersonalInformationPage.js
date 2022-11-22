@@ -2,21 +2,25 @@ import { useEffect, useState } from "react";
 import HeaderWithBack from "../../components/HeaderWithBack";
 import useAPI from "../../hooks/useAPI";
 import PersonalInformationCard from "../../components/SettingPanel/PersonalInformationCard";
+import LoadingIcon from "../../components/LoadingIcon.js";
 import dayjs from "dayjs";
 
 const PersonalInformationPage = () => {
   const [informationUser, setInformationUser] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [apiDefault] = useAPI();
 
   useEffect(() => {
-    fetchInformationUser();
+    fetchInformationUser().then(() => setLoading(false));
   }, []);
   const fetchInformationUser = async () => {
     const res = await apiDefault.get("/info");
     setInformationUser(res.data);
   };
 
-  return (
+  return loading ? (
+    <LoadingIcon />
+  ) : (
     <div>
       <HeaderWithBack textHeader="Personal Information" path="/setting" />
       <PersonalInformationCard
