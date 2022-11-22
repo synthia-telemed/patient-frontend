@@ -16,6 +16,10 @@ const mapState = state => ({
   user: state.user
 });
 
+const mapDispatch = dispatch => ({
+  setProfile: value => dispatch.user.setProfile(value)
+});
+
 const NotificationIcon = () => {
   return (
     <>
@@ -54,7 +58,6 @@ const HomePage = props => {
   const [apiMeasurement] = useAPIMeasureMent();
   const [detailYourAppointment, setDetailYourAppointment] = useState([]);
   const [latestMeasurement, setLatestMeasurement] = useState([]);
-  const [name, setName] = useState("");
   const [isLoadingLatestResult, setIsLoadingLatestResult] = useState(true);
   useEffect(() => {
     getNextAppointment();
@@ -72,8 +75,12 @@ const HomePage = props => {
     setDetailYourAppointment(res.data);
   };
   const getName = async () => {
-    const res = await apiDefault.get("/info/name");
-    setName(res.data);
+    const { data } = await apiDefault.get("/info");
+    props.setProfile({
+      firstname: data.name_en.firstname,
+      fullname: data.name_en.full_name,
+      pictureURL: data.profile_pic_url
+    });
   };
   return (
     <div className="">
@@ -81,7 +88,9 @@ const HomePage = props => {
         <div className=" flex justify-between mt-[56px] px-[17px] w-full">
           <div className="w-[173px]">
             <h1 className="typographyTextSmMedium text-primary-500">Welcome Back</h1>
-            <h1 className="typographyHeadingXsSemibold">{name?.EN?.firstname} &#9996;</h1>
+            <h1 className="typographyHeadingXsSemibold">
+              {props.user.firstname} &#9996;
+            </h1>
           </div>
           <div
             className="w-[45px] h-[45px] p-[5px] rounded-[15px] bg-primary-50 flex justify-center items-center "
@@ -172,4 +181,4 @@ const HomePage = props => {
     </div>
   );
 };
-export default connect(mapState)(HomePage);
+export default connect(mapState, mapDispatch)(HomePage);
