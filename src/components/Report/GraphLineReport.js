@@ -155,7 +155,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
               {dayjs.unix(label).format("dddd , DD MMM YYYY")}
             </h1>
             <div className="flex items-center">
-              <div className="w-[16px] h-[16px] bg-[#4F84F6] rounded-[16px]"></div>
+              <div className="w-[16px] h-[16px] bg-[#303ed9] rounded-[16px]"></div>
               <h1 className="typographyTextXsRegular ml-[4px] text-gray-600">
                 Pulse
               </h1>{" "}
@@ -238,7 +238,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
             <></>
           )}
           <YAxis
-            domain={[0, 200]}
+            domain={[0, 240]}
             tick={{ fontSize: 12, dx: -5 }}
             axisLine={false}
             label={{
@@ -258,6 +258,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
             layout="horizontal"
             verticalAlign="top"
             align="right"
+            iconSize={12}
             iconType="circle"
           />
           {name === "Pulse" ? (
@@ -268,8 +269,8 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
                 dataKey="values"
                 strokeWidth={3}
                 isAnimationActive={false}
-                fill="#4F84F6"
-                stroke="#4F84F6"
+                fill="#303ed9"
+                stroke="#303ed9"
               ></Line>
             </>
           ) : (

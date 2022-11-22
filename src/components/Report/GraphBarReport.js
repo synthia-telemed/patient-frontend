@@ -43,7 +43,11 @@ const GraphBarReport = ({
     <div className=" mt-[24px]">
       <h1 className="typographyTextXlSemibold">{name}</h1>
       <>
-        <h1 className="typographyTextSmMedium text-gray-600">{detailGraph}</h1>
+        {label ? (
+          <></>
+        ) : (
+          <h1 className="typographyTextSmMedium text-gray-600">{detailGraph}</h1>
+        )}
         <div className="flex flex-col justify-center mt-[5px]">
           {panel === "Month" ? (
             label ? (
@@ -139,7 +143,7 @@ const GraphBarReport = ({
             <></>
           )}
           <YAxis
-            domain={[0, 200]}
+            domain={[0, 240]}
             tick={{ fontSize: 12, dx: -5 }}
             axisLine={false}
             style={{ textAnchor: "end" }}
@@ -175,9 +179,10 @@ const GraphBarReport = ({
           )}
           <Bar
             barSize={10}
+            data={name === "Glucose Level" ? data?.data : ""}
             dataKey={name === "Glucose Level" ? "value" : "values"}
             isAnimationActive={false}
-            radius={name === "Blood Pressure" ? 30 : 4}
+            radius={name === "Blood Pressure" ? 30 : 0}
             // wrapperStyle={{ borderTopLeftRadius: "4px", borderTopRightRadius: "4px" }}
           >
             {/* {name === "Glucose Level" &&
@@ -218,6 +223,17 @@ const GraphBarReport = ({
                   className="typographyTextXsMedium"
                   width={20}
                   dataKey="values"
+                  formatter={
+                    v => Math.round(v)
+                    // v => `${Math.round(v[1])}`
+                  }
+                  position="top"
+                />
+              ) : name === "Glucose Level" ? (
+                <LabelList
+                  className="typographyTextXsMedium"
+                  width={20}
+                  dataKey="value"
                   formatter={
                     v => Math.round(v)
                     // v => `${Math.round(v[1])}`
