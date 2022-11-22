@@ -88,9 +88,7 @@ const HomePage = props => {
         <div className=" flex justify-between mt-[56px] px-[17px] w-full">
           <div className="w-[173px]">
             <h1 className="typographyTextSmMedium text-primary-500">Welcome Back</h1>
-            <h1 className="typographyHeadingXsSemibold">
-              {props.user.firstname} &#9996;
-            </h1>
+            <h1 className="typographyHeadingXsMedium">{props.user.firstname} &#9996;</h1>
           </div>
           <div
             className="w-[45px] h-[45px] p-[5px] rounded-[15px] bg-primary-50 flex justify-center items-center "

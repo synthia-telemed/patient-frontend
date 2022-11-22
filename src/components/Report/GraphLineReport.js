@@ -18,7 +18,7 @@ import BadgeStatus from "../Appointment/BadgeStatus";
 dayjs.extend(utc);
 const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
   const [valueGraph, setValueGraph] = useState("");
-  const [pulseLabel, setPulseLabel] = useState("");
+  const [label, setLabel] = useState("");
   const [valueGraphBeforeMeal, setValueGraphBeforeMeal] = useState("-");
   const [valueGraphFasting, setValueGraphFasting] = useState("-");
   const [valueGraphAfterMeal, setValueGraphAfterMeal] = useState("-");
@@ -26,7 +26,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
   useEffect(() => {}, [onClick]);
 
   const CustomTooltip = ({ active, payload }) => {
-    setPulseLabel(payload[0]?.payload?.label);
+    setLabel(payload[0]?.payload?.label);
     setOnClick(active);
     if (active && payload && payload.length) {
       if (name === "Glucose Level") {
@@ -102,7 +102,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
   return (
     <div className="mt-[24px]">
       <h1 className="typographyTextXlSemibold">{name}</h1>
-      {name === "Pulse" ? (
+      {name === "Pulse" && !(valueGraph && onClick) ? (
         <>
           <h1 className="typographyTextSmMedium text-gray-600">{detailGraph}</h1>
           <div className="flex items-center  mt-[5px]">
@@ -132,26 +132,30 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
           </div>
         </>
       ) : (
-        <div className="flex items-center mt-[5px]">
-          <h1 className="typographyTextXsMedium text-gray-600">
-            Your Glucose in this week :
-          </h1>
-          {data?.summary?.status === "Normal" ? (
-            <BadgeStatus text="Normal" style="bg-success-50 text-success-700" />
-          ) : data?.summary?.status === "Abnormal" ? (
-            <BadgeStatus text="Abnormal" style="bg-error-50 text-error-700" />
-          ) : data?.summary?.status === "Warning" ? (
-            <BadgeStatus text="Warning" style="bg-warning-50 text-warning-700" />
-          ) : (
-            <BadgeStatus text="New" style="bg-primary-50 text-primary-700" />
-          )}
-        </div>
+        // <div className="flex items-center mt-[5px]">
+        //   <h1 className="typographyTextXsMedium text-gray-600">
+        //     Your Glucose in this week :
+        //   </h1>
+        //   {data?.summary?.status === "Normal" ? (
+        //     <BadgeStatus text="Normal" style="bg-success-50 text-success-700" />
+        //   ) : data?.summary?.status === "Abnormal" ? (
+        //     <BadgeStatus text="Abnormal" style="bg-error-50 text-error-700" />
+        //   ) : data?.summary?.status === "Warning" ? (
+        //     <BadgeStatus text="Warning" style="bg-warning-50 text-warning-700" />
+        //   ) : (
+        //     <BadgeStatus text="New" style="bg-primary-50 text-primary-700" />
+        //   )}
+        // </div>
+        <></>
       )}
       {data && data.data && data.data.length && data?.data[0].values ? (
         valueGraph && onClick ? (
           <>
+            <h1 className="typographyTextXsRegular text-gray-600 ml-[4px]">
+              {dayjs.unix(label).format("dddd , DD MMM YYYY")}
+            </h1>
             <div className="flex items-center">
-              <div className="w-[16px] h-[16px] bg-[#4F84F6] rounded-[16px]"></div>
+              <div className="w-[16px] h-[16px] bg-[#303ed9] rounded-[16px]"></div>
               <h1 className="typographyTextXsRegular ml-[4px] text-gray-600">
                 Pulse
               </h1>{" "}
@@ -160,15 +164,19 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
               </h1>
               <h1 className="typographyTextXsRegular ml-[8px] text-gray-600">bpm</h1>
             </div>
-            <h1 className="typographyTextXsRegular text-gray-600 ml-[4px]">
-              Date : {dayjs(pulseLabel).format("DD MMMM")}
-            </h1>
           </>
         ) : (
           <></>
         )
       ) : (
         <div>
+          {label ? (
+            <h1 className="typographyTextXsRegular text-gray-600 ml-[4px]">
+              {dayjs.unix(label).format("dddd , DD MMM YYYY")}
+            </h1>
+          ) : (
+            <></>
+          )}
           <div className="flex items-center">
             <div className="w-[16px] h-[16px] bg-[#131957] rounded-[16px]"></div>{" "}
             <h1 className="typographyTextXsRegular ml-[4px] text-gray-600">Fasting</h1>
@@ -230,8 +238,8 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
             <></>
           )}
           <YAxis
-            domain={[0, 200]}
-            tick={{ fontSize: 12,dx: -5 }}
+            domain={[0, 240]}
+            tick={{ fontSize: 12, dx: -5 }}
             axisLine={false}
             label={{
               value: data?.unit,
@@ -250,6 +258,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
             layout="horizontal"
             verticalAlign="top"
             align="right"
+            iconSize={12}
             iconType="circle"
           />
           {name === "Pulse" ? (
@@ -258,10 +267,10 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
                 data={data.data}
                 name="Pulse"
                 dataKey="values"
-                strokeWidth={2}
+                strokeWidth={3}
                 isAnimationActive={false}
-                fill="#4F84F6"
-                stroke="#4F84F6"
+                fill="#303ed9"
+                stroke="#303ed9"
               ></Line>
             </>
           ) : (
@@ -269,7 +278,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
               <Line
                 name="Fasting"
                 data={data.data.fasting}
-                strokeWidth={2}
+                strokeWidth={3}
                 dataKey="value"
                 stroke="#131957"
                 fill="#131957"
@@ -279,7 +288,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
               <Line
                 name="Before meal"
                 data={data.data.beforeMeal}
-                strokeWidth={2}
+                strokeWidth={3}
                 dataKey="value"
                 stroke="#303ed9"
                 fill="#303ed9"
@@ -289,7 +298,7 @@ const GraphLineReport = ({ data, name, panel, summaryValue, detailGraph }) => {
               <Line
                 name="After meal"
                 data={data.data.afterMeal}
-                strokeWidth={2}
+                strokeWidth={3}
                 dataKey="value"
                 stroke="#4F84F6"
                 fill="#4F84F6"
