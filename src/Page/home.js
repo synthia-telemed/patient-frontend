@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import DefaultProfile from "../Assets/default_profile.png";
 import AppointmentDetailCard from "../components/Appointment/AppointmentDetailCard";
+import LoadingIcon from "../components/LoadingIcon";
 import Navbar from "../components/Navbar";
 import useAPI from "../hooks/useAPI";
 import LatestCardResult from "../components/LatestCardResult";
@@ -54,15 +55,17 @@ const HomePage = props => {
   const [detailYourAppointment, setDetailYourAppointment] = useState([]);
   const [latestMeasurement, setLatestMeasurement] = useState([]);
   const [name, setName] = useState("");
+  const [isLoadingLatestResult, setIsLoadingLatestResult] = useState(true);
   useEffect(() => {
     getNextAppointment();
     getName();
     getLastMeasurementResult();
   }, []);
-  console.log(latestMeasurement ," Lates")
+  console.log(latestMeasurement, " Lates");
   const getLastMeasurementResult = async () => {
     const res = await apiMeasurement.get("/home/latest");
     setLatestMeasurement(res.data);
+    setIsLoadingLatestResult(false);
   };
   const getNextAppointment = async () => {
     const res = await apiDefault.get("/appointment/next");
@@ -109,7 +112,9 @@ const HomePage = props => {
       <Navbar />
       <div className="mt-[30px] px-[16px] ">
         <h1 className="typographyTextMdSemibold">Latest measurement result</h1>
-        {Object.keys(latestMeasurement).length === 0 ? (
+        {isLoadingLatestResult ? (
+          <LoadingIcon />
+        ) : Object.keys(latestMeasurement).length === 0 ? (
           <div className="flex flex-col justify-center items-center h-[300px] ">
             <img src={EmptyStatusIcon} alt="" width="200px" height="148px" />
             <h1 className="typographyTextXsMedium mt-[8px] w-[200px] text-center">

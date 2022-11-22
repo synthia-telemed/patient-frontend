@@ -7,6 +7,7 @@ import MasterCardIcon from "../../Assets/Payment/mastercard.svg";
 import JCBIcon from "../../Assets/Payment/jcb.svg";
 import VisaIcon from "../../Assets/Payment/visa.svg";
 import useAPI from "../../hooks/useAPI";
+import LoadingIcon from "../../components/LoadingIcon";
 
 const mapState = state => ({
   user: state.user
@@ -14,10 +15,11 @@ const mapState = state => ({
 
 const CreditCardPage = props => {
   useEffect(() => {
-    getListPaymentCreditCard();
+    getListPaymentCreditCard().then(() => setLoading(false));
   }, []);
 
   const [paymentList, setPaymentList] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [apiDefault] = useAPI();
 
   const getListPaymentCreditCard = async () => {
@@ -25,7 +27,9 @@ const CreditCardPage = props => {
     setPaymentList(res.data);
   };
 
-  return (
+  return loading ? (
+    <LoadingIcon />
+  ) : (
     <div>
       <HeaderWithBack textHeader="Credit cards" path="/setting" />
       <div className="mx-[16px]">
