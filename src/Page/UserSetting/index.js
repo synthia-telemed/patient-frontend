@@ -15,7 +15,7 @@ const UserSettingPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [apiDefault] = useAPI();
-  const [informationUser, setInformationUser] = useState([]);
+  const [informationUser, setInformationUser] = useState({name_en: {firstname: '', lastname: ''}});
   const onLogout = () => {
     Preferences.remove({ key: "token" }).then(() => {
       dispatch.user.removeToken();
