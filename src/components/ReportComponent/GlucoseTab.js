@@ -81,20 +81,26 @@ const GlucoseTab = ({ dateTime, setShowModal }) => {
             <h1 className="typographyTextSmMedium text-gray-800 mt-[20px]">After Meal</h1>
           </div>
         </div>
-        <div className="flex justify-between mt-[16px]">
-          <h1 className="typographyTextMdSemibold ">Fasting</h1>
-          <Switch
-            onChange={handleChange}
-            checked={checked}
-            checkedIcon={false}
-            uncheckedIcon={false}
-            onColor="#303ED9"
-            offColor="#EAECF0"
-          />
-        </div>
-        <h1 className="typographyTextXsRegular">
-          (Test in the morning before food or water)
-        </h1>
+        {period === "AFTER_MEAL" ? (
+          <></>
+        ) : (
+          <>
+            <div className="flex justify-between mt-[16px]">
+              <h1 className="typographyTextMdSemibold ">Fasting</h1>
+              <Switch
+                onChange={handleChange}
+                checked={checked}
+                checkedIcon={false}
+                uncheckedIcon={false}
+                onColor="#303ED9"
+                offColor="#EAECF0"
+              />
+            </div>
+            <h1 className="typographyTextXsRegular">
+              (Test in the morning before food or water)
+            </h1>
+          </>
+        )}
 
         <div className="flex justify-center">
           <button
