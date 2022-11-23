@@ -27,7 +27,7 @@ const GlucoseTab = ({ dateTime, setShowModal }) => {
       period: period
     };
     console.log(body);
-    // const res = await apiDefault.post(`/glucose`, body);
+    const res = await apiDefault.post(`/glucose`, body);
     setShowModal();
   };
   useEffect(() => {
