@@ -28,12 +28,11 @@ const GlucoseTab = ({ dateTime, setShowModal }) => {
     };
     console.log(body);
     const res = await apiDefault.post(`/glucose`, body);
-    console.log(res);
     setShowModal();
   };
   useEffect(() => {
     if (checked) {
-      setPeriod("BEFORE_MEAL");
+      setPeriod("FASTING");
     }
   }, [checked]);
   useEffect(() => {

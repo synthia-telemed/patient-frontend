@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'synthia.tech',
-  appName: 'synthia',
+  appName: 'Synthia',
   webDir: 'build',
   bundledWebRuntime: false
 };
